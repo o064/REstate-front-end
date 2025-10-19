@@ -1,11 +1,10 @@
 import { createBrowserRouter, RouterProvider } from 'react-router';
+import LogIn from './pages/login';
 
 const router = createBrowserRouter([{}]);
 
 function App() {
-  return <div>
-    
-  </div>;
+  return <LogIn />;
 }
 
 export default App;
