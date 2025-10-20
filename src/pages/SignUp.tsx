@@ -8,7 +8,7 @@ import { useState } from 'react';
 import UserTypeSelector from '../ui/UserTypeSelector';
 import type { UserType } from '../types/UserType';
 
-function SignUp() {
+function Signup() {
   const [userType, setUserType] = useState<UserType>('buyer');
   return (
     <main className="min-h-screen w-full flex items-center justify-center bg-blue-100 text-black p-6 ">
@@ -48,7 +48,7 @@ function SignUp() {
             />
           </InputField>
           {/* actions  */}
-          <AuthActions />
+          <AuthActions actionFor="Sign Up" />
         </form>
         {/* footer */}
         <p className="text-gray-600 text-sm mt-6">
@@ -62,4 +62,4 @@ function SignUp() {
   );
 }
 
-export default SignUp;
+export default Signup;

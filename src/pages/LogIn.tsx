@@ -28,7 +28,7 @@ function Login() {
             <PasswordInput id="password" name="password" />
           </InputField>
           {/* actions  */}
-          <AuthActions />
+          <AuthActions actionFor="Sign In" />
         </form>
         {/* footer */}
         <p className="text-gray-600 text-sm mt-6">
