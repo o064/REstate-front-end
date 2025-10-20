@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type ReactNode } from 'react';
 import { twMerge } from 'tailwind-merge'; // helps cleanly merge Tailwind classes
 import { Link } from 'react-router-dom'; // optional, for `to` support
 type ButtonVariants = 'primary' | 'secondary';
@@ -8,6 +8,7 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   className?: string;
   to?: string;
   fullWidth?: boolean;
+  icon?:ReactNode;
 };
 
 function Button({
@@ -16,6 +17,7 @@ function Button({
   className,
   to,
   fullWidth = true,
+  icon,
   ...rest
 }: ButtonProps) {
   const base =
@@ -47,7 +49,7 @@ function Button({
 
   return (
     <button className={combined} {...rest}>
-      {children}
+      <div className='flex gap-2'>{children} {icon}</div>
     </button>
   );
 }
