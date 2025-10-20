@@ -1,12 +1,12 @@
 import type { ReactNode } from 'react';
-type HeaderProps = {
+type FormHeaderProps = {
   Hchildren?: ReactNode;
   Pchildren?: ReactNode;
-  icon?:ReactNode;
+  icon?: ReactNode;
   Hcolor?: string;
-  Pcolor?:string;
-}
-function Header({ Hchildren, Pchildren, icon , Hcolor ,Pcolor}: HeaderProps) {
+  Pcolor?: string;
+};
+function FormHeader({ Hchildren, Pchildren, icon, Hcolor, Pcolor }: FormHeaderProps) {
   return (
     <div className="mb-8">
       {icon && (
@@ -20,4 +20,4 @@ function Header({ Hchildren, Pchildren, icon , Hcolor ,Pcolor}: HeaderProps) {
   );
 }
 
-export default Header;
+export default FormHeader;
