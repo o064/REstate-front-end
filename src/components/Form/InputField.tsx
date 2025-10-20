@@ -13,7 +13,7 @@ function InputField({ id, label, icon, children }: InputProps) {
         {label}
       </label>
       <div className="relative">
-        {icon && <div className="text-gray-400">{icon}</div>}
+        {icon && <div className="text-gray-400 absolute left-3 top-4">{icon}</div>}
         {children}
       </div>
     </div>

@@ -1,5 +1,8 @@
-import { createBrowserRouter, RouterProvider } from 'react-router';
-import SignUp from './pages/Signup';
+import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router';
+import SignUp from './pages/SignUp';
+import Layout from './layout/Layout';
+import Home from './pages/Home';
+import Login from './pages/LogIn';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -17,7 +20,7 @@ const router = createBrowserRouter(
 );
 
 function App() {
-  return <SignUp />;
+  return <RouterProvider router={router} />;
 }
 
 export default App;
