@@ -1,7 +1,7 @@
 // src/ui/PasswordInput.tsx
 import { useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
-import Input from './Input';
+import Input from '../../ui/Input';
 
 type PasswordInputProps = React.ComponentPropsWithoutRef<'input'>;
 

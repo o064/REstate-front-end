@@ -1,6 +1,6 @@
 import { Building2, Mail } from 'lucide-react';
 import InputField from '../components/Form/InputField';
-import Input from '../components/Form/Input';
+import Input from '../ui/Input';
 import PasswordInput from '../components/Form/PasswordInput';
 import AuthActions from '../components/Form/AuthActions';
 import { Link } from 'react-router';
