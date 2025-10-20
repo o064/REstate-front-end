@@ -1,6 +1,6 @@
 import { Search } from 'lucide-react';
 import Header from '../Form/FormHeader';
-import Input from '../Form/Input';
+import Input from '../../ui/Input';
 import InputField from '../Form/InputField';
 import Button from '../../ui/Button';
 import CardDetils from '../../ui/CardDetils';
