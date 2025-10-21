@@ -41,7 +41,7 @@ const Main = () => {
 
           {/* Card */}
           <div className="relative">
-            <div className="flex  justify-around items-center absolute w-full -top-10 flex-wrap gap-2.5 mb-4 md:mb-0">
+            <div className="flex justify-around items-center absolute w-full -top-10 flex-wrap gap-2.5 mb-4 md:mb-0">
               <CardDetils
                 Hfont="bold"
                 Pfont="semibold"
@@ -61,7 +61,7 @@ const Main = () => {
                 Pfont="semibold"
                 count={'0'}
                 title="For Rent"
-                Hcolor="indigo-500"
+                Hcolor="indigo-600"
               />
             </div>
           </div>
