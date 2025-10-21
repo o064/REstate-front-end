@@ -1,10 +1,14 @@
-interface IProps {}
+import Estate from "../components/estate/Estate"
+import EstateType from "../components/estateType/EstateType"
+import Main from "../components/main/Main"
 
-const Home = ({} : IProps) => {
+const Home = () => {
 
   return (
     <>
-    Home
+    <Main/>
+    <Estate/>
+    <EstateType/>
     </>
   )
 }

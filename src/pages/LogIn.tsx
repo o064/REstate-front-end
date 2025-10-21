@@ -1,0 +1,83 @@
+import { Building2, Mail } from 'lucide-react';
+import InputField from '../components/Form/InputField';
+import Input from '../ui/Input';
+import PasswordInput from '../components/Form/PasswordInput';
+import AuthActions from '../components/Form/AuthActions';
+import { Link } from 'react-router';
+import FormHeader from '../components/Form/FormHeader';
+import { useForm } from 'react-hook-form';
+import { emailValidation, passwordValidtion } from '../utils/validation';
+
+type signInInputs = {
+  email: string;
+  password: string;
+};
+
+function Login() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<signInInputs>({
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+    mode: 'onSubmit',
+  });
+
+  function onSubmit(data: signInInputs) {
+    console.log(data);
+    // addUserToDatabase(data);
+    // showSuccessMessage();
+    // redirectToHomePage();
+  }
+  return (
+    <main className="min-h-screen w-full flex items-center justify-center bg-blue-100 text-black p-6 ">
+      <div className="bg-white shadow-2xl rounded-2xl p-10 w-full max-w-md text-center">
+        {/* Header */}
+        <FormHeader
+          Hcolor={'gray-900'}
+          Pcolor={'gray-600'}
+          Hchildren={'First Estate'}
+          Pchildren={'Welcome back! Sign in to continue.'}
+          icon={<Building2 className="h-8 w-8" />}
+        />
+        {/* Sign in Form */}
+        <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
+          {/* email */}
+          <InputField id="email" label="Email address" icon={<Mail />}>
+            <Input
+              id="email"
+              type="email"
+              placeholder="you@example.com"
+              className="pl-10"
+              {...register('email', emailValidation)}
+            />
+            {errors.email && (
+              <p className="text-red-500 text-sm mt-1 font-medium">{errors.email.message}</p>
+            )}
+          </InputField>
+          {/* password */}
+          <InputField id="password" label="Password">
+            <PasswordInput id="password" {...register('password', passwordValidtion)} />
+            {errors.password && (
+              <p className="text-red-500 text-sm mt-1 font-medium">{errors.password.message}</p>
+            )}
+          </InputField>
+          {/* actions  */}
+          <AuthActions actionFor="Sign In" />
+        </form>
+        {/* footer */}
+        <p className="text-gray-600 text-sm mt-6">
+          Don’t have an account?{' '}
+          <Link to="/signup" className="text-blue-600 hover:underline font-medium">
+            Sign up
+          </Link>
+        </p>
+      </div>
+    </main>
+  );
+}
+
+export default Login;

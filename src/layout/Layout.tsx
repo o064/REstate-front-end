@@ -1,13 +1,13 @@
 import { Outlet } from "react-router"
-import Nav from "../components/nav/Nav"
+import Navbar from "../components/navbar/Navbar"
+import Header from "../components/header/Header"
 
-interface IProps {}
-
-const Layout = ({} : IProps) => {
+const Layout = () => {
 
   return (
     <>
-    <Nav/>
+    <Header/>
+    <Navbar/>
     <Outlet/>
     </>
   )
