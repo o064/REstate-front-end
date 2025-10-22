@@ -1,8 +1,8 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import { fakePropertyWithAgency } from "../dev-data/properites";
-import type { WishList } from "../types/wishList";
 import type { RootState } from "../store";
 import type { PropertyWithAgency } from "../types/property";
+import type { WishList } from "../types/WishList";
 
 const initialState: WishList = {
     items: fakePropertyWithAgency,
@@ -19,10 +19,7 @@ const cartSlice = createSlice({
             const id = action.payload;
             state.items = state.items.filter(item => item.id !== id);
         }
-        ,
-        clearWishList(state) {
-            state.items = [];
-        }
+
     }
 
 })
@@ -30,7 +27,6 @@ const cartSlice = createSlice({
 export const {
     addItemtoWishList,
     delItemFromWishList,
-    clearWishList,
 } = cartSlice.actions;
 // export reducer
 const cartReducer = cartSlice.reducer;
