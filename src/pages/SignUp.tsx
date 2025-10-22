@@ -4,7 +4,6 @@ import Input from '../ui/Input';
 import PasswordInput from '../components/Form/PasswordInput';
 import AuthActions from '../components/Form/AuthActions';
 import UserTypeSelector from '../components/Form/UserTypeSelector';
-import type { UserType } from '../types/UserType';
 import { Link } from 'react-router';
 import FormHeader from '../components/Form/FormHeader';
 import { Controller, useForm } from 'react-hook-form';
@@ -14,6 +13,7 @@ import {
   passwordValidtion,
   phoneValidation,
 } from '../utils/validation';
+import type { UserType } from '../types/User';
 
 type signUpInputs = {
   email: string;

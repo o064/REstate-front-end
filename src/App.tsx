@@ -5,13 +5,15 @@ import Layout from './layout/Layout';
 import Home from './pages/Home';
 import Login from './pages/LogIn';
 import EstateDetails from './pages/EstateDetails';
+import Profile from './pages/Profile';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
-        <Route path='estateDetails' element={<EstateDetails/>}/>
+        <Route path="estateDetails" element={<EstateDetails />} />
+        <Route path="profile" element={<Profile />} />
       </Route>
       {/* login & signup layout */}
       <Route>
