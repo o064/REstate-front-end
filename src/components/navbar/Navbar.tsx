@@ -33,9 +33,9 @@ const Navbar = () => {
             </div>
           </NavLink>
 
-          <NavLink to={'/saved'}>
+          <NavLink to={'/wishList'}>
             <div className="flex justify-center items-center flex-col-reverse">
-              <h3>Saved</h3>
+              <h3>Wish List</h3>
               <span>
                 <Heart />
               </span>

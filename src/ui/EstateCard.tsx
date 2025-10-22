@@ -1,31 +1,117 @@
-import { Link } from "react-router"
+import { Link } from 'react-router';
+import { Bath, Bed, Eye, Heart, MapPin, Square } from 'lucide-react';
+import { formatPrice } from '../utils/helper';
+import type { PropertyWithAgency } from '../types/property';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addItemtoWishList, delItemFromWishList, getWishList } from '../store/wishListSlice';
 type EstateCardPropse = {
-    image?: string;
-    address?: string;
-    price: string | number
-    area?: string | number
-    title?: string
-}
-const EstateCard = ({ image, address, price, area, title }: EstateCardPropse) => {
+  property: PropertyWithAgency;
+};
+const EstateCard = ({ property }: EstateCardPropse) => {
+  const dispatch = useDispatch();
+  const wishList = useSelector(getWishList);
+  const [isWishList, setIsWishList] = useState(false);
 
-    return (
-        <>
-            <Link to="/estateDetails" className="block rounded-lg p-4 shadow-xs shadow-indigo-100">
-                <img
-                    lang="lazy"
-                    src={image || 'https://images.unsplash.com/photo-1613545325278-f24b0cae1224?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80'}
-                    alt={title}
-                    className="h-56 w-full rounded-md  object-cover group-hover:scale-105 transition-transform"
-                />
-                <div className="p-3 space-y-1">
-                    <h3 className="font-semibold text-gray-800">{title}</h3>
-                    <p className="font-medium text-gray-800 ml-0.5">{address || '123 Wallaby Avenue, Park Road'}</p>
-                    <p className="text-gray-500 text-sm">{area}</p>
-                    <p className="text-green-600 font-bold">{price || '240,000'}</p>
+  // check if property is already in wishlist
+  useEffect(() => {
+    const exists = wishList.some((item) => item.id === property.id);
+    setIsWishList(exists);
+  }, [wishList, property.id]);
+
+  const handleWishListToggle = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (isWishList) {
+      dispatch(delItemFromWishList(property.id));
+    } else {
+      dispatch(addItemtoWishList(property));
+    }
+    setIsWishList(!isWishList);
+  };
+  return (
+    <>
+      <Link
+        to="/estateDetails"
+        className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow overflow-hidden border border-gray-200"
+      >
+        {/* Property Image */}
+        <div className="relative h-48 bg-gray-200 cursor-pointer">
+          <img src={property.imageUrl} alt={property.name} className="w-full h-full object-cover" />
+          {/* Badge */}
+          <div className="absolute top-3 left-3">
+            <span
+              className={`px-2 py-1 rounded-full text-xs font-medium ${
+                property.type === 'sale'
+                  ? 'bg-green-100 text-green-800'
+                  : 'bg-purple-100 text-purple-800'
+              }`}
+            >
+              For {property.type === 'sale' ? 'Sale' : 'Rent'}
+            </span>
+          </div>
+
+          {/* Wishlist Icon */}
+          <button
+            onClick={handleWishListToggle}
+            className="absolute top-3 right-3 p-2 bg-white rounded-full shadow-md hover:bg-red-50 transition"
+          >
+            <Heart
+              className={`h-4 w-4 ${
+                isWishList ? 'fill-red-500 text-red-500' : 'text-gray-400 hover:text-red-500'
+              }`}
+            />
+          </button>
+        </div>
+
+        {/* Property Details */}
+        <div className="p-4 cursor-pointer">
+          {/* Price */}
+          <div className="text-xl font-bold text-blue-600 mb-2">{formatPrice(property.price)}</div>
+
+          {/* name */}
+          <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2">{property.name}</h3>
+
+          {/* Location */}
+          <div className="flex items-center text-gray-600 mb-3">
+            <MapPin className="h-4 w-4 mr-1 flex-shrink-0" />
+            <span className="text-sm truncate">{property.address}</span>
+          </div>
+
+          {/* Property Info */}
+          <div className="flex items-center justify-between text-sm text-gray-600">
+            <div className="flex items-center space-x-3">
+              {property.bedrooms && property.bedrooms > 0 && (
+                <div className="flex items-center space-x-1">
+                  <Bed className="h-4 w-4" />
+                  <span>{property.bedrooms}</span>
                 </div>
-            </Link>
+              )}
+              {property.bathrooms && property.bathrooms > 0 && (
+                <div className="flex items-center space-x-1">
+                  <Bath className="h-4 w-4" />
+                  <span>{property.bathrooms}</span>
+                </div>
+              )}
+              {property.square && (
+                <div className="flex items-center space-x-1">
+                  <Square className="h-4 w-4" />
+                  <span>{property.square}</span>
+                </div>
+              )}
+            </div>
+          </div>
 
-        </>
-    )
-}
-export default EstateCard
+          {/* Vendor */}
+          <div className="mt-3 pt-3 border-t border-gray-100">
+            <div className="text-xs text-gray-500">
+              Listed by {property.agencyName || property.vendorName}
+            </div>
+          </div>
+        </div>
+      </Link>
+    </>
+  );
+};
+export default EstateCard;

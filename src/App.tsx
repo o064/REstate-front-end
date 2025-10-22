@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Login from './pages/LogIn';
 import EstateDetails from './pages/EstateDetails';
 import Profile from './pages/Profile';
+import WishList from './pages/WishList';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -14,6 +15,7 @@ const router = createBrowserRouter(
         <Route index element={<Home />} />
         <Route path="estateDetails" element={<EstateDetails />} />
         <Route path="profile" element={<Profile />} />
+        <Route path="wishList" element={<WishList />} />
       </Route>
       {/* login & signup layout */}
       <Route>

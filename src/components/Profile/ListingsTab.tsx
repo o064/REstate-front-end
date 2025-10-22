@@ -1,8 +1,8 @@
 import { Building2 } from 'lucide-react';
-import type { porperty } from '../../types/property';
 import PropertyListingCard from './PropertyListingCard';
+import type { Property } from '../../types/property';
 type ListingsTabProps = {
-  properties: porperty[];
+  properties: Property[];
   onDelete: (string: any) => void;
 };
 function ListingsTab({ properties, onDelete }: ListingsTabProps) {

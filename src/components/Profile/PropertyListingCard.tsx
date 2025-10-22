@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import type { porperty } from '../../types/property';
 import { Bath, Bed, Edit, MapPin, Square, Trash2 } from 'lucide-react';
 import { formatPrice } from '../../utils/helper';
+import type { Property } from '../../types/property';
 
 type PropertyListingCardProps = {
-  property: porperty;
+  property: Property;
   onDelete: (string: any) => void;
 };
 
@@ -35,7 +35,7 @@ function PropertyListingCard({ property, onDelete }: PropertyListingCardProps) {
               <h3 className="font-semibold text-gray-900 mb-1">{property.name}</h3>
               <div className="flex items-center text-gray-600 text-sm mb-2">
                 <MapPin className="h-4 w-4 mr-1 flex-shrink-0" />
-                <span className="truncate">{property.address}</span>
+                {property.address}
               </div>
             </div>
             <span
