@@ -6,25 +6,37 @@ import OptionSelector from '../../ui/OptionSelector';
 import Select from '../../ui/Select';
 import Option from '../../ui/Option';
 import { PropertyPurposeOptions, PropertyTypeOptions } from '../../constants/options';
+import { useFormContext } from 'react-hook-form';
+import { nameValidation } from '../../utils/validation';
+import { ControlledSelector } from '../../ui/ControllerSelector';
 
 function BasicInfoStep() {
-  const [listType, setListingType] = useState('sale');
+  const {
+    register,
+    control,
+    formState: { errors },
+  } = useFormContext();
   return (
     <Step title="basic information">
       {/* property name */}
       <InputField id="name" label="Property Name *">
-        <Input />
+        <Input
+          id="name"
+          type="text"
+          placeholder="e.g., Beautiful 3BR House with Garden"
+          {...register('name', nameValidation)}
+        />
       </InputField>
       {/*  Listing Type */}
-      <OptionSelector
-        onChange={setListingType}
-        value={listType}
+      <ControlledSelector
+        control={control}
+        name="type"
         options={PropertyTypeOptions}
         title="Listing Type *"
       />
       {/* Property purpose  */}
       <InputField id="purpose" label="Property Purpose *">
-        <Select>
+        <Select {...register('purpose', { required: 'Please select a purpose' })}>
           {PropertyPurposeOptions.map((opt) => (
             <Option label={opt.label} value={opt.value} key={opt.value} />
           ))}

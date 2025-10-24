@@ -1,28 +1,35 @@
-import { useState } from 'react';
 import InputField from '../../ui/InputField';
 import OptionSelector from '../../ui/OptionSelector';
 import TextArea from '../../ui/TextArea';
 import Step from './Step';
 import { amenityOptions } from '../../constants/options';
+import { useFormContext } from 'react-hook-form';
+import { descriptionValidation } from '../../utils/validation';
+import { ControlledSelector } from '../../ui/ControllerSelector';
 
 function DescriptionAmenitiesStep() {
-  const [amenity, setAmenity] = useState('parking');
+  const {
+    register,
+    control,
+    formState: { errors },
+  } = useFormContext();
   return (
     <Step title="Description & Amenities">
       {/* Property Description  */}
       <InputField id="description" label="Property Description *">
         <TextArea
+          {...register('description', descriptionValidation)}
           placeholder="Describe your property, its features, neighborhood, and what makes it special..."
           rows={6}
         />
       </InputField>
       {/* amenity options */}
       {/* allow multiple choice */}
-      <OptionSelector
-        onChange={setAmenity}
-        value={amenity}
+      <ControlledSelector
+        control={control}
+        name="aminty"
         options={amenityOptions}
-        title="Listing Type *"
+        title="Amenities & Features"
       />
     </Step>
   );
