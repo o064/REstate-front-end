@@ -1,5 +1,5 @@
 import { User, Building2 } from 'lucide-react';
-import type { UserType } from '../../types/UserType';
+import type { UserType } from '../../types/User';
 
 interface UserTypeSelectorProps {
   value: UserType;

@@ -1,5 +1,5 @@
 import { MapPin, TrendingUp } from 'lucide-react';
-import Header from '../Form/FormHeader';
+import Header from '../auth/FormHeader';
 import EstateCard from '../../ui/EstateCard';
 import { fakePropertyWithAgency } from '../../dev-data/properites';
 

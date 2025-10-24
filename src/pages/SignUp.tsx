@@ -1,12 +1,11 @@
-import { Building2, Mail, Phone } from 'lucide-react';
-import InputField from '../components/Form/InputField';
+import { Building2, Mail, Phone, User } from 'lucide-react';
+import InputField from '../ui/InputField';
 import Input from '../ui/Input';
-import PasswordInput from '../components/Form/PasswordInput';
-import AuthActions from '../components/Form/AuthActions';
-import UserTypeSelector from '../components/Form/UserTypeSelector';
+import PasswordInput from '../components/auth/PasswordInput';
+import AuthActions from '../components/auth/AuthActions';
 import { Link } from 'react-router';
-import FormHeader from '../components/Form/FormHeader';
-import { Controller, useForm } from 'react-hook-form';
+import FormHeader from '../components/auth/FormHeader';
+import { useForm } from 'react-hook-form';
 import {
   emailValidation,
   nameValidation,
@@ -14,6 +13,7 @@ import {
   phoneValidation,
 } from '../utils/validation';
 import type { UserType } from '../types/User';
+import { ControlledSelector } from '../ui/ControllerSelector';
 
 type signUpInputs = {
   email: string;
@@ -59,13 +59,15 @@ function Signup() {
         {/* Sign in Form */}
         <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
           {/* select Type */}
-          <Controller
+          <ControlledSelector
             name="type"
             control={control}
             rules={{ required: 'Please select a user type' }}
-            render={({ field }) => (
-              <UserTypeSelector value={field.value} onChange={field.onChange} />
-            )}
+            title="I am signing up as a:"
+            options={[
+              { value: 'buyer', icon: <User /> },
+              { value: 'vendor', icon: <Building2 /> },
+            ]}
           />
           {/* email */}
           <InputField id="email" label="Email address" icon={<Mail />}>

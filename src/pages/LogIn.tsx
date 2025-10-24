@@ -1,10 +1,10 @@
 import { Building2, Mail } from 'lucide-react';
-import InputField from '../components/Form/InputField';
+import InputField from '../ui/InputField';
 import Input from '../ui/Input';
-import PasswordInput from '../components/Form/PasswordInput';
-import AuthActions from '../components/Form/AuthActions';
+import PasswordInput from '../components/auth/PasswordInput';
+import AuthActions from '../components/auth/AuthActions';
 import { Link } from 'react-router';
-import FormHeader from '../components/Form/FormHeader';
+import FormHeader from '../components/auth/FormHeader';
 import { useForm } from 'react-hook-form';
 import { emailValidation, passwordValidtion } from '../utils/validation';
 
