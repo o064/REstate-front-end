@@ -5,7 +5,7 @@ type InputProps = React.ComponentPropsWithoutRef<'input'> & {
 };
 function Input({ className, ...rest }: InputProps) {
   var base =
-    'w-full pl-4 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150';
+    'capitalize w-full pl-4 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150';
   const combined = twMerge(base, className);
   return <input className={combined} {...rest} />;
 }
