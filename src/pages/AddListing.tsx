@@ -1,4 +1,5 @@
 import BasicInfoStep from '../components/AddListing/BasicInfoStep';
+import DescriptionAmenitiesStep from '../components/AddListing/DescriptionAmenitiesStep';
 import LocationStep from '../components/AddListing/LocationStep';
 import PricePropertyDetailsStep from '../components/AddListing/PricePropertyDetailsStep';
 
@@ -27,7 +28,7 @@ function AddListing() {
         {/* Form Content */}
         <form className="bg-white rounded-lg shadow-sm p-6">
           {/* step information */}
-          <PricePropertyDetailsStep />
+          <DescriptionAmenitiesStep />
           {/* Navigation Buttons */}
           <div className="flex justify-between mt-8 pt-6 border-t border-gray-200">
             <button className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">

@@ -3,14 +3,10 @@ import Input from '../../ui/Input';
 import InputField from '../../ui/InputField';
 import Step from './Step';
 import OptionSelector from '../../ui/OptionSelector';
-import { DollarSign, Home } from 'lucide-react';
 import Select from '../../ui/Select';
 import Option from '../../ui/Option';
-const PropertyPurposeOptions = [
-  { value: 'resedential ', label: 'resedential' },
-  { value: 'commercial ', label: 'commercial' },
-  { value: 'other', label: 'other' },
-];
+import { PropertyPurposeOptions, PropertyTypeOptions } from '../../constants/options';
+
 function BasicInfoStep() {
   const [listType, setListingType] = useState('sale');
   return (
@@ -23,10 +19,7 @@ function BasicInfoStep() {
       <OptionSelector
         onChange={setListingType}
         value={listType}
-        options={[
-          { value: 'for sale', icon: <DollarSign /> },
-          { value: 'for rent', icon: <Home /> },
-        ]}
+        options={PropertyTypeOptions}
         title="Listing Type *"
       />
       {/* Property purpose  */}
