@@ -1,9 +1,9 @@
-export type PropertyType = "sale" | "rent";
+export type PropertyPurpose = "sale" | "rent";
 
 export type Property = {
     id: string;
     name: string;
-    type: PropertyType;
+    purpose: PropertyPurpose;
     square: number;
     price: number;
     address: string;

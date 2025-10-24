@@ -9,7 +9,7 @@ type InputProps = {
 function InputField({ id, label, icon, children }: InputProps) {
   return (
     <div className="text-left relative">
-      <label htmlFor={id} className="block text-sm font-medium text-gray-700 mb-1">
+      <label htmlFor={id} className="capitalize block text-sm font-medium text-gray-700 mb-1">
         {label}
       </label>
       <div className="relative">

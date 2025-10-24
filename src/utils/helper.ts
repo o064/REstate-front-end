@@ -14,3 +14,10 @@ export function formatDate(dateStr: string): string {
         minute: "2-digit",
     }).format(new Date(dateStr));
 }
+
+export function capitalize(str: string) {
+    return str
+        .split(' ')
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');;
+}

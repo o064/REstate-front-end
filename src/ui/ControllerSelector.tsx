@@ -1,5 +1,5 @@
 import { Controller, type Control, type Path } from 'react-hook-form';
-import TypeSelector from './TypeSelector';
+import OptionSelector from './OptionSelector';
 
 type ControlledSelectorProps<T extends Record<string, any>> = {
   name: Path<T>;
@@ -22,7 +22,7 @@ export function ControlledSelector<T extends Record<string, any>>({
       control={control}
       rules={rules}
       render={({ field }) => (
-        <TypeSelector
+        <OptionSelector
           title={title}
           value={field.value}
           onChange={field.onChange}

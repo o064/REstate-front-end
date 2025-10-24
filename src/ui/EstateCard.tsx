@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import { Bath, Bed, Eye, Heart, MapPin, Square } from 'lucide-react';
+import { Bath, Bed, Heart, MapPin, Square } from 'lucide-react';
 import { formatPrice } from '../utils/helper';
 import type { PropertyWithAgency } from '../types/property';
 import { useEffect, useState } from 'react';
@@ -43,12 +43,12 @@ const EstateCard = ({ property }: EstateCardPropse) => {
           <div className="absolute top-3 left-3">
             <span
               className={`px-2 py-1 rounded-full text-xs font-medium ${
-                property.type === 'sale'
+                property.purpose === 'sale'
                   ? 'bg-green-100 text-green-800'
                   : 'bg-purple-100 text-purple-800'
               }`}
             >
-              For {property.type === 'sale' ? 'Sale' : 'Rent'}
+              For {property.purpose === 'sale' ? 'Sale' : 'Rent'}
             </span>
           </div>
 

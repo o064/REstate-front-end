@@ -1,6 +1,5 @@
 import type { ReactNode } from 'react';
-import TypeSelectorOption from './TypeSelectorOption';
-import type { OptionType } from '../types/option';
+import OptionSelectorOption from './OptionSelectorOption';
 
 type Option<T> = {
   value: T;
@@ -8,7 +7,7 @@ type Option<T> = {
   label?: string;
 };
 
-type TypeSelectorProps<T> = {
+type OptionSelectorProps<T> = {
   title: string;
   value: T;
   onChange: (type: T) => void;
@@ -16,19 +15,19 @@ type TypeSelectorProps<T> = {
   className?: string;
 };
 
-function TypeSelector<T extends string>({
+function OptionSelector<T extends string>({
   title,
   value,
   onChange,
   options,
   className = '',
-}: TypeSelectorProps<T>) {
+}: OptionSelectorProps<T>) {
   return (
     <div className={`mb-6 border-b border-gray-300 pb-4 ${className}`}>
       <label className="block text-base font-semibold text-gray-700 mb-3">{title}</label>
       <div className="grid grid-cols-2 gap-3">
         {options.map((opt) => (
-          <TypeSelectorOption
+          <OptionSelectorOption
             key={opt.value}
             icon={opt.icon}
             option={opt.value}
@@ -41,4 +40,4 @@ function TypeSelector<T extends string>({
   );
 }
 
-export default TypeSelector;
+export default OptionSelector;

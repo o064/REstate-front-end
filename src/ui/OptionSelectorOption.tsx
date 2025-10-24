@@ -1,18 +1,18 @@
 import type { ReactNode } from 'react';
 
-type TypeSelectorOptionProps<T extends string> = {
+type OptionSelectorOptionProps<T extends string> = {
   value: T;
   onChange: (type: T) => void;
   icon: ReactNode;
   option: T;
 };
 
-function TypeSelectorOption<T extends string>({
+function OptionSelectorOption<T extends string>({
   onChange,
   value,
   icon,
   option,
-}: TypeSelectorOptionProps<T>) {
+}: OptionSelectorOptionProps<T>) {
   const isSelected = value === option;
 
   return (
@@ -26,9 +26,9 @@ function TypeSelectorOption<T extends string>({
       }`}
     >
       <span className="h-6 w-6 mb-1 transition-colors group-hover:text-blue-600">{icon}</span>
-      <span className="text-sm capitalize">{option}</span>
+      <span className="text-l  font-semibold capitalize">{option}</span>
     </button>
   );
 }
 
-export default TypeSelectorOption;
+export default OptionSelectorOption;
