@@ -24,7 +24,12 @@ type signUpInputs = {
   type: UserType;
 };
 function Signup() {
-  const { register, handleSubmit, control } = useForm<signUpInputs>({
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<signUpInputs>({
     defaultValues: {
       email: '',
       password: '',
@@ -60,6 +65,7 @@ function Signup() {
             control={control}
             rules={{ required: 'Please select a user type' }}
             title="I am signing up as a:"
+            className="border-b border-gray-300"
             options={[
               { value: 'buyer', icon: <User /> },
               { value: 'vendor', icon: <Building2 /> },
@@ -74,12 +80,12 @@ function Signup() {
               className="pl-10"
               {...register('email', emailValidation)}
             />
-            <ErrorMessage name="email" />
+            {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
           </InputField>
           {/* password */}
           <InputField id="password" label="Password">
             <PasswordInput id="password" {...register('password', passwordValidtion)} />
-            <ErrorMessage name="password" />
+            {errors.password && <ErrorMessage>{errors.password.message}</ErrorMessage>}
           </InputField>
           {/* full Name */}
           <InputField id="name" label="Full Name">
@@ -90,7 +96,7 @@ function Signup() {
               {...register('name', nameValidation)}
             />
 
-            <ErrorMessage name="name" />
+            {errors.name && <ErrorMessage>{errors.name.message}</ErrorMessage>}
           </InputField>
           {/* phone number */}
           <InputField id="phone" label="Phone Number" icon={<Phone />}>
@@ -101,7 +107,7 @@ function Signup() {
               className="pl-10"
               {...register('phone', phoneValidation)}
             />
-            <ErrorMessage name="phone" />
+            {errors.phone && <ErrorMessage>{errors.phone.message}</ErrorMessage>}
           </InputField>
           {/* actions  */}
           <AuthActions actionFor="create account" />

@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import OptionSelectorOption from './OptionSelectorOption';
 
 type Option<T> = {
-  value: T;
+  value: T ;
   icon: ReactNode;
   label?: string;
 };
@@ -23,7 +23,7 @@ function OptionSelector<T extends string>({
   className = '',
 }: OptionSelectorProps<T>) {
   return (
-    <div className={`mb-6 border-b border-gray-300 pb-4 ${className}`}>
+    <div className={`mb-6 pb-4 ${className}`}>
       <label className="block text-base font-semibold text-gray-700 mb-3">{title}</label>
       <div className="grid grid-cols-2 gap-3">
         {options.map((opt) => (

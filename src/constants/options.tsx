@@ -17,8 +17,8 @@ export const PropertyPurposeOptions = [
   { value: 'other', label: 'other' },
 ];
 export const PropertyTypeOptions = [
-  { value: 'for sale', icon: <DollarSign /> },
-  { value: 'for rent', icon: <Home /> },
+  { value: 'sale', icon: <DollarSign /> },
+  { value: 'rent', icon: <Home /> },
 ];
 export const amenityOptions = [
   { value: 'parking', label: 'Parking', icon: <Car /> },

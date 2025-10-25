@@ -1,8 +1,6 @@
-import { useState } from 'react';
 import Input from '../../ui/Input';
 import InputField from '../../ui/InputField';
 import Step from './Step';
-import OptionSelector from '../../ui/OptionSelector';
 import Select from '../../ui/Select';
 import Option from '../../ui/Option';
 import { PropertyPurposeOptions, PropertyTypeOptions } from '../../constants/options';
@@ -12,7 +10,7 @@ import { ControlledSelector } from '../../ui/ControllerSelector';
 import ErrorMessage from '../../ui/ErrorMessage';
 
 function BasicInfoStep() {
-  const { register, control } = useFormContext();
+  const { register, control, trigger } = useFormContext();
   return (
     <Step title="basic information">
       {/* property name */}

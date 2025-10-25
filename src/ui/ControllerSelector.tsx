@@ -7,6 +7,7 @@ type ControlledSelectorProps<T extends Record<string, any>> = {
   rules?: object;
   title: string;
   options: { value: string; icon: React.ReactNode; label?: string }[];
+  className?: string;
 };
 
 export function ControlledSelector<T extends Record<string, any>>({
@@ -15,6 +16,7 @@ export function ControlledSelector<T extends Record<string, any>>({
   rules,
   title,
   options,
+  className = '',
 }: ControlledSelectorProps<T>) {
   return (
     <Controller
@@ -27,6 +29,7 @@ export function ControlledSelector<T extends Record<string, any>>({
           value={field.value}
           onChange={field.onChange}
           options={options}
+          className={className}
         />
       )}
     />

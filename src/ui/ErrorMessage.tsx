@@ -1,12 +1,26 @@
-// ErrorMessage.tsx
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, type FieldError, type FieldErrorsImpl, type Merge } from 'react-hook-form';
 
-export default function ErrorMessage({ name }: { name: string }) {
-  const {
-    formState: { errors },
-  } = useFormContext();
+type ErrorType = string | FieldError | Merge<FieldError, FieldErrorsImpl<any>> | undefined;
 
-  const error = errors[name]?.message as string | undefined;
+type ErrorMessageProps = { name: string; children?: never } | { name?: never; children: ErrorType };
 
-  return error ? <p className="text-red-500 text-sm mt-1">{error}</p> : null;
+export default function ErrorMessage(props: ErrorMessageProps) {
+  const form = useFormContext();
+  let message: string | undefined;
+
+  if ('name' in props && props.name) {
+    const fieldError = form?.formState?.errors?.[props.name as keyof typeof form.formState.errors];
+    if (fieldError && typeof fieldError === 'object' && 'message' in fieldError) {
+      message = fieldError.message as string;
+    }
+  } else if ('children' in props) {
+    const { children } = props;
+    if (typeof children === 'string') {
+      message = children;
+    } else if (typeof children === 'object' && children && 'message' in children) {
+      message = children.message as string;
+    }
+  }
+
+  return message ? <p className="text-red-500 text-sm mt-1 font-medium">{message}</p> : null;
 }
