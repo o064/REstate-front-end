@@ -9,6 +9,7 @@ import { PropertyPurposeOptions, PropertyTypeOptions } from '../../constants/opt
 import { useFormContext } from 'react-hook-form';
 import { nameValidation } from '../../utils/validation';
 import { ControlledSelector } from '../../ui/ControllerSelector';
+import ErrorMessage from '../../ui/ErrorMessage';
 
 function BasicInfoStep() {
   const {
@@ -26,6 +27,7 @@ function BasicInfoStep() {
           placeholder="e.g., Beautiful 3BR House with Garden"
           {...register('name', nameValidation)}
         />
+        {errors.name && <ErrorMessage>{errors.name.message}</ErrorMessage>}
       </InputField>
       {/*  Listing Type */}
       <ControlledSelector
@@ -41,6 +43,7 @@ function BasicInfoStep() {
             <Option label={opt.label} value={opt.value} key={opt.value} />
           ))}
         </Select>
+        {errors.purpose && <ErrorMessage>{errors.purpose.message}</ErrorMessage>}
       </InputField>
     </Step>
   );

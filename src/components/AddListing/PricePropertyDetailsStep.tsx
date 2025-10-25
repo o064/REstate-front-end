@@ -7,6 +7,7 @@ import Option from '../../ui/Option';
 import Select from '../../ui/Select';
 import Step from './Step';
 import { priceValidation, sizeValidation } from '../../utils/validation';
+import ErrorMessage from '../../ui/ErrorMessage';
 
 function PricePropertyDetailsStep() {
   const {
@@ -23,6 +24,7 @@ function PricePropertyDetailsStep() {
           placeholder="enter price"
           {...register('price', priceValidation)}
         />
+        {errors.price && <ErrorMessage>{errors.price.message}</ErrorMessage>}
       </InputField>
       <Grid className="grid-cols-2 gap-6">
         {/* bedrooms */}
@@ -32,6 +34,7 @@ function PricePropertyDetailsStep() {
               <Option label={opt.label} value={opt.value} key={opt.value} />
             ))}
           </Select>
+          {errors.bedrooms && <ErrorMessage>{errors.bedrooms.message}</ErrorMessage>}
         </InputField>
         {/* Bathrooms */}
         <InputField id="bathrooms" label="Bathrooms *">
@@ -40,6 +43,7 @@ function PricePropertyDetailsStep() {
               <Option label={opt.label} value={opt.value} key={opt.value} />
             ))}
           </Select>
+          {errors.bathrooms && <ErrorMessage>{errors.bathrooms.message}</ErrorMessage>}
         </InputField>
       </Grid>
       {/* size */}
@@ -50,6 +54,7 @@ function PricePropertyDetailsStep() {
           placeholder="enter size"
           {...register('square', sizeValidation)}
         />
+        {errors.square && <ErrorMessage>{errors.square.message}</ErrorMessage>}
       </InputField>
     </Step>
   );
