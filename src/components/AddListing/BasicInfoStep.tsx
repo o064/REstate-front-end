@@ -12,11 +12,7 @@ import { ControlledSelector } from '../../ui/ControllerSelector';
 import ErrorMessage from '../../ui/ErrorMessage';
 
 function BasicInfoStep() {
-  const {
-    register,
-    control,
-    formState: { errors },
-  } = useFormContext();
+  const { register, control } = useFormContext();
   return (
     <Step title="basic information">
       {/* property name */}
@@ -27,7 +23,7 @@ function BasicInfoStep() {
           placeholder="e.g., Beautiful 3BR House with Garden"
           {...register('name', nameValidation)}
         />
-        {errors.name && <ErrorMessage>{errors.name.message}</ErrorMessage>}
+        <ErrorMessage name="name" />
       </InputField>
       {/*  Listing Type */}
       <ControlledSelector
@@ -43,7 +39,7 @@ function BasicInfoStep() {
             <Option label={opt.label} value={opt.value} key={opt.value} />
           ))}
         </Select>
-        {errors.purpose && <ErrorMessage>{errors.purpose.message}</ErrorMessage>}
+        <ErrorMessage name="purpose" />
       </InputField>
     </Step>
   );

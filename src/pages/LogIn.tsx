@@ -7,6 +7,7 @@ import { Link } from 'react-router';
 import FormHeader from '../components/auth/FormHeader';
 import { useForm } from 'react-hook-form';
 import { emailValidation, passwordValidtion } from '../utils/validation';
+import ErrorMessage from '../ui/ErrorMessage';
 
 type signInInputs = {
   email: string;
@@ -14,11 +15,7 @@ type signInInputs = {
 };
 
 function Login() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<signInInputs>({
+  const { register, handleSubmit } = useForm<signInInputs>({
     defaultValues: {
       email: '',
       password: '',
@@ -54,16 +51,12 @@ function Login() {
               className="pl-10"
               {...register('email', emailValidation)}
             />
-            {errors.email && (
-              <p className="text-red-500 text-sm mt-1 font-medium">{errors.email.message}</p>
-            )}
+            <ErrorMessage name="email" />
           </InputField>
           {/* password */}
           <InputField id="password" label="Password">
             <PasswordInput id="password" {...register('password', passwordValidtion)} />
-            {errors.password && (
-              <p className="text-red-500 text-sm mt-1 font-medium">{errors.password.message}</p>
-            )}
+            <ErrorMessage name="password" />
           </InputField>
           {/* actions  */}
           <AuthActions actionFor="Sign In" />

@@ -9,7 +9,9 @@ function AddListing() {
     mode: 'onChange',
   });
   const step = 0;
-
+  function onSubmit(data: any) {
+    console.log(data);
+  }
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -31,7 +33,10 @@ function AddListing() {
 
         {/* Form Content */}
         <FormProvider {...methods}>
-          <form className="bg-white rounded-lg shadow-sm p-6">
+          <form
+            onSubmit={methods.handleSubmit(onSubmit)}
+            className="bg-white rounded-lg shadow-sm p-6"
+          >
             {/* step information */}
             <BasicInfoStep />
             {/* Navigation Buttons */}

@@ -7,10 +7,7 @@ import { addressValidation, cityValidation } from '../../utils/validation';
 import ErrorMessage from '../../ui/ErrorMessage';
 
 function LocationStep() {
-  const {
-    register,
-    formState: { errors },
-  } = useFormContext();
+  const { register } = useFormContext();
   return (
     <Step title="Location Details">
       {/* street  address */}
@@ -22,12 +19,12 @@ function LocationStep() {
           type="text"
           placeholder="enter the property address e.g., 15 El Tahrir St, Cairo, Egypt"
         />
-        {errors.address && <ErrorMessage>{errors.address.message}</ErrorMessage>}
+        <ErrorMessage name="address" />
       </InputField>
       {/* city */}
       <InputField id="city" label="city *">
         <Input id="city" type="text" placeholder="city" {...register('city', cityValidation)} />
-        {errors.city && <ErrorMessage>{errors.city.message}</ErrorMessage>}
+        <ErrorMessage name="city" />
       </InputField>
     </Step>
   );

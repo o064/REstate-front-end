@@ -14,6 +14,7 @@ import {
 } from '../utils/validation';
 import type { UserType } from '../types/User';
 import { ControlledSelector } from '../ui/ControllerSelector';
+import ErrorMessage from '../ui/ErrorMessage';
 
 type signUpInputs = {
   email: string;
@@ -23,12 +24,7 @@ type signUpInputs = {
   type: UserType;
 };
 function Signup() {
-  const {
-    register,
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useForm<signUpInputs>({
+  const { register, handleSubmit, control } = useForm<signUpInputs>({
     defaultValues: {
       email: '',
       password: '',
@@ -78,16 +74,12 @@ function Signup() {
               className="pl-10"
               {...register('email', emailValidation)}
             />
-            {errors.email && (
-              <p className="text-red-500 text-sm mt-1 font-medium">{errors.email.message}</p>
-            )}
+            <ErrorMessage name="email" />
           </InputField>
           {/* password */}
           <InputField id="password" label="Password">
             <PasswordInput id="password" {...register('password', passwordValidtion)} />
-            {errors.password && (
-              <p className="text-red-500 text-sm mt-1 font-medium">{errors.password.message}</p>
-            )}
+            <ErrorMessage name="password" />
           </InputField>
           {/* full Name */}
           <InputField id="name" label="Full Name">
@@ -97,9 +89,8 @@ function Signup() {
               placeholder="Your Full Name"
               {...register('name', nameValidation)}
             />
-            {errors.name && (
-              <p className="text-red-500 text-sm mt-1 font-medium">{errors.name.message}</p>
-            )}
+
+            <ErrorMessage name="name" />
           </InputField>
           {/* phone number */}
           <InputField id="phone" label="Phone Number" icon={<Phone />}>
@@ -110,9 +101,7 @@ function Signup() {
               className="pl-10"
               {...register('phone', phoneValidation)}
             />
-            {errors.phone && (
-              <p className="text-red-500 text-sm mt-1 font-medium">{errors.phone.message}</p>
-            )}
+            <ErrorMessage name="phone" />
           </InputField>
           {/* actions  */}
           <AuthActions actionFor="create account" />
