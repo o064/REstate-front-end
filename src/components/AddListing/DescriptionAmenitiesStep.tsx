@@ -27,6 +27,7 @@ function DescriptionAmenitiesStep() {
         name="aminty"
         options={amenityOptions}
         title="Amenities & Features"
+        multiple={true}
       />
     </Step>
   );
