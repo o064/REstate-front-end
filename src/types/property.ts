@@ -1,5 +1,5 @@
 export type PropertyPurpose = "sale" | "rent";
-export type PropertyType = "commercial" | "residentail";
+export type PropertyType = "commercial" | "residential";
 
 export type Property = {
     id: string;

@@ -26,7 +26,7 @@ function OptionSelectorOption<T extends string>({
   label,
   multiple,
 }: OptionSelectorOptionProps<T>) {
-  const isSelected = multiple ? value.includes(option) : value === option;
+  const isSelected = multiple ? value?.includes(option) : value === option;
 
   function handleChange() {
     if (multiple) {

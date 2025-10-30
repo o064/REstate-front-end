@@ -1,13 +1,14 @@
 import { FormProvider, useForm } from 'react-hook-form';
-import BasicInfoStep from '../components/AddListing/BasicInfoStep';
-import DescriptionAmenitiesStep from '../components/AddListing/DescriptionAmenitiesStep';
-import LocationStep from '../components/AddListing/LocationStep';
-import PricePropertyDetailsStep from '../components/AddListing/PricePropertyDetailsStep';
+import BasicInfoStep from '../components/Listing/BasicInfoStep';
+import DescriptionAmenitiesStep from '../components/Listing/DescriptionAmenitiesStep';
+import LocationStep from '../components/Listing/LocationStep';
+import PricePropertyDetailsStep from '../components/Listing/PricePropertyDetailsStep';
 import Button from '../ui/Button';
 import { useEffect, useState } from 'react';
-import ImageUploadStep from '../components/AddListing/ImageUploadStep';
+import ImageUploadStep from '../components/Listing/ImageUploadStep';
 import { CheckCircle } from 'lucide-react';
 import type { ListingFormInputs } from '../types/property';
+import PageHeader from '../components/Listing/PageHeader';
 export const stepFields: Record<number, (keyof ListingFormInputs)[]> = {
   1: ['name', 'purpose', 'type'],
   2: ['address', 'city'],
@@ -21,7 +22,7 @@ function AddListing() {
     defaultValues: {
       name: '',
       purpose: 'sale',
-      type: 'residentail',
+      type: 'residential',
       address: '',
       city: '',
       price: 0,
@@ -71,24 +72,15 @@ function AddListing() {
   }
 
   return (
-    <main className=" min-h-screen bg-gray-50 py-8">
+    <main className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
-          <div className="flex items-center justify-between mb-4">
-            <h1 className="text-2xl font-bold text-gray-900">Create New Listing</h1>
-            <div className="text-sm text-gray-500">Step {step} of 5</div>
-          </div>
-
-          {/* Progress Bar */}
-          <div className="w-full bg-gray-200 rounded-full h-2">
-            <div
-              className="bg-blue-600 h-2 rounded-full transition-all duration-300"
-              style={{ width: `${(step / 5) * 100}%` }}
-            ></div>
-          </div>
-        </div>
-
+        <PageHeader
+          title="Create New Listing"
+          subtitle="Fill out the details below to publish your listing."
+          step={step}
+          totalSteps={5}
+          color="bg-indigo-600"
+        />
         {/* Form Content */}
         <FormProvider {...methods}>
           <form

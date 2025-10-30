@@ -15,7 +15,11 @@ type signInInputs = {
 };
 
 function Login() {
-  const { register, handleSubmit } = useForm<signInInputs>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<signInInputs>({
     defaultValues: {
       email: '',
       password: '',
@@ -51,12 +55,12 @@ function Login() {
               className="pl-10"
               {...register('email', emailValidation)}
             />
-            <ErrorMessage name="email" />
+            {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
           </InputField>
           {/* password */}
           <InputField id="password" label="Password">
             <PasswordInput id="password" {...register('password', passwordValidtion)} />
-            <ErrorMessage name="password" />
+            {errors.password && <ErrorMessage>{errors.password.message}</ErrorMessage>}
           </InputField>
           {/* actions  */}
           <AuthActions actionFor="Sign In" />

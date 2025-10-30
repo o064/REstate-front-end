@@ -1,7 +1,7 @@
 import React, { type ReactNode } from 'react';
 import { twMerge } from 'tailwind-merge'; // helps cleanly merge Tailwind classes
 import { Link } from 'react-router-dom'; // optional, for `to` support
-type ButtonVariants = 'primary' | 'secondary';
+type ButtonVariants = 'primary' | 'secondary' | 'destructive';
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   children: React.ReactNode;
   variant?: ButtonVariants;
@@ -23,11 +23,12 @@ function Button({
   ...rest
 }: ButtonProps) {
   const base =
-    'inline-flex items-center justify-center gap-2 font-semibold rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
+    'inline-flex items-center justify-center gap-2 font-semibold rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed capitalize';
 
   const variants: Record<ButtonVariants, string> = {
     primary: 'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500 disabled:bg-blue-300',
     secondary: 'border border-gray-300 text-gray-700 hover:bg-gray-100 focus:ring-gray-400',
+    destructive: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500 disabled:bg-red-300',
   };
 
   const size = 'px-4 py-3 text-base';

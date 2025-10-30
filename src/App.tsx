@@ -8,6 +8,7 @@ import EstateDetails from './pages/EstateDetails';
 import Profile from './pages/Profile';
 import WishList from './pages/WishList';
 import AddListing from './pages/AddListing';
+import EditLisiting from './pages/EditLisiting';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -18,6 +19,7 @@ const router = createBrowserRouter(
         <Route path="profile" element={<Profile />} />
         <Route path="wishList" element={<WishList />} />
         <Route path="add" element={<AddListing />} />
+        <Route path="edit" element={<EditLisiting />} />
       </Route>
       {/* login & signup layout */}
       <Route>

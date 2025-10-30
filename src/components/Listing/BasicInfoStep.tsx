@@ -10,7 +10,7 @@ import { ControlledSelector } from '../../ui/ControllerSelector';
 import ErrorMessage from '../../ui/ErrorMessage';
 
 function BasicInfoStep() {
-  const { register, control, trigger } = useFormContext();
+  const { register, control } = useFormContext();
   return (
     <Step title="basic information">
       {/* property name */}

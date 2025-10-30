@@ -12,7 +12,7 @@ import {
 } from 'lucide-react';
 
 export const PropertyPurposeOptions = [
-  { value: 'resedential ', label: 'resedential' },
+  { value: 'residential ', label: 'residential' },
   { value: 'commercial ', label: 'commercial' },
   { value: 'other', label: 'other' },
 ];
