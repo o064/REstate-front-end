@@ -3,35 +3,32 @@ import InputField from '../ui/InputField';
 import Input from '../ui/Input';
 import PasswordInput from '../components/auth/PasswordInput';
 import AuthActions from '../components/auth/AuthActions';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import FormHeader from '../components/auth/FormHeader';
 import { useForm } from 'react-hook-form';
 import { emailValidation, passwordValidtion } from '../utils/validation';
 import ErrorMessage from '../ui/ErrorMessage';
-
-type signInInputs = {
-  email: string;
-  password: string;
-};
+import type { UserSignIn } from '../types/User';
+import AuthService from '../services/AuthService';
 
 function Login() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<signInInputs>({
+  } = useForm<UserSignIn>({
     defaultValues: {
       email: '',
       password: '',
     },
     mode: 'onSubmit',
   });
+  const navigate = useNavigate();
 
-  function onSubmit(data: signInInputs) {
-    console.log(data);
-    // addUserToDatabase(data);
-    // showSuccessMessage();
-    // redirectToHomePage();
+  async function onSubmit(formData: UserSignIn) {
+    console.log(formData);
+    const res = await AuthService.login(formData);
+    if (res) navigate('/');
   }
   return (
     <main className="min-h-screen w-full flex items-center justify-center bg-blue-100 text-black p-6 ">

@@ -3,7 +3,7 @@ import InputField from '../ui/InputField';
 import Input from '../ui/Input';
 import PasswordInput from '../components/auth/PasswordInput';
 import AuthActions from '../components/auth/AuthActions';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import FormHeader from '../components/auth/FormHeader';
 import { useForm } from 'react-hook-form';
 import {
@@ -12,39 +12,33 @@ import {
   passwordValidtion,
   phoneValidation,
 } from '../utils/validation';
-import type { UserType } from '../types/User';
+import type { UserRegister } from '../types/User';
 import { ControlledSelector } from '../ui/ControllerSelector';
 import ErrorMessage from '../ui/ErrorMessage';
+import AuthService from '../services/AuthService';
 
-type signUpInputs = {
-  email: string;
-  password: string;
-  name: string;
-  phone: string;
-  type: UserType;
-};
 function Signup() {
   const {
     register,
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<signUpInputs>({
+  } = useForm<UserRegister>({
     defaultValues: {
       email: '',
       password: '',
-      name: '',
+      userName: '',
       phone: '',
       type: 'buyer',
     },
     mode: 'onSubmit',
   });
+  const navigate = useNavigate();
 
-  function onSubmit(data: signUpInputs) {
-    console.log(data);
-    // addUserToDatabase(data);
-    // showSuccessMessage();
-    // redirectToHomePage();
+  async function onSubmit(formData: UserRegister) {
+    console.log(formData);
+    const res = await AuthService.register(formData);
+    if (res) navigate('/');
   }
   return (
     <main className="min-h-screen w-full flex items-center justify-center bg-blue-100 text-black p-6 ">
@@ -93,10 +87,10 @@ function Signup() {
               type="text"
               id="name"
               placeholder="Your Full Name"
-              {...register('name', nameValidation)}
+              {...register('userName', nameValidation)}
             />
 
-            {errors.name && <ErrorMessage>{errors.name.message}</ErrorMessage>}
+            {errors.userName && <ErrorMessage>{errors.userName.message}</ErrorMessage>}
           </InputField>
           {/* phone number */}
           <InputField id="phone" label="Phone Number" icon={<Phone />}>

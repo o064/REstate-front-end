@@ -6,6 +6,7 @@ import Button from '../ui/Button';
 import CardSection from '../ui/CardSection';
 import { fakeUser } from '../dev-data/userProfile';
 import { fakeUserProperties } from '../dev-data/properites';
+import AuthService from '../services/AuthService';
 
 const user = fakeUser;
 const userProperties = fakeUserProperties;
@@ -82,7 +83,7 @@ function Profile() {
 
         {/* Logout Section */}
         <CardSection className="flex justify-end">
-          <Button variant="destructive" type="button">
+          <Button variant="destructive" type="button" onClick={() => AuthService.logout()}>
             Log out
           </Button>
         </CardSection>

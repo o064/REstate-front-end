@@ -22,4 +22,15 @@ interface VendorProfile extends BaseProfile {
     rating: number;
 }
 
+export type UserRegister = {
+    email: string;
+    password: string;
+    userName: string;
+    phone: string;
+    type: UserType;
+};
+export type UserSignIn = {
+    email: string;
+    password: string;
+};
 export type userProfile = BuyerProfile | VendorProfile;
