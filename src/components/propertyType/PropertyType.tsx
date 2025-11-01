@@ -3,7 +3,7 @@ import Header from '../auth/FormHeader';
 
 interface IProps {}
 
-const EstateType = ({}: IProps) => {
+const PropertyType = ({}: IProps) => {
   return (
     <section className="mb-32 mt-5">
       <div className="p-5">
@@ -50,4 +50,4 @@ const EstateType = ({}: IProps) => {
     </section>
   );
 };
-export default EstateType;
+export default PropertyType;

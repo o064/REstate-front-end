@@ -1,7 +1,7 @@
-import EstateCard from '../ui/EstateCard';
 import { getWishList } from '../store/wishListSlice';
 import { Heart } from 'lucide-react';
 import { useSelector } from 'react-redux';
+import PropertyCard from '../ui/PropertyCard';
 
 function WishList() {
   const wishList = useSelector(getWishList);
@@ -34,7 +34,7 @@ function WishList() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 px-6">
             {wishList.map((property) => (
-              <EstateCard key={property.id} property={property} />
+              <PropertyCard key={property.id} property={property} />
             ))}
           </div>
         )}
