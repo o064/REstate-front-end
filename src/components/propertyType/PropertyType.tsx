@@ -1,5 +1,5 @@
 import CardDetils from '../../ui/CardDetils';
-import Header from '../Form/FormHeader';
+import Header from '../auth/FormHeader';
 
 interface IProps {}
 
