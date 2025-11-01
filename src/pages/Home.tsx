@@ -1,5 +1,5 @@
-import Estate from "../components/property/Property"
-import EstateType from "../components/propertyType/PropertyType"
+import Estate from "../components/estate/Estate"
+import EstateType from "../components/estateType/EstateType"
 import Main from "../components/main/Main"
 
 const Home = () => {

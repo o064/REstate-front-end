@@ -1,36 +1,34 @@
 import { Building2, Mail } from 'lucide-react';
-import InputField from '../components/Form/InputField';
+import InputField from '../ui/InputField';
 import Input from '../ui/Input';
-import PasswordInput from '../components/Form/PasswordInput';
-import AuthActions from '../components/Form/AuthActions';
-import { Link } from 'react-router';
-import FormHeader from '../components/Form/FormHeader';
+import PasswordInput from '../components/auth/PasswordInput';
+import AuthActions from '../components/auth/AuthActions';
+import { Link, useNavigate } from 'react-router';
+import FormHeader from '../components/auth/FormHeader';
 import { useForm } from 'react-hook-form';
 import { emailValidation, passwordValidtion } from '../utils/validation';
-
-type signInInputs = {
-  email: string;
-  password: string;
-};
+import ErrorMessage from '../ui/ErrorMessage';
+import type { UserSignIn } from '../types/User';
+import AuthService from '../services/AuthService';
 
 function Login() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<signInInputs>({
+  } = useForm<UserSignIn>({
     defaultValues: {
       email: '',
       password: '',
     },
     mode: 'onSubmit',
   });
+  const navigate = useNavigate();
 
-  function onSubmit(data: signInInputs) {
-    console.log(data);
-    // addUserToDatabase(data);
-    // showSuccessMessage();
-    // redirectToHomePage();
+  async function onSubmit(formData: UserSignIn) {
+    console.log(formData);
+    const res = await AuthService.login(formData);
+    if (res) navigate('/');
   }
   return (
     <main className="min-h-screen w-full flex items-center justify-center bg-blue-100 text-black p-6 ">
@@ -54,16 +52,12 @@ function Login() {
               className="pl-10"
               {...register('email', emailValidation)}
             />
-            {errors.email && (
-              <p className="text-red-500 text-sm mt-1 font-medium">{errors.email.message}</p>
-            )}
+            {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
           </InputField>
           {/* password */}
           <InputField id="password" label="Password">
             <PasswordInput id="password" {...register('password', passwordValidtion)} />
-            {errors.password && (
-              <p className="text-red-500 text-sm mt-1 font-medium">{errors.password.message}</p>
-            )}
+            {errors.password && <ErrorMessage>{errors.password.message}</ErrorMessage>}
           </InputField>
           {/* actions  */}
           <AuthActions actionFor="Sign In" />

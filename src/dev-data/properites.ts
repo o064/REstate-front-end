@@ -4,7 +4,7 @@ export const fakeUserProperties: Property[] = [
     {
         id: "prop-001",
         name: "Modern Apartment Downtown",
-        type: "rent",
+        purpose: "rent",
         square: 120,
         price: 15000,
         address: "15 El Tahrir St, Cairo, Egypt",
@@ -15,7 +15,7 @@ export const fakeUserProperties: Property[] = [
     {
         id: "prop-002",
         name: "Luxury Villa by the Nile",
-        type: "sale",
+        purpose: "sale",
         square: 450,
         price: 4500000,
         address: "Nile Corniche, Giza, Egypt",
@@ -29,7 +29,7 @@ export const fakePropertyWithAgency: PropertyWithAgency[] = [
     {
         id: "prop-001",
         name: "Modern Apartment Downtown",
-        type: "rent",
+        purpose: "rent",
         square: 120,
         price: 15000,
         address: "15 El Tahrir St, Cairo, Egypt",
@@ -43,7 +43,7 @@ export const fakePropertyWithAgency: PropertyWithAgency[] = [
     {
         id: "prop-002",
         name: "Luxury Villa by the Nile",
-        type: "sale",
+        purpose: "sale",
         square: 480,
         price: 4500000,
         address: "Nile Corniche, Giza, Egypt",
@@ -57,7 +57,7 @@ export const fakePropertyWithAgency: PropertyWithAgency[] = [
     {
         id: "prop-003",
         name: "Cozy Studio Apartment",
-        type: "rent",
+        purpose: "rent",
         square: 60,
         price: 8000,
         address: "Zamalek, Cairo, Egypt",
@@ -71,7 +71,7 @@ export const fakePropertyWithAgency: PropertyWithAgency[] = [
     {
         id: "prop-004",
         name: "Family House with Garden",
-        type: "sale",
+        purpose: "sale",
         square: 300,
         price: 2100000,
         address: "6th of October City, Egypt",
@@ -85,7 +85,7 @@ export const fakePropertyWithAgency: PropertyWithAgency[] = [
     {
         id: "prop-005",
         name: "Beachfront Chalet",
-        type: "rent",
+        purpose: "rent",
         square: 200,
         price: 12000,
         address: "North Coast, Egypt",

@@ -1,20 +1,26 @@
 import { Building2, User } from 'lucide-react';
-import ProfileTab from '../components/Profile/ProfileTab';
 import { useState } from 'react';
+import ProfileTab from '../components/Profile/ProfileTab';
+import ListingsTab from '../components/Profile/ListingsTab';
+import Button from '../ui/Button';
+import CardSection from '../ui/CardSection';
 import { fakeUser } from '../dev-data/userProfile';
 import { fakeUserProperties } from '../dev-data/properites';
-import ListingsTab from '../components/Profile/ListingsTab';
+import AuthService from '../services/AuthService';
 
 const user = fakeUser;
 const userProperties = fakeUserProperties;
-type activeTab = 'profile' | 'listings';
+
+type ActiveTab = 'profile' | 'listings';
+
 function Profile() {
-  const [activeTab, setActiveTab] = useState<activeTab>('profile');
+  const [activeTab, setActiveTab] = useState<ActiveTab>('profile');
+
   return (
     <main className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-6 sm:px-6 lg:px-8 space-y-10 mb-20">
         {/* Header */}
-        <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
+        <CardSection>
           <div className="flex items-center space-x-4">
             {user.avatar ? (
               <img
@@ -38,9 +44,10 @@ function Profile() {
               )}
             </div>
           </div>
-        </div>
+        </CardSection>
+
         {/* Tabs */}
-        <div className="bg-white rounded-lg shadow-sm mb-6">
+        <CardSection>
           <div className="border-b border-gray-200">
             <div className="flex">
               <button
@@ -65,14 +72,21 @@ function Profile() {
               </button>
             </div>
           </div>
-          {/* active tab */}
+
           <div className="p-6">
             {activeTab === 'profile' && <ProfileTab user={user} />}
             {activeTab === 'listings' && (
               <ListingsTab properties={userProperties} onDelete={() => null} />
             )}
           </div>
-        </div>
+        </CardSection>
+
+        {/* Logout Section */}
+        <CardSection className="flex justify-end">
+          <Button variant="destructive" type="button" onClick={() => AuthService.logout()}>
+            Log out
+          </Button>
+        </CardSection>
       </div>
     </main>
   );

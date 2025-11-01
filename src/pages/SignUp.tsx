@@ -1,49 +1,44 @@
-import { Building2, Mail, Phone } from 'lucide-react';
-import InputField from '../components/Form/InputField';
+import { Building2, Mail, Phone, User } from 'lucide-react';
+import InputField from '../ui/InputField';
 import Input from '../ui/Input';
-import PasswordInput from '../components/Form/PasswordInput';
-import AuthActions from '../components/Form/AuthActions';
-import UserTypeSelector from '../components/Form/UserTypeSelector';
-import { Link } from 'react-router';
-import FormHeader from '../components/Form/FormHeader';
-import { Controller, useForm } from 'react-hook-form';
+import PasswordInput from '../components/auth/PasswordInput';
+import AuthActions from '../components/auth/AuthActions';
+import { Link, useNavigate } from 'react-router';
+import FormHeader from '../components/auth/FormHeader';
+import { useForm } from 'react-hook-form';
 import {
   emailValidation,
   nameValidation,
   passwordValidtion,
   phoneValidation,
 } from '../utils/validation';
-import type { UserType } from '../types/User';
+import type { UserRegister } from '../types/User';
+import { ControlledSelector } from '../ui/ControllerSelector';
+import ErrorMessage from '../ui/ErrorMessage';
+import AuthService from '../services/AuthService';
 
-type signUpInputs = {
-  email: string;
-  password: string;
-  name: string;
-  phone: string;
-  type: UserType;
-};
 function Signup() {
   const {
     register,
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<signUpInputs>({
+  } = useForm<UserRegister>({
     defaultValues: {
       email: '',
       password: '',
-      name: '',
+      userName: '',
       phone: '',
       type: 'buyer',
     },
     mode: 'onSubmit',
   });
+  const navigate = useNavigate();
 
-  function onSubmit(data: signUpInputs) {
-    console.log(data);
-    // addUserToDatabase(data);
-    // showSuccessMessage();
-    // redirectToHomePage();
+  async function onSubmit(formData: UserRegister) {
+    console.log(formData);
+    const res = await AuthService.register(formData);
+    if (res) navigate('/');
   }
   return (
     <main className="min-h-screen w-full flex items-center justify-center bg-blue-100 text-black p-6 ">
@@ -59,13 +54,16 @@ function Signup() {
         {/* Sign in Form */}
         <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
           {/* select Type */}
-          <Controller
+          <ControlledSelector
             name="type"
             control={control}
             rules={{ required: 'Please select a user type' }}
-            render={({ field }) => (
-              <UserTypeSelector value={field.value} onChange={field.onChange} />
-            )}
+            title="I am signing up as a:"
+            className="border-b border-gray-300"
+            options={[
+              { value: 'buyer', icon: <User /> },
+              { value: 'vendor', icon: <Building2 /> },
+            ]}
           />
           {/* email */}
           <InputField id="email" label="Email address" icon={<Mail />}>
@@ -76,16 +74,12 @@ function Signup() {
               className="pl-10"
               {...register('email', emailValidation)}
             />
-            {errors.email && (
-              <p className="text-red-500 text-sm mt-1 font-medium">{errors.email.message}</p>
-            )}
+            {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
           </InputField>
           {/* password */}
           <InputField id="password" label="Password">
             <PasswordInput id="password" {...register('password', passwordValidtion)} />
-            {errors.password && (
-              <p className="text-red-500 text-sm mt-1 font-medium">{errors.password.message}</p>
-            )}
+            {errors.password && <ErrorMessage>{errors.password.message}</ErrorMessage>}
           </InputField>
           {/* full Name */}
           <InputField id="name" label="Full Name">
@@ -93,11 +87,10 @@ function Signup() {
               type="text"
               id="name"
               placeholder="Your Full Name"
-              {...register('name', nameValidation)}
+              {...register('userName', nameValidation)}
             />
-            {errors.name && (
-              <p className="text-red-500 text-sm mt-1 font-medium">{errors.name.message}</p>
-            )}
+
+            {errors.userName && <ErrorMessage>{errors.userName.message}</ErrorMessage>}
           </InputField>
           {/* phone number */}
           <InputField id="phone" label="Phone Number" icon={<Phone />}>
@@ -108,9 +101,7 @@ function Signup() {
               className="pl-10"
               {...register('phone', phoneValidation)}
             />
-            {errors.phone && (
-              <p className="text-red-500 text-sm mt-1 font-medium">{errors.phone.message}</p>
-            )}
+            {errors.phone && <ErrorMessage>{errors.phone.message}</ErrorMessage>}
           </InputField>
           {/* actions  */}
           <AuthActions actionFor="create account" />

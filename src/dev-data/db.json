@@ -1,0 +1,10 @@
+{
+  "users": [
+    { "id": 1, "name": "John Doe", "email": "john.doe@example.com" },
+    { "id": 2, "name": "Jane Smith", "email": "jane.smith@example.com" }
+  ],
+  "posts": [
+    { "id": 1, "title": "React Tips", "content": "Learn how to use React efficiently." },
+    { "id": 2, "title": "Understanding Hooks", "content": "A deep dive into React Hooks." }
+  ]
+}
