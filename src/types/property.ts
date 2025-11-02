@@ -39,5 +39,5 @@ export type ListingFormInputs = {
     amenities: string[]; // multiple selections
 
     // Step 5
-    images: string[];
+    images: File[];
 };

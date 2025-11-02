@@ -5,10 +5,10 @@ import LocationStep from '../components/Listing/LocationStep';
 import PricePropertyDetailsStep from '../components/Listing/PricePropertyDetailsStep';
 import DescriptionAmenitiesStep from '../components/Listing/DescriptionAmenitiesStep';
 import ImageUploadStep from '../components/Listing/ImageUploadStep';
-import { Divide } from 'lucide-react';
-import Divider from '../components/auth/Divider';
+
 import StepDivider from '../components/Listing/StepDivider';
 import Button from '../ui/Button';
+import CompoundStep from '../components/Listing/CompoundStep';
 
 function EditLisiting() {
   const methods = useForm<ListingFormInputs>({
@@ -43,6 +43,9 @@ function EditLisiting() {
           <StepDivider />
           {/* Location */}
           <LocationStep />
+          <StepDivider />
+          {/* compound */}
+          <CompoundStep />
           <StepDivider />
           {/* Price */}
           <PricePropertyDetailsStep />

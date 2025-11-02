@@ -5,7 +5,6 @@ import Layout from './layout/Layout';
 import Home from './pages/Home';
 import Login from './pages/LogIn';
 import EstateDetails from './pages/EstateDetails';
-import EstateDetails from './pages/EstateDetails';
 import Profile from './pages/Profile';
 import WishList from './pages/WishList';
 import AddListing from './pages/AddListing';

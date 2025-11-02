@@ -34,7 +34,7 @@ function AddListing() {
       images: [],
     },
   });
-  const [step, setStep] = useState<number>(1);
+  const [step, setStep] = useState<number>(5);
 
   async function nextStep() {
     if (step >= 5) return;

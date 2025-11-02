@@ -30,10 +30,10 @@ function OptionSelectorOption<T extends string>({
 
   function handleChange() {
     if (multiple) {
-      const typedValue = value as T[];
+      const typedValue = Array.isArray(value) ? value : [];
       const typedOnChange = onChange as (type: T[]) => void;
 
-      const newValue = typedValue.includes(option)
+      const newValue = typedValue?.includes(option)
         ? typedValue.filter((v) => v !== option)
         : [...typedValue, option];
       typedOnChange(newValue);

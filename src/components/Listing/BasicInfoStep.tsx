@@ -5,7 +5,7 @@ import Select from '../../ui/Select';
 import Option from '../../ui/Option';
 import { PropertyPurposeOptions, PropertyTypeOptions } from '../../constants/options';
 import { useFormContext } from 'react-hook-form';
-import { nameValidation } from '../../utils/validation';
+import { PropertyNameValidation } from '../../utils/validation';
 import { ControlledSelector } from '../../ui/ControllerSelector';
 import ErrorMessage from '../../ui/ErrorMessage';
 
@@ -19,7 +19,7 @@ function BasicInfoStep() {
           id="name"
           type="text"
           placeholder="e.g., Beautiful 3BR House with Garden"
-          {...register('name', nameValidation)}
+          {...register('name', PropertyNameValidation)}
         />
         <ErrorMessage name="name" />
       </InputField>
