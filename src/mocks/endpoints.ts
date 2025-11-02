@@ -94,4 +94,139 @@ export const endpoints: Endpoints = {
             }),
         },
     ],
+
+    commercialProperty: [
+        {
+            method: "POST",
+            path: "/api/CommercialProperty/AddCommercialProperty",
+            response: (req) => {
+                const body = req.body || {};
+
+                return {
+                    isSuccess: true,
+                    message: "Property added successfully",
+                    data: {
+                        propertyId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                        city: body.city,
+                        address: body.address,
+                        googleMapsUrl: body.googleMapsUrl,
+                        propertyType: body.propertyType,
+                        propertyPurpose: body.propertyPurpose,
+                        propertyStatus: body.propertyStatus,
+                        price: body.price,
+                        square: body.square,
+                        description: body.description,
+                        agentName: "Agent Example",
+                        compoundName: "Compound Example",
+                        businessType: body.businessType,
+                        floorNumber: body.floorNumber,
+                        hasStorage: body.hasStorage,
+                        amenity: body.amenity,
+                        galleries: [
+                            {
+                                mediaId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                propertyId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                imageUrl: "https://example.com/image.jpg",
+                                videoUrl: "https://example.com/video.mp4",
+                                uploadedAt: new Date().toISOString(),
+                            },
+                        ],
+                    },
+                };
+            },
+        },
+    ],
+
+    residentialProperty: [
+        {
+            method: "POST",
+            path: "/api/ResidentialProperty/AddResidentialProperty",
+            response: (req) => {
+                const body = req.body || {};
+                return {
+                    isSuccess: true,
+                    message: "Residential property added successfully",
+                    data: {
+                        propertyId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                        city: body.city,
+                        address: body.address,
+                        googleMapsUrl: body.googleMapsUrl,
+                        propertyType: body.propertyType,
+                        propertyPurpose: body.propertyPurpose,
+                        propertyStatus: body.propertyStatus,
+                        price: body.price,
+                        square: body.square,
+                        description: body.description,
+                        dateListed: new Date().toISOString(),
+                        agentName: "Agent Example",
+                        compoundName: "Compound Example",
+                        bedrooms: body.bedrooms,
+                        bathrooms: body.bathrooms,
+                        floors: body.floors,
+                        kitchenType: body.kitchenType,
+                        galleries: [
+                            {
+                                mediaId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                propertyId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                imageUrl: "https://example.com/image.jpg",
+                                videoUrl: "https://example.com/video.mp4",
+                                uploadedAt: new Date().toISOString(),
+                            },
+                        ],
+                        amenity: body.amenity,
+                    },
+                };
+            },
+        },
+    ],
+    // 👇 Compound endpoints
+    compound: [
+        {
+            method: "POST",
+            path: "/api/Compound/AddCompound",
+            response: (req) => {
+                const body = req.body || {};
+                return {
+                    isSuccess: true,
+                    message: "Compound added successfully",
+                    data: {
+                        compoundId: crypto.randomUUID(),
+                        name: body.name,
+                        city: body.city,
+                        address: body.address,
+                        description: body.description,
+                    },
+                };
+            },
+        },
+        {
+            method: "GET",
+            path: "/api/Compound/GetAll",
+            response: () => ({
+                isSuccess: true,
+                message: "Compounds retrieved successfully",
+                data: {
+                    data: [
+                        {
+                            compoundId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                            name: "Palm Hills",
+                            city: "Cairo",
+                            address: "6th of October",
+                            description: "Luxury residential compound",
+                        },
+                        {
+                            compoundId: "2fa95f64-5717-4562-b3fc-2c963f66afa6",
+                            name: "Madinaty",
+                            city: "Cairo",
+                            address: "New Cairo",
+                            description: "Spacious modern living community",
+                        },
+                    ],
+                    totalCount: 2,
+                    totalPages: 1,
+                },
+            }),
+        },
+    ],
+
 };

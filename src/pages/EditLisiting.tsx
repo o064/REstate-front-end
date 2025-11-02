@@ -8,7 +8,6 @@ import ImageUploadStep from '../components/Listing/ImageUploadStep';
 
 import StepDivider from '../components/Listing/StepDivider';
 import Button from '../ui/Button';
-import CompoundStep from '../components/Listing/CompoundStep';
 
 function EditLisiting() {
   const methods = useForm<ListingFormInputs>({
@@ -44,9 +43,7 @@ function EditLisiting() {
           {/* Location */}
           <LocationStep />
           <StepDivider />
-          {/* compound */}
-          <CompoundStep />
-          <StepDivider />
+
           {/* Price */}
           <PricePropertyDetailsStep />
           <StepDivider />

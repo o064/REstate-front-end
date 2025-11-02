@@ -6,7 +6,7 @@ type ControlledSelectorProps<T extends Record<string, any>> = {
   control: Control<T>;
   rules?: object;
   title: string;
-  options: { value: string; icon: React.ReactNode; label?: string }[];
+  options: { value: string | number; icon: React.ReactNode; label?: string }[];
   className?: string;
   multiple?: boolean;
 };

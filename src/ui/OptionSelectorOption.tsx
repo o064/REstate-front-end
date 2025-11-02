@@ -54,8 +54,8 @@ function OptionSelectorOption<T extends string>({
       }`}
     >
       <span className="h-6 w-6 mb-1 transition-colors group-hover:text-blue-600">{icon}</span>
-      <span className="text-l  font-semibold capitalize">{option}</span>
-      {label && <span className="text-xs font-medium">{label}</span>}
+      {/* <span className="text-l  font-semibold capitalize">{option}</span> */}
+      {label && <span className="text-l  font-semibold capitalize">{label}</span>}
     </button>
   );
 }

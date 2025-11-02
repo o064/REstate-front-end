@@ -17,27 +17,43 @@ export type PropertyWithAgency = Property & {
     agencyName: string;
     vendorName: string;
 };
-
-export type ListingFormInputs = {
-    // Step 1
-    name: string;
-    purpose: PropertyPurpose;
-    type: PropertyType;
-
+export type baseLisintingForm = {
+    agentId: string;
+    propertyStatus: number;
+    // Step 1 info
+    title: string;
+    propertyPurpose: 0 | 1;
+    compoundId?: string;
     // Step 2
     address: string;
     city: string;
-
+    googleMapsUrl: string;
     // Step 3
     price: number;
     square: number;
-    bedrooms: number;
-    bathrooms: number;
-
     // Step 4
     description: string;
-    amenities: string[]; // multiple selections
-
+    amenities: {
+        hasElectricityLine: boolean;
+        hasWaterLine: boolean;
+        hasGasLine: boolean;
+    }; // multiple selections
     // Step 5
     images: File[];
 };
+export type residentialProperty = baseLisintingForm & {
+    propertyType: 0;
+    bathrooms: number;
+    bedrooms: number;
+    kitchenType: number;
+    floors: number;
+};
+export type CommercialProperty = baseLisintingForm & {
+    propertyType: 1;
+    floorNumber: number;
+    businessType: string;
+    hasStorage: boolean
+};
+export type ListingFormInputs =
+    | CommercialProperty
+    | residentialProperty;

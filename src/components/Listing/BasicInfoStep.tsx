@@ -8,36 +8,65 @@ import { useFormContext } from 'react-hook-form';
 import { PropertyNameValidation } from '../../utils/validation';
 import { ControlledSelector } from '../../ui/ControllerSelector';
 import ErrorMessage from '../../ui/ErrorMessage';
+import { useQuery } from '@tanstack/react-query';
+import { getAllCompounds } from '../../services/compoundService';
+import type { getAllCompoundsResponse } from '../../types/compound';
 
 function BasicInfoStep() {
   const { register, control } = useFormContext();
+  // Access the client
+  const {
+    isLoading,
+    isError,
+    data: compoundOptions,
+  } = useQuery<getAllCompoundsResponse>({
+    queryKey: ['compounds'],
+    queryFn: getAllCompounds,
+  });
+
   return (
     <Step title="basic information">
-      {/* property name */}
-      <InputField id="name" label="Property Name *">
+      {/* property title */}
+      <InputField id="title" label="Property title *">
         <Input
-          id="name"
+          id="title"
           type="text"
           placeholder="e.g., Beautiful 3BR House with Garden"
-          {...register('name', PropertyNameValidation)}
+          {...register('title', PropertyNameValidation)}
         />
-        <ErrorMessage name="name" />
+        <ErrorMessage name="title" />
       </InputField>
-      {/*  Listing Type */}
+      {/*  Listing purpose sale/rent*/}
       <ControlledSelector
         control={control}
-        name="type"
-        options={PropertyTypeOptions}
-        title="Listing Type *"
+        name="propertyPurpose"
+        options={PropertyPurposeOptions}
+        rules={{ required: 'property Purpose is required' }}
+        title="Listing purpose *"
       />
-      {/* Property purpose  */}
-      <InputField id="purpose" label="Property Purpose *">
-        <Select {...register('purpose', { required: 'Please select a purpose' })}>
-          {PropertyPurposeOptions.map((opt) => (
+      {/* Property type  res/com*/}
+      <InputField id="propertyType" label="Property type *">
+        <Select {...register('propertyType', { required: 'Please select a propertyType' })}>
+          {PropertyTypeOptions.map((opt) => (
             <Option label={opt.label} value={opt.value} key={opt.value} />
           ))}
         </Select>
-        <ErrorMessage name="purpose" />
+        <ErrorMessage name="propertyType" />
+      </InputField>
+      {/* Compound */}
+      <InputField id="compound" label="Compound">
+        <Select disabled={isLoading || isError} {...register('compoundId')}>
+          <Option key={'0'} value="" label="" />
+          {isLoading && <Option label="Loading compounds..." value="" />}
+          {isError && <Option label="Failed to load compounds" value="" />}
+          {!isLoading &&
+            !isError &&
+            compoundOptions &&
+            compoundOptions?.data?.data.map((compound) => (
+              <Option key={compound.compoundId} value={compound.compoundId} label={compound.name} />
+            ))}
+        </Select>
+        <ErrorMessage name="compoundId" />
       </InputField>
     </Step>
   );

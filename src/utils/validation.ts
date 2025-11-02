@@ -43,16 +43,7 @@ export const descriptionValidation = {
         message: "Description cannot exceed 500 characters",
     },
 }
-export const compoundDescriptionValidation = {
-    minLength: {
-        value: 20,
-        message: "Compound Description must be at least 20 characters long",
-    },
-    maxLength: {
-        value: 500,
-        message: "Description cannot exceed 500 characters",
-    },
-}
+
 export const addressValidation = {
     required: "Address is required",
     pattern: {
@@ -65,17 +56,7 @@ export const addressValidation = {
         message: "Address seems too short",
     },
 }
-export const compundAddressValidation = {
-    pattern: {
-        value: /^\d+\s+[A-Za-z\s]+,\s*[A-Za-z\s]+,\s*[A-Za-z\s]+$/,
-        message:
-            "Address must follow the format: '15 El Tahrir St, Cairo, Egypt'",
-    },
-    minLength: {
-        value: 10,
-        message: "Address seems too short",
-    },
-}
+
 
 export const cityValidation = {
     required: "City is required",
@@ -88,16 +69,16 @@ export const cityValidation = {
         message: "City name must be at least 2 characters",
     },
 }
-export const compundCityValidation = {
+export const googleMapsUrlValidation = {
+    required: "Google Maps URL is required",
     pattern: {
-        value: /^[A-Za-z\s-]+$/,
-        message: "Please enter a valid city name (letters only)",
+        value: /^(https?:\/\/)?(www\.)?(google\.[a-z.]+\/maps|maps\.app\.goo\.gl|goo\.gl\/maps|g\.page\/.+)/i,
+        message: "Please enter a valid Google Maps URL",
     },
-    minLength: {
-        value: 2,
-        message: "City name must be at least 2 characters",
-    },
-}
+};
+
+
+
 export const priceValidation = {
     required: "Price is required",
     valueAsNumber: true,
@@ -122,19 +103,10 @@ export const sizeValidation = {
         message: "Size cannot exceed 10,000 m²",
     },
 }
-export const CompoundNameValidation = {
-    required: 'Compound name is required',
-    minLength: {
-        value: 3,
-        message: 'Compound Name must be at least 3 characters long',
-    },
-    pattern: {
-        value: /^[a-zA-Z\s]+$/,
-        message: 'Compound Name should only contain letters and spaces',
-    },
-};
+
+
 export const PropertyNameValidation = {
-    required: 'Property name is required',
+    required: 'Property title is required',
     minLength: {
         value: 3,
         message: 'Property Name must be at least 3 characters long',

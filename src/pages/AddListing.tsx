@@ -7,40 +7,44 @@ import Button from '../ui/Button';
 import { useEffect, useState } from 'react';
 import ImageUploadStep from '../components/Listing/ImageUploadStep';
 import { CheckCircle } from 'lucide-react';
-import type { ListingFormInputs } from '../types/property';
+import type { CommercialProperty, ListingFormInputs, residentialProperty } from '../types/property';
 import PageHeader from '../components/Listing/PageHeader';
-export const stepFields: Record<number, (keyof ListingFormInputs)[]> = {
-  1: ['name', 'purpose', 'type'],
-  2: ['address', 'city'],
+import { defaultResidentialValues } from '../constants/ListingDefaults';
+export const residentialStepFields: Record<number, (keyof residentialProperty)[]> = {
+  1: ['title', 'propertyPurpose', 'propertyType'],
+  2: ['address', 'city', 'googleMapsUrl'],
   3: ['price', 'square', 'bedrooms', 'bathrooms'],
+  4: ['description', 'amenities'],
+  5: ['images'],
+};
+
+export const commercialStepFields: Record<number, (keyof CommercialProperty)[]> = {
+  1: ['title', 'propertyPurpose', 'propertyType'],
+  2: ['address', 'city', 'googleMapsUrl'],
+  3: ['price', 'square', 'floorNumber', 'businessType', 'hasStorage'],
   4: ['description', 'amenities'],
   5: ['images'],
 };
 function AddListing() {
   const methods = useForm<ListingFormInputs>({
     mode: 'onChange',
-    defaultValues: {
-      name: '',
-      purpose: 'sale',
-      type: 'residential',
-      address: '',
-      city: '',
-      price: 0,
-      square: 0,
-      bedrooms: 0,
-      bathrooms: 1,
-      description: '',
-      amenities: [],
-      images: [],
-    },
+    defaultValues: defaultResidentialValues,
   });
-  const [step, setStep] = useState<number>(5);
+  const [step, setStep] = useState<number>(1);
 
   async function nextStep() {
     if (step >= 5) return;
-    const isStepValid = await methods.trigger(stepFields[step]);
+
+    // Get property type (0 = residential, 1 = commercial)
+    const propertyType = methods.getValues('propertyType');
+
+    const fieldsToValidate =
+      propertyType === 0 ? residentialStepFields[step] : commercialStepFields[step];
+
+    const isStepValid = await methods.trigger(fieldsToValidate);
+
     if (!isStepValid) return; // stop if validation fails
-    setStep((step) => step + 1);
+    setStep((s) => s + 1);
   }
   function prevStep() {
     if (step <= 1) return;

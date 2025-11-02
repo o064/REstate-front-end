@@ -1,4 +1,5 @@
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import SignUp from './pages/SignUp';
 import Layout from './layout/Layout';
@@ -9,7 +10,9 @@ import Profile from './pages/Profile';
 import WishList from './pages/WishList';
 import AddListing from './pages/AddListing';
 import EditLisiting from './pages/EditLisiting';
-
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+// Create a client
+const queryClient = new QueryClient();
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
@@ -31,7 +34,13 @@ const router = createBrowserRouter(
 );
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    // Provide the client to your App
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
+  );
 }
 
 export default App;

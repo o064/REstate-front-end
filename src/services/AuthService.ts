@@ -33,7 +33,7 @@ const AuthService = {
             return res.data;
         } catch (error) {
             console.log(error);
-            return null;
+            return error;
         }
     },
     async register(user: UserRegister) {
@@ -50,7 +50,7 @@ const AuthService = {
             return res.data;
         } catch (error) {
             console.log(error);
-            return null;
+            return error;
         }
     },
     logout() {

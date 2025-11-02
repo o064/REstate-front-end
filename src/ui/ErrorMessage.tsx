@@ -22,5 +22,7 @@ export default function ErrorMessage(props: ErrorMessageProps) {
     }
   }
 
-  return message ? <p className="text-red-500 text-sm mt-1 font-medium">{message}</p> : null;
+  return message ? (
+    <p className="text-red-500 text-sm mt-1 font-medium capitalize">{message}</p>
+  ) : null;
 }
