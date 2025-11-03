@@ -19,7 +19,6 @@ import BooleanInputField from '../../ui/BooleanInputFIeld';
 function PricePropertyDetailsStep() {
   const { register, watch } = useFormContext();
   const propertyType = watch('propertyType');
-  console.log(propertyType);
   return (
     <Step title="Price & Property Details">
       {/* price */}

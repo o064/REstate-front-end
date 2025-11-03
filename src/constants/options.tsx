@@ -8,16 +8,7 @@ export const PropertyPurposeOptions = [
   { value: 0, label: 'sale', icon: <DollarSign /> },
   { value: 1, label: 'rent', icon: <Home /> },
 ];
-// export const amenityOptions = [
-//   { value: 'parking', label: 'Parking', icon: <Car /> },
-//   { value: 'ac', label: 'Air Conditioning', icon: <Snowflake /> },
-//   { value: 'internet', label: 'Internet/WiFi', icon: <Wifi /> },
-//   { value: 'security', label: '24/7 Security', icon: <Shield /> },
-//   { value: 'pool', label: 'Swimming Pool', icon: <Waves /> },
-//   { value: 'gym', label: 'Gym/Fitness', icon: <Dumbbell /> },
-//   { value: 'garden', label: 'Garden', icon: <Sprout /> },
-//   { value: 'balcony', label: 'Balcony', icon: <Building2 /> },
-// ];
+
 export const bedroomsOptions = [
   { value: 0, label: 'studio' },
   { value: 1, label: '1 bedrooms' },
@@ -54,3 +45,14 @@ export const bathroomsOptions = [
   { value: 3, label: '3 bedrooms' },
   { value: 4, label: '4+ bedrooms' },
 ];
+
+// export const amenityOptions = [
+//   { value: 'parking', label: 'Parking', icon: <Car /> },
+//   { value: 'ac', label: 'Air Conditioning', icon: <Snowflake /> },
+//   { value: 'internet', label: 'Internet/WiFi', icon: <Wifi /> },
+//   { value: 'security', label: '24/7 Security', icon: <Shield /> },
+//   { value: 'pool', label: 'Swimming Pool', icon: <Waves /> },
+//   { value: 'gym', label: 'Gym/Fitness', icon: <Dumbbell /> },
+//   { value: 'garden', label: 'Garden', icon: <Sprout /> },
+//   { value: 'balcony', label: 'Balcony', icon: <Building2 /> },
+// ];
