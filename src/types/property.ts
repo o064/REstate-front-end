@@ -39,7 +39,7 @@ export type baseLisintingForm = {
         hasGasLine: boolean;
     }; // multiple selections
     // Step 5
-    images: File[];
+    images?: File[];
 };
 export type residentialProperty = baseLisintingForm & {
     propertyType: 0;

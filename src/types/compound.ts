@@ -1,4 +1,3 @@
-import type { BadRequest } from "./request";
 export type Compound = {
     compoundId: string;
     name: string;
@@ -7,12 +6,3 @@ export type Compound = {
     description: string;
 };
 
-export type getAllCompoundsResponse = {
-    isSuccess: boolean;
-    message: string;
-    data?: {
-        data: Compound[];
-        totalCount: number;
-        totalPages: number;
-    };
-};

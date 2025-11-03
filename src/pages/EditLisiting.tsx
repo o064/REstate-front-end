@@ -12,20 +12,20 @@ import Button from '../ui/Button';
 function EditLisiting() {
   const methods = useForm<ListingFormInputs>({
     mode: 'onChange',
-    defaultValues: {
-      name: '',
-      purpose: 'sale',
-      type: 'residential',
-      address: '',
-      city: '',
-      price: 0,
-      square: 0,
-      bedrooms: 0,
-      bathrooms: 1,
-      description: '',
-      amenities: [],
-      images: [],
-    },
+    // defaultValues: {
+    //   title: '',
+    //   purpose: 'sale',
+    //   type: 'residential',
+    //   address: '',
+    //   city: '',
+    //   price: 0,
+    //   square: 0,
+    //   bedrooms: 0,
+    //   bathrooms: 1,
+    //   description: '',
+    //   amenities: {},
+    //   images: [],
+    // },
   });
   function onSubmit(data: any) {
     console.log(data);

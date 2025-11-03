@@ -59,7 +59,6 @@ function ImageUploadStep() {
             <Controller
               control={control}
               name="images"
-              rules={{ required: 'Picture is required' }}
               render={() => (
                 <>
                   <Input

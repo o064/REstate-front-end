@@ -7,51 +7,42 @@ import Button from '../ui/Button';
 import { useEffect, useState } from 'react';
 import ImageUploadStep from '../components/Listing/ImageUploadStep';
 import { CheckCircle } from 'lucide-react';
-import type { CommercialProperty, ListingFormInputs, residentialProperty } from '../types/property';
+import type { ListingFormInputs } from '../types/property';
 import PageHeader from '../components/Listing/PageHeader';
 import { defaultResidentialValues } from '../constants/ListingDefaults';
-export const residentialStepFields: Record<number, (keyof residentialProperty)[]> = {
-  1: ['title', 'propertyPurpose', 'propertyType'],
-  2: ['address', 'city', 'googleMapsUrl'],
-  3: ['price', 'square', 'bedrooms', 'bathrooms'],
-  4: ['description', 'amenities'],
-  5: ['images'],
-};
+import { commercialStepFields, residentialStepFields } from '../constants/ListingFields';
+import Input from '../ui/Input';
+import { useMutateProperty } from '../hooks/useMutateProperty';
+import Loader from '../ui/Loader';
 
-export const commercialStepFields: Record<number, (keyof CommercialProperty)[]> = {
-  1: ['title', 'propertyPurpose', 'propertyType'],
-  2: ['address', 'city', 'googleMapsUrl'],
-  3: ['price', 'square', 'floorNumber', 'businessType', 'hasStorage'],
-  4: ['description', 'amenities'],
-  5: ['images'],
-};
 function AddListing() {
   const methods = useForm<ListingFormInputs>({
     mode: 'onChange',
     defaultValues: defaultResidentialValues,
   });
-  const [step, setStep] = useState<number>(1);
+  const [step, setStep] = useState<number>(5);
+  const { mutate: mutateProperty, isPending, isError } = useMutateProperty();
 
   async function nextStep() {
+    // invalid step
     if (step >= 5) return;
-
     // Get property type (0 = residential, 1 = commercial)
     const propertyType = methods.getValues('propertyType');
-
     const fieldsToValidate =
       propertyType === 0 ? residentialStepFields[step] : commercialStepFields[step];
-
     const isStepValid = await methods.trigger(fieldsToValidate);
-
     if (!isStepValid) return; // stop if validation fails
+    // next step
     setStep((s) => s + 1);
   }
   function prevStep() {
     if (step <= 1) return;
     setStep((step) => step - 1);
   }
-  function onSubmit(data: any) {
-    console.log(data);
+  function onSubmit(formData: ListingFormInputs) {
+    console.log(formData);
+    mutateProperty(formData);
+    if (!isPending && !isError) setStep(6); // Move to success state
   }
   //  scroll to top when step changes
   useEffect(() => {
@@ -74,7 +65,9 @@ function AddListing() {
       </div>
     );
   }
-
+  if (isPending) {
+    return <Loader />;
+  }
   return (
     <main className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -91,8 +84,16 @@ function AddListing() {
             onSubmit={methods.handleSubmit(onSubmit)}
             className="bg-white rounded-lg shadow-sm p-6 mb-20"
           >
+            {/* defaults */}
+            <Input
+              type="hidden"
+              {...methods.register('agentId', { required: 'agent id is required' })}
+            />
+            <Input
+              type="hidden"
+              {...methods.register('propertyStatus', { required: 'propertyStatus  is required' })}
+            />
             {/*  information steps */}
-
             {step == 1 && <BasicInfoStep />}
             {step == 2 && <LocationStep />}
             {step == 3 && <PricePropertyDetailsStep />}
@@ -116,7 +117,7 @@ function AddListing() {
                   Next
                 </Button>
               ) : (
-                <Button variant="primary" fullWidth={false} onClick={nextStep} type="submit">
+                <Button variant="primary" fullWidth={false} type="submit">
                   Create Listing
                 </Button>
               )}

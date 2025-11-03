@@ -122,15 +122,6 @@ export const endpoints: Endpoints = {
                         floorNumber: body.floorNumber,
                         hasStorage: body.hasStorage,
                         amenity: body.amenity,
-                        galleries: [
-                            {
-                                mediaId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                                propertyId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                                imageUrl: "https://example.com/image.jpg",
-                                videoUrl: "https://example.com/video.mp4",
-                                uploadedAt: new Date().toISOString(),
-                            },
-                        ],
                     },
                 };
             },
@@ -164,15 +155,6 @@ export const endpoints: Endpoints = {
                         bathrooms: body.bathrooms,
                         floors: body.floors,
                         kitchenType: body.kitchenType,
-                        galleries: [
-                            {
-                                mediaId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                                propertyId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                                imageUrl: "https://example.com/image.jpg",
-                                videoUrl: "https://example.com/video.mp4",
-                                uploadedAt: new Date().toISOString(),
-                            },
-                        ],
                         amenity: body.amenity,
                     },
                 };
@@ -228,5 +210,30 @@ export const endpoints: Endpoints = {
             }),
         },
     ],
+    Images: [
+        {
+            method: "POST",
+            path: "/api/PropertyGallery",
+            response: (req) => {
+                const body = req.body || {};
+                const propertyId = body.propertyId || "unknown";
+                // simulate uploaded image URLs
+                const uploadedImages = Array.isArray(body.images)
+                    ? body.images.map((_, index) =>
+                        `https://mock-server.com/uploads/${propertyId}-${index}.jpg`
+                    )
+                    : [
+                        `https://mock-server.com/uploads/${propertyId}-0.jpg`,
+                    ];
+
+                return {
+                    isSuccess: true,
+                    message: "Images uploaded successfully (mock)",
+                    data: uploadedImages,
+                };
+            },
+        },
+    ],
+
 
 };

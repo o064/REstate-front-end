@@ -10,7 +10,8 @@ import { ControlledSelector } from '../../ui/ControllerSelector';
 import ErrorMessage from '../../ui/ErrorMessage';
 import { useQuery } from '@tanstack/react-query';
 import { getAllCompounds } from '../../services/compoundService';
-import type { getAllCompoundsResponse } from '../../types/compound';
+import type { Compound } from '../../types/compound';
+import type { getAllCompoundsResponse } from '../../types/Responses';
 
 function BasicInfoStep() {
   const { register, control } = useFormContext();
@@ -62,7 +63,7 @@ function BasicInfoStep() {
           {!isLoading &&
             !isError &&
             compoundOptions &&
-            compoundOptions?.data?.data.map((compound) => (
+            compoundOptions?.data?.data.map((compound: Compound) => (
               <Option key={compound.compoundId} value={compound.compoundId} label={compound.name} />
             ))}
         </Select>

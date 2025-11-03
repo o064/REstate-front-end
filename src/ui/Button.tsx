@@ -10,6 +10,7 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   fullWidth?: boolean;
   icon?: ReactNode;
   onClick?: () => void;
+  type: 'submit' | 'reset' | 'button';
 };
 
 function Button({
@@ -20,6 +21,7 @@ function Button({
   to,
   fullWidth = true,
   icon,
+  type = 'button',
   ...rest
 }: ButtonProps) {
   const base =
@@ -51,7 +53,7 @@ function Button({
   }
 
   return (
-    <button className={combined} {...rest} onClick={onClick}>
+    <button className={combined} {...rest} onClick={onClick} type={type}>
       <div className="flex gap-2">
         {children} {icon}
       </div>
