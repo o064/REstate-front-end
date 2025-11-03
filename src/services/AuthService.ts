@@ -1,65 +1,74 @@
 // ./services/authService.ts
-import type { UserRegister, UserSignIn } from "../types/User";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 import request from "../utils/request";
-type BadRequest = {
-    isSuccess: false,
-    message: string,
-    data: string
-}
-type logInResponse = {
-    isSuccess: true,
-    message: string,
-    data: {
-        userId: string,
-        jwtToken: string
-    }
-} | BadRequest;
+import type { UserRegister, UserSignIn } from "../types/User";
 
+type BadRequest = {
+    isSuccess: false;
+    message: string;
+    data?: string;
+};
+
+type LoginSuccess = {
+    isSuccess: true;
+    message: string;
+    data: {
+        userId: string;
+        jwtToken: string;
+    };
+};
+
+type LoginResponse = LoginSuccess | BadRequest;
 
 const AuthService = {
-    async login(user: UserSignIn) {
+    async login(user: UserSignIn): Promise<LoginResponse> {
         try {
-
-            const res = await request<logInResponse>("/auth/login", {
+            const res = await request<LoginResponse>("/auth/login", {
                 method: "POST",
                 body: JSON.stringify(user),
             });
             if (res.isSuccess) {
-                Cookies.set('user', JSON.stringify(res.data), { expires: 7 })
-
-                // localStorage.setItem("user", JSON.stringify(res.data));
+                Cookies.set("user", JSON.stringify(res.data), { expires: 7 });
             }
-            return res.data;
+            return res;
         } catch (error) {
-            console.log(error);
-            return error;
+            console.error(error);
+            return {
+                isSuccess: false,
+                message: "Unexpected error during login",
+                data: String(error),
+            };
         }
     },
-    async register(user: UserRegister) {
-        try {
 
-            const res = await request<logInResponse>("/register", {
+    async register(user: UserRegister): Promise<LoginResponse> {
+        try {
+            const res = await request<LoginResponse>("/register", {
                 method: "POST",
                 body: JSON.stringify(user),
             });
+
             if (res.isSuccess) {
-                Cookies.set('user', JSON.stringify(res.data), { expires: 7 })
-                // localStorage.setItem("user", JSON.stringify(res.data));
+                Cookies.set("user", JSON.stringify(res.data), { expires: 7 });
             }
-            return res.data;
+
+            return res;
         } catch (error) {
-            console.log(error);
-            return error;
+            console.error(error);
+            return {
+                isSuccess: false,
+                message: "Unexpected error during registration",
+                data: String(error),
+            };
         }
     },
+
     logout() {
-        Cookies.remove('user');
-        // localStorage.removeItem("user");
+        Cookies.remove("user");
     },
+
     getCurrentUser() {
-        const stored = Cookies.get('user');
-        // const stored = localStorage.getItem("user");
+        const stored = Cookies.get("user");
         return stored ? JSON.parse(stored) : null;
     },
 };

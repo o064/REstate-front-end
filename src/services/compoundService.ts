@@ -1,5 +1,5 @@
 
-import type { getAllCompoundsResponse } from "../types/compound";
+import type { getAllCompoundsResponse } from "../types/Responses";
 import request from "../utils/request";
 export async function getAllCompounds() {
     try {
