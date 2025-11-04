@@ -4,31 +4,46 @@ import BasicInfoStep from '../components/Listing/BasicInfoStep';
 import LocationStep from '../components/Listing/LocationStep';
 import PricePropertyDetailsStep from '../components/Listing/PricePropertyDetailsStep';
 import DescriptionAmenitiesStep from '../components/Listing/DescriptionAmenitiesStep';
-import ImageUploadStep from '../components/Listing/ImageUploadStep';
-
 import StepDivider from '../components/Listing/StepDivider';
 import Button from '../ui/Button';
+import Loader from '../ui/Loader';
+import { useEditProperty, usePrevData } from '../hooks/useProperty';
+import { useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router';
 
 function EditLisiting() {
-  const methods = useForm<ListingFormInputs>({
+  const { data: prevData, isLoading, isError: isErrorPrevData, error } = usePrevData();
+  const methods = useForm<Omit<ListingFormInputs, 'images' | 'agentId'>>({
     mode: 'onChange',
-    // defaultValues: {
-    //   title: '',
-    //   purpose: 'sale',
-    //   type: 'residential',
-    //   address: '',
-    //   city: '',
-    //   price: 0,
-    //   square: 0,
-    //   bedrooms: 0,
-    //   bathrooms: 1,
-    //   description: '',
-    //   amenities: {},
-    //   images: [],
-    // },
   });
-  function onSubmit(data: any) {
-    console.log(data);
+  const { id: propertyId } = useParams<{ id: string }>();
+  const { reset } = methods;
+  const navigate = useNavigate();
+  //  Reset form when previous data is loaded
+  useEffect(() => {
+    if (prevData && Object.keys(prevData).length > 0) {
+      // const { dateListed, agentName, compoundName, ...rest } = prevData;
+      console.log('reset', prevData);
+      const { compoundName, dateListed, agentName, images, ...rest } = prevData;
+      reset({ ...rest, propertyStatus: 0, compoundId: '' } as Omit<
+        ListingFormInputs,
+        'images' | 'agentId'
+      >); // fill all fields
+    }
+  }, [prevData, reset]);
+  // mutuate fun to make put req
+  if (!propertyId) {
+    return <p>Error: Missing property ID</p>;
+  }
+  const { mutate: EditProperty, isPending, isError: isErrorMutate } = useEditProperty(propertyId);
+  if (isLoading || isPending) return <Loader />;
+  if (isErrorPrevData || isErrorMutate) {
+    const errorMessage = error instanceof Error ? error.message : 'An error occurred';
+    return <p>Error: {errorMessage}</p>;
+  }
+  function onSubmit(formData: Omit<ListingFormInputs, 'images' | 'agentId'>) {
+    EditProperty(formData);
+    navigate('/', { replace: true });
   }
   return (
     <main className="min-h-screen bg-gray-50 py-8">
@@ -43,21 +58,18 @@ function EditLisiting() {
           {/* Location */}
           <LocationStep />
           <StepDivider />
-
           {/* Price */}
           <PricePropertyDetailsStep />
           <StepDivider />
           {/* Description */}
           <DescriptionAmenitiesStep />
           <StepDivider />
-          {/* Image */}
-          <ImageUploadStep />
           {/* Navigation Buttons */}
           <div className="flex justify-between gap-6 mt-8 pt-6 border-t border-gray-200">
             <Button variant="secondary" fullWidth={false} type="button">
               Cancel
             </Button>
-            <Button variant="primary" fullWidth={false} type="button">
+            <Button variant="primary" fullWidth={false} type="submit">
               Confirm Edits
             </Button>
           </div>
@@ -68,3 +80,32 @@ function EditLisiting() {
 }
 
 export default EditLisiting;
+// {
+//     "propertyId": "123123",
+//     "title": "omar property title",
+//     "city": "Cairo",
+//     "address": "123 Nile Street",
+//     "googleMapsUrl": "https://maps.google.com/example",
+//     "propertyType": 0,
+//     "propertyPurpose": 0,
+//     "propertyStatus": 1,
+//     "price": 2000000,
+//     "square": 150,
+//     "description": "A beautiful residential apartment near the Nile.",
+//     "dateListed": "2025-11-03T23:48:49.001Z",
+//     "agentName": "Agent Example",
+//     "compoundName": "Compound Example",
+//     "bedrooms": 3,
+//     "bathrooms": 2,
+//     "floors": 5,
+//     "kitchenType": 1,
+//     "amenity": {
+//         "hasElectricityLine": true,
+//         "hasWaterLine": true,
+//         "hasGasLine": true
+//     },
+//     "images": [
+//         "https://placehold.co/600x400/residential1.jpg",
+//         "https://placehold.co/600x400/residential2.jpg"
+//     ]
+// }

@@ -12,8 +12,8 @@ import PageHeader from '../components/Listing/PageHeader';
 import { defaultResidentialValues } from '../constants/ListingDefaults';
 import { commercialStepFields, residentialStepFields } from '../constants/ListingFields';
 import Input from '../ui/Input';
-import { useMutateProperty } from '../hooks/useMutateProperty';
 import Loader from '../ui/Loader';
+import { useAddProperty } from '../hooks/useProperty';
 
 function AddListing() {
   const methods = useForm<ListingFormInputs>({
@@ -21,7 +21,7 @@ function AddListing() {
     defaultValues: defaultResidentialValues,
   });
   const [step, setStep] = useState<number>(5);
-  const { mutate: mutateProperty, isPending, isError } = useMutateProperty();
+  const { mutate: AddProperty, isPending, isError } = useAddProperty();
 
   async function nextStep() {
     // invalid step
@@ -41,7 +41,7 @@ function AddListing() {
   }
   function onSubmit(formData: ListingFormInputs) {
     console.log(formData);
-    mutateProperty(formData);
+    AddProperty(formData);
     if (!isPending && !isError) setStep(6); // Move to success state
   }
   //  scroll to top when step changes

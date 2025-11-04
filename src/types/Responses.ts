@@ -16,17 +16,37 @@ export type getAllCompoundsResponse = {
     };
 };
 
-export type postResPropertyResponse =
-    | {
-        isSuccess: true;
-        message: string;
-        data: Omit<residentialProperty, "images" | "compoundId" | "agentId"> & {
-            compoundName: string;
-            agentName: string;
-            propertyId: string;
-        };
-    }
-    | BadRequest;
+export type getResidentialPropertyById = {
+    isSuccess: true;
+    message: string;
+    data?: Omit<residentialProperty, "images" | "agentId"> & {
+        propertyId: string;
+        images: string[];
+        compoundName: string;
+        agentName: string;
+        dateListed: string;
+    };
+}
+export type postResPropertyResponse = {
+    isSuccess: true;
+    message: string;
+    data: Omit<residentialProperty, "images" | "compoundId" | "agentId"> & {
+        compoundName: string;
+        agentName: string;
+        propertyId: string;
+    };
+} | BadRequest;
+export type getCommercialPropertyById = {
+    isSuccess: true;
+    message: string;
+    data?: Omit<CommercialProperty, "images" | "compoundId" | "agentId"> & {
+        propertyId: string;
+        images: string[];
+        compoundName: string;
+        agentName: string;
+        dateListed: string;
+    };
+}
 export type postComPropertyResponse =
     | {
         isSuccess: true;

@@ -21,7 +21,7 @@ const router = createBrowserRouter(
         <Route path="estateDetails" element={<EstateDetails />} />
         <Route path="profile" element={<Profile />} />
         <Route path="wishList" element={<WishList />} />
-        <Route path="edit" element={<EditLisiting />} />
+        <Route path="edit/:type/:id" element={<EditLisiting />} />
         <Route path="add" element={<AddListing />} />
       </Route>
       {/* login & signup layout */}

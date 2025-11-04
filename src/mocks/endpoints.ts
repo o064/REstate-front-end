@@ -1,4 +1,4 @@
-type EndpointMethod = "GET" | "POST";
+type EndpointMethod = "GET" | "POST" | "PUT";
 
 interface Endpoint<T> {
     method: EndpointMethod;
@@ -43,19 +43,14 @@ export const endpoints: Endpoints = {
         {
             method: "POST",
             path: "/api/Auth/register",
-            response: (req) => {
-                const { userName, email, phone, type, password } = req.body || {};
+            response: () => {
                 return {
                     isSuccess: true,
-                    message: "User registered successfully.",
+                    message: "Login successful",
                     data: {
-                        userId: Math.floor(Math.random() * 10000),
-                        userName,
-                        email,
-                        phone,
-                        type, password
+                        userId: 1,
+                        jwtToken: "mock-jwt-token-123",
                     },
-                    jwtToken: "mock-jwt-token-123",
                 };
             },
         },
@@ -63,16 +58,13 @@ export const endpoints: Endpoints = {
             method: "POST",
             path: "/api/Auth/login",
             response: (req) => {
-                const { userName } = req.body || {};
                 return {
                     isSuccess: true,
                     message: "Login successful",
                     data: {
                         userId: 1,
-                        userName,
-                        email: `${userName}@example.com`,
+                        jwtToken: "mock-jwt-token-123",
                     },
-                    jwtToken: "mock-jwt-token-123",
                 };
             },
         },
@@ -94,19 +86,17 @@ export const endpoints: Endpoints = {
             }),
         },
     ],
-
     commercialProperty: [
         {
             method: "POST",
             path: "/api/CommercialProperty/AddCommercialProperty",
             response: (req) => {
                 const body = req.body || {};
-
                 return {
                     isSuccess: true,
-                    message: "Property added successfully",
+                    message: "Commercial property added successfully",
                     data: {
-                        propertyId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                        propertyId: "6fa85f64-5717-4562-b3fc-2c963f66afa6",
                         city: body.city,
                         address: body.address,
                         googleMapsUrl: body.googleMapsUrl,
@@ -116,17 +106,97 @@ export const endpoints: Endpoints = {
                         price: body.price,
                         square: body.square,
                         description: body.description,
+                        dateListed: new Date().toISOString(),
                         agentName: "Agent Example",
                         compoundName: "Compound Example",
-                        businessType: body.businessType,
                         floorNumber: body.floorNumber,
+                        businessType: body.businessType,
                         hasStorage: body.hasStorage,
                         amenity: body.amenity,
                     },
                 };
             },
         },
+        {
+            method: "PUT",
+            path: "/api/CommercialProperty/:id",
+            response: ({ params }) => {
+                const { id } = params;
+                return {
+                    isSuccess: true,
+                    message: "Commercial property retrieved successfully",
+                    data: {
+                        propertyId: id,
+                        city: "Alexandria",
+                        title: "omar property title",
+                        address: "15 El Tahrir St, Cairo, Egypt",
+                        googleMapsUrl: "vhttps://www.google.com/maps/@29.9609231,32.5484151,13z?entry=ttu&g_ep=EgoyMDI1MTAyOS4yIKXMDSoASAFQAw%3D%3D",
+                        propertyType: 1,
+                        propertyPurpose: 1,
+                        propertyStatus: 1,
+                        price: 4000000,
+                        square: 400,
+                        description: "A spacious office space available for rent.",
+                        dateListed: new Date().toISOString(),
+                        agentName: "Agent Example",
+                        compoundName: "Compound Example",
+                        floorNumber: 3,
+                        businessType: "Office",
+                        hasStorage: false,
+                        amenity: {
+                            hasElectricityLine: true,
+                            hasWaterLine: true,
+                            hasGasLine: false,
+                        },
+                        images: [
+                            "https://placehold.co/600x400/commercial1.jpg",
+                            "https://placehold.co/600x400/commercial2.jpg",
+                        ],
+                    },
+                };
+            },
+        },
+        {
+            method: "GET",
+            path: "/api/CommercialProperty/:id",
+            response: ({ params }) => {
+                const { id } = params;
+                return {
+                    isSuccess: true,
+                    message: "Commercial property retrieved successfully",
+                    data: {
+                        propertyId: id,
+                        city: "Alexandria",
+                        title: "omar property title",
+                        address: "15 El Tahrir St, Cairo, Egypt",
+                        googleMapsUrl: "vhttps://www.google.com/maps/@29.9609231,32.5484151,13z?entry=ttu&g_ep=EgoyMDI1MTAyOS4yIKXMDSoASAFQAw%3D%3D",
+                        propertyType: 1,
+                        propertyPurpose: 1,
+                        propertyStatus: 1,
+                        price: 4000000,
+                        square: 400,
+                        description: "A spacious office space available for rent.",
+                        dateListed: new Date().toISOString(),
+                        agentName: "Agent Example",
+                        compoundName: "Compound Example",
+                        floorNumber: 3,
+                        businessType: "Office",
+                        hasStorage: false,
+                        amenity: {
+                            hasElectricityLine: true,
+                            hasWaterLine: true,
+                            hasGasLine: false,
+                        },
+                        images: [
+                            "https://placehold.co/600x400/commercial1.jpg",
+                            "https://placehold.co/600x400/commercial2.jpg",
+                        ],
+                    },
+                };
+            },
+        },
     ],
+
 
     residentialProperty: [
         {
@@ -160,7 +230,88 @@ export const endpoints: Endpoints = {
                 };
             },
         },
+        {
+            method: "PUT",
+            path: "/api/ResidentialProperty/:id",
+            response: ({ params }) => {
+                const { id } = params;
+                return {
+                    isSuccess: true,
+                    message: "Residential property retrieved successfully",
+                    data: {
+                        propertyId: id,
+                        title: "omar property title",
+                        city: "Cairo",
+                        address: "15 El Tahrir St, Cairo, Egypt",
+                        googleMapsUrl: "https://www.google.com/maps/@29.9609231,32.5484151,13z?entry=ttu&g_ep=EgoyMDI1MTAyOS4yIKXMDSoASAFQAw%3D%3D",
+                        propertyType: 0,
+                        propertyPurpose: 0,
+                        propertyStatus: 1,
+                        price: 2000000,
+                        square: 150,
+                        description: "A beautiful residential apartment near the Nile.",
+                        dateListed: new Date().toISOString(),
+                        agentName: "Agent Example",
+                        compoundName: "Compound Example",
+                        bedrooms: 3,
+                        bathrooms: 2,
+                        floors: 5,
+                        kitchenType: 1,
+                        amenity: {
+                            hasElectricityLine: true,
+                            hasWaterLine: true,
+                            hasGasLine: true,
+                        },
+                        images: [
+                            "https://placehold.co/600x400/residential1.jpg",
+                            "https://placehold.co/600x400/residential2.jpg",
+                        ],
+                    },
+                };
+            },
+        },
+        {
+            method: "GET",
+            path: "/api/ResidentialProperty/:id",
+            response: ({ params }) => {
+                const { id } = params;
+                return {
+                    isSuccess: true,
+                    message: "Residential property retrieved successfully",
+                    data: {
+                        propertyId: id,
+                        title: "omar property title",
+                        city: "Cairo",
+                        address: "15 El Tahrir St, Cairo, Egypt",
+                        googleMapsUrl: "https://www.google.com/maps/@29.9609231,32.5484151,13z?entry=ttu&g_ep=EgoyMDI1MTAyOS4yIKXMDSoASAFQAw%3D%3D",
+                        propertyType: 0,
+                        propertyPurpose: 0,
+                        propertyStatus: 1,
+                        price: 2000000,
+                        square: 150,
+                        description: "A beautiful residential apartment near the Nile.",
+                        dateListed: new Date().toISOString(),
+                        agentName: "Agent Example",
+                        compoundName: "Compound Example",
+                        bedrooms: 3,
+                        bathrooms: 2,
+                        floors: 5,
+                        kitchenType: 1,
+                        amenity: {
+                            hasElectricityLine: true,
+                            hasWaterLine: true,
+                            hasGasLine: true,
+                        },
+                        images: [
+                            "https://placehold.co/600x400/residential1.jpg",
+                            "https://placehold.co/600x400/residential2.jpg",
+                        ],
+                    },
+                };
+            },
+        },
     ],
+
     // 👇 Compound endpoints
     compound: [
         {

@@ -33,7 +33,7 @@ export type baseLisintingForm = {
     square: number;
     // Step 4
     description: string;
-    amenities: {
+    amenity: {
         hasElectricityLine: boolean;
         hasWaterLine: boolean;
         hasGasLine: boolean;
