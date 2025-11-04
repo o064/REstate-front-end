@@ -10,13 +10,14 @@ import Loader from '../ui/Loader';
 import { useEditProperty, usePrevData } from '../hooks/useProperty';
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router';
+import Container from '../ui/Continer';
 
 function EditLisiting() {
   const { data: prevData, isLoading, isError: isErrorPrevData, error } = usePrevData();
   const methods = useForm<Omit<ListingFormInputs, 'images' | 'agentId'>>({
     mode: 'onChange',
   });
-  const { id: propertyId } = useParams<{ id: string }>();
+  const { propertyId } = useParams<{ propertyId: string }>();
   const { reset } = methods;
   const navigate = useNavigate();
   //  Reset form when previous data is loaded
@@ -46,7 +47,7 @@ function EditLisiting() {
     navigate('/', { replace: true });
   }
   return (
-    <main className="min-h-screen bg-gray-50 py-8">
+    <Container>
       <FormProvider {...methods}>
         <form
           onSubmit={methods.handleSubmit(onSubmit)}
@@ -75,7 +76,7 @@ function EditLisiting() {
           </div>
         </form>
       </FormProvider>
-    </main>
+    </Container>
   );
 }
 

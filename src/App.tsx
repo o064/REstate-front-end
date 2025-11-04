@@ -11,6 +11,7 @@ import WishList from './pages/WishList';
 import AddListing from './pages/AddListing';
 import EditLisiting from './pages/EditLisiting';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import EditImages from './pages/EditImages';
 // Create a client
 const queryClient = new QueryClient();
 const router = createBrowserRouter(
@@ -21,7 +22,8 @@ const router = createBrowserRouter(
         <Route path="estateDetails" element={<EstateDetails />} />
         <Route path="profile" element={<Profile />} />
         <Route path="wishList" element={<WishList />} />
-        <Route path="edit/:type/:id" element={<EditLisiting />} />
+        <Route path="edit/property/:propertyType/:propertyId" element={<EditLisiting />} />
+        {/* <Route path="edit/images/:propertyId" element={<EditImages />} /> */}
         <Route path="add" element={<AddListing />} />
       </Route>
       {/* login & signup layout */}

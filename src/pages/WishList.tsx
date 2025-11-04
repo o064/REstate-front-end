@@ -2,12 +2,13 @@ import EstateCard from '../ui/EstateCard';
 import { getWishList } from '../store/wishListSlice';
 import { Heart } from 'lucide-react';
 import { useSelector } from 'react-redux';
+import Container from '../ui/Continer';
 
 function WishList() {
   const wishList = useSelector(getWishList);
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <Container>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
@@ -39,7 +40,7 @@ function WishList() {
           </div>
         )}
       </div>
-    </div>
+    </Container>
   );
 }
 

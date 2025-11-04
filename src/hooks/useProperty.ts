@@ -48,7 +48,7 @@ export function useEditProperty(id: string) {
 }
 
 export function usePrevData() {
-    const { id: propertyId, type: propertyType } = useParams<{ id: string; type: string }>();
+    const { propertyId, propertyType } = useParams<{ propertyId: string; propertyType: string }>();
     const numericType = propertyType === "residential" ? 0 : 1;
 
     const query = useQuery({

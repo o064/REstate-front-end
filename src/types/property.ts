@@ -4,7 +4,7 @@ export type PropertyType = "commercial" | "residential";
 export type Property = {
     id: string;
     name: string;
-    purpose: PropertyPurpose;
+    purpose: 0 | 1;
     square: number;
     price: number;
     address: string;
@@ -57,3 +57,6 @@ export type CommercialProperty = baseLisintingForm & {
 export type ListingFormInputs =
     | CommercialProperty
     | residentialProperty;
+export type ListingImagesFormInputs = {
+    images: File[];
+}

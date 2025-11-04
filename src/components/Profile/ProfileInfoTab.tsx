@@ -1,10 +1,10 @@
 import { Building2, Mail, Phone, User } from 'lucide-react';
-import type { userProfile } from '../../types/User';
+import type { Profile } from '../../types/User';
 
-type profileTabProps = {
-  user: userProfile;
+type ProfileInfoTabProps = {
+  user: Profile;
 };
-function ProfileTab({ user }: profileTabProps) {
+function ProfileInfoTab({ user }: ProfileInfoTabProps) {
   return (
     <div className="space-y-6">
       <div>
@@ -43,7 +43,7 @@ function ProfileTab({ user }: profileTabProps) {
             </div>
           </div>
 
-          {user.type === 'vendor' && (
+          {user.type === 'agent' && (
             <>
               {user.agencyName && (
                 <div className="flex items-start">
@@ -88,4 +88,4 @@ function ProfileTab({ user }: profileTabProps) {
     </div>
   );
 }
-export default ProfileTab;
+export default ProfileInfoTab;

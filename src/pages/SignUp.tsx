@@ -16,6 +16,7 @@ import type { UserRegister } from '../types/User';
 import { ControlledSelector } from '../ui/ControllerSelector';
 import ErrorMessage from '../ui/ErrorMessage';
 import AuthService from '../services/AuthService';
+import Container from '../ui/Continer';
 
 function Signup() {
   const {
@@ -29,7 +30,7 @@ function Signup() {
       password: '',
       userName: '',
       phone: '',
-      type: 'buyer',
+      type: 'user',
     },
     mode: 'onSubmit',
   });
@@ -41,7 +42,7 @@ function Signup() {
     if (res) navigate('/');
   }
   return (
-    <main className="min-h-screen w-full flex items-center justify-center bg-blue-100 text-black p-6 ">
+    <Container className="flex items-center justify-center bg-blue-100 text-black p-6 ">
       <div className="bg-white shadow-2xl rounded-2xl p-10 w-full max-w-md text-center">
         {/* Header */}
         <FormHeader
@@ -61,8 +62,8 @@ function Signup() {
             title="I am signing up as a:"
             className="border-b border-gray-300"
             options={[
-              { value: 'buyer', icon: <User /> },
-              { value: 'vendor', icon: <Building2 /> },
+              { value: 'user', icon: <User /> },
+              { value: 'agent', icon: <Building2 /> },
             ]}
           />
           {/* email */}
@@ -114,7 +115,7 @@ function Signup() {
           </Link>
         </p>
       </div>
-    </main>
+    </Container>
   );
 }
 

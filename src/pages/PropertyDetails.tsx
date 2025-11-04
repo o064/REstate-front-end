@@ -1,68 +1,68 @@
-import { MapPin, Phone, Bed, Bath, Ruler, Heart } from "lucide-react";
-import { useEffect, useState } from "react";
-import SiteMap from "../components/siteMap/SiteMap";
-import Button from "../ui/Button";
-import PropertyCard from "../ui/PropertyCard";
-import Commnts from "../components/comments/Comments";
+import { MapPin, Phone, Bed, Bath, Ruler, Heart } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import SiteMap from '../components/siteMap/SiteMap';
+import Button from '../ui/Button';
+import PropertyCard from '../ui/PropertyCard';
+import Commnts from '../components/comments/Comments';
 
 const PropertyDetails = () => {
   const [src, setSrc] = useState(0);
   const [comment, setComment] = useState<string[]>([]);
 
   const property = {
-    title: "شقة فاخرة في المعادي",
-    price: "2,500,000 جنيه",
-    area: "180 م²",
+    title: 'شقة فاخرة في المعادي',
+    price: '2,500,000 جنيه',
+    area: '180 م²',
     rooms: 3,
     baths: 2,
-    address: "المعادي، القاهرة",
+    address: 'المعادي، القاهرة',
     lat: 29.9611,
     lng: 31.2612,
     agent: {
-      name: "محمود عبد الهادي",
-      phone: "01012345678",
+      name: 'محمود عبد الهادي',
+      phone: '01012345678',
     },
     description:
-      "شقة فاخرة في قلب المعادي بالقرب من الكورنيش، تشطيب سوبر لوكس، قريبة من المدارس والخدمات، تطل على شارع رئيسي.",
-    features: ["تكييف مركزي", "بلكونة", "موقف سيارات", "أمن وحراسة 24 ساعة"],
+      'شقة فاخرة في قلب المعادي بالقرب من الكورنيش، تشطيب سوبر لوكس، قريبة من المدارس والخدمات، تطل على شارع رئيسي.',
+    features: ['تكييف مركزي', 'بلكونة', 'موقف سيارات', 'أمن وحراسة 24 ساعة'],
     images: [
-      "https://images.dubizzle.com.eg/thumbnails/146038752-800x600.webp",
-      "https://images.dubizzle.com.eg/thumbnails/146038765-400x300.webp",
-      "https://images.dubizzle.com.eg/thumbnails/146038769-400x300.webp",
+      'https://images.dubizzle.com.eg/thumbnails/146038752-800x600.webp',
+      'https://images.dubizzle.com.eg/thumbnails/146038765-400x300.webp',
+      'https://images.dubizzle.com.eg/thumbnails/146038769-400x300.webp',
     ],
     Commnts: [
-      "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Blanditiis atque, esse porro pariatur mollitia iusto magnam dolorem vero, maiores soluta quae at repellat aliquid dolorum ipsa saepe eos ducimus ullam.",
-      "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Blanditiis atque, esse porro pariatur mollitia iusto magnam dolorem vero, maiores soluta quae at",
-      "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Blanditiis atque, esse porro pariatur mollitia iusto magnam dolorem vero, maiores soluta quae at repellat aliquid dolorum",
-    ]
+      'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Blanditiis atque, esse porro pariatur mollitia iusto magnam dolorem vero, maiores soluta quae at repellat aliquid dolorum ipsa saepe eos ducimus ullam.',
+      'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Blanditiis atque, esse porro pariatur mollitia iusto magnam dolorem vero, maiores soluta quae at',
+      'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Blanditiis atque, esse porro pariatur mollitia iusto magnam dolorem vero, maiores soluta quae at repellat aliquid dolorum',
+    ],
   };
 
   const similarProperties = [
     {
       id: 1,
-      title: "شقة حديثة في التجمع الخامس",
-      price: "3,000,000 جنيه",
-      area: "200 م²",
-      image: "https://images.dubizzle.com.eg/thumbnails/154463110-800x600.webp",
+      title: 'شقة حديثة في التجمع الخامس',
+      price: '3,000,000 جنيه',
+      area: '200 م²',
+      image: 'https://images.dubizzle.com.eg/thumbnails/154463110-800x600.webp',
     },
     {
       id: 2,
-      title: "فيلا في الشيخ زايد",
-      price: "7,500,000 جنيه",
-      area: "350 م²",
-      image: "https://images.dubizzle.com.eg/thumbnails/154339648-800x600.webp",
+      title: 'فيلا في الشيخ زايد',
+      price: '7,500,000 جنيه',
+      area: '350 م²',
+      image: 'https://images.dubizzle.com.eg/thumbnails/154339648-800x600.webp',
     },
     {
       id: 3,
-      title: "شقة في مدينة نصر",
-      price: "1,900,000 جنيه",
-      area: "150 م²",
+      title: 'شقة في مدينة نصر',
+      price: '1,900,000 جنيه',
+      area: '150 م²',
       image:
-        "https://img-4.aqarmap.com.eg/new-aqarmap-media/slider-photo-watermarked-logo-large/2506/683c4f22e696a972766983.png/2510/68e25a8a33845018562350.jfif",
+        'https://img-4.aqarmap.com.eg/new-aqarmap-media/slider-photo-watermarked-logo-large/2506/683c4f22e696a972766983.png/2510/68e25a8a33845018562350.jfif',
     },
   ];
   useEffect(() => {
-    setComment(property.Commnts)
+    setComment(property.Commnts);
   }, []);
 
   return (
@@ -96,10 +96,11 @@ const PropertyDetails = () => {
               key={index}
               src={img}
               alt={`thumb-${index}`}
-              className={`h-24 object-cover rounded-lg cursor-pointer border-2 transition ${src === index
-                  ? "border-blue-500 scale-105"
-                  : "border-transparent hover:border-gray-300"
-                }`}
+              className={`h-24 object-cover rounded-lg cursor-pointer border-2 transition ${
+                src === index
+                  ? 'border-blue-500 scale-105'
+                  : 'border-transparent hover:border-gray-300'
+              }`}
               onClick={() => setSrc(index)}
             />
           ))}
@@ -177,7 +178,7 @@ const PropertyDetails = () => {
           ))}
         </div>
       </section>
-      <Commnts comment={comment} Func={setComment}/>
+      <Commnts comment={comment} Func={setComment} />
     </div>
   );
 };

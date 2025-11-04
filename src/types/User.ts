@@ -1,5 +1,5 @@
 
-export type UserType = 'buyer' | 'vendor';
+export type UserType = 'user' | 'agent';
 
 interface BaseProfile {
     id: string;
@@ -10,12 +10,12 @@ interface BaseProfile {
     dateJoined: Date;
 }
 
-interface BuyerProfile extends BaseProfile {
-    type: "buyer";
+interface UserProfile extends BaseProfile {
+    type: "user";
 }
 
-interface VendorProfile extends BaseProfile {
-    type: "vendor";
+interface AgentProfile extends BaseProfile {
+    type: "agent";
     agencyName: string;
     agencyType?: string;
     experienceYears: number;
@@ -33,4 +33,4 @@ export type UserSignIn = {
     email: string;
     password: string;
 };
-export type userProfile = BuyerProfile | VendorProfile;
+export type Profile = UserProfile | AgentProfile;

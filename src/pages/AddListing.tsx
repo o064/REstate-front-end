@@ -14,6 +14,7 @@ import { commercialStepFields, residentialStepFields } from '../constants/Listin
 import Input from '../ui/Input';
 import Loader from '../ui/Loader';
 import { useAddProperty } from '../hooks/useProperty';
+import Container from '../ui/Continer';
 
 function AddListing() {
   const methods = useForm<ListingFormInputs>({
@@ -69,7 +70,7 @@ function AddListing() {
     return <Loader />;
   }
   return (
-    <main className="min-h-screen bg-gray-50 py-8">
+    <Container>
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <PageHeader
           title="Create New Listing"
@@ -125,7 +126,7 @@ function AddListing() {
           </form>
         </FormProvider>
       </div>
-    </main>
+    </Container>
   );
 }
 
