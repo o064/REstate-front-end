@@ -90,3 +90,24 @@ export type getUserProfileResponse = {
     message: string;
     data: UserData;
 } | BadRequest;
+export type getUser = {
+    isSuccess: true;
+    message: string;
+    data: UserData;
+} | BadRequest;
+// delete property 
+export type deletePropertyResponse = { isSuccess: boolean, message: string, data?: null | boolean }
+
+// auth
+
+
+export type LoginSuccess = {
+    isSuccess: true;
+    message: string;
+    data: {
+        userId: string;
+        jwtToken: string;
+    };
+};
+
+export type LoginResponse = LoginSuccess | BadRequest;

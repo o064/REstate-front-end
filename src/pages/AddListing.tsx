@@ -99,7 +99,7 @@ function AddListing() {
             {step == 2 && <LocationStep />}
             {step == 3 && <PricePropertyDetailsStep />}
             {step == 4 && <DescriptionAmenitiesStep />}
-            {step == 5 && <ImageUploadStep />}
+            {step == 5 && <ImageUploadStep required={true} />}
             {/* Navigation Buttons */}
             <div className="flex justify-between gap-6 mt-8 pt-6 border-t border-gray-200">
               {step >= 1 && (

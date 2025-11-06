@@ -23,8 +23,6 @@ function EditLisiting() {
   //  Reset form when previous data is loaded
   useEffect(() => {
     if (prevData && Object.keys(prevData).length > 0) {
-      // const { dateListed, agentName, compoundName, ...rest } = prevData;
-      console.log('reset', prevData);
       const { compoundName, dateListed, agentName, galleries, ...rest } = prevData;
       reset({ ...rest, propertyStatus: 0, compoundId: '' } as Omit<
         ListingFormInputs,
@@ -36,15 +34,27 @@ function EditLisiting() {
   if (!propertyId) {
     return <p>Error: Missing property ID</p>;
   }
-  const { mutate: EditProperty, isPending, isError: isErrorMutate } = useEditProperty(propertyId);
+  const { mutate: EditProperty, isPending, isError: isErrorMutate } = useEditProperty();
   if (isLoading || isPending) return <Loader />;
   if (isErrorPrevData || isErrorMutate) {
     const errorMessage = error instanceof Error ? error.message : 'An error occurred';
     return <p>Error: {errorMessage}</p>;
   }
   function onSubmit(formData: Omit<ListingFormInputs, 'images' | 'agentId'>) {
-    EditProperty(formData);
-    navigate('/', { replace: true });
+    if (propertyId) {
+      EditProperty(
+        { formData, propertyId },
+        {
+          onSuccess: () => {
+            navigate('/', { replace: true });
+          },
+          onError: (error) => {
+            console.error('Edit failed:', error);
+            alert(`Error updating property: ${error.message}`);
+          },
+        }
+      );
+    }
   }
   return (
     <Container>

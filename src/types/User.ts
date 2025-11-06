@@ -8,11 +8,24 @@ export type UserRegister = {
     password: string;
     userName: string;
     phone: string;
-    type: UserType;
 };
+export type customerRegister = UserRegister & {
+    roleDiscriminator: 3;
+};
+export type agentRegister = UserRegister & {
+    roleDiscriminator: 1;
+    agencyName: string,
+    taxIdentificationNumber: number,
+    experienceYears: number,
+};
+export type RegitserForm = agentRegister | agentRegister;
 export type UserSignIn = {
     email: string;
     password: string;
+};
+export type sessinToken = {
+    userId: string;
+    jwtToken: string;
 };
 // profile
 

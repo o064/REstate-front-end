@@ -1,4 +1,4 @@
-import { Building2, Mail, Phone, User } from 'lucide-react';
+import { Building2, Loader, Mail, Phone, User } from 'lucide-react';
 import InputField from '../ui/InputField';
 import Input from '../ui/Input';
 import PasswordInput from '../components/auth/PasswordInput';
@@ -7,40 +7,55 @@ import { Link, useNavigate } from 'react-router';
 import FormHeader from '../components/auth/FormHeader';
 import { useForm } from 'react-hook-form';
 import {
+  agencyNameValidation,
   emailValidation,
+  experienceYearsValidation,
   nameValidation,
   passwordValidtion,
   phoneValidation,
+  taxIdentificationNumberValidation,
 } from '../utils/validation';
-import type { UserRegister } from '../types/User';
+import type { RegitserForm } from '../types/User';
 import { ControlledSelector } from '../ui/ControllerSelector';
 import ErrorMessage from '../ui/ErrorMessage';
-import AuthService from '../services/AuthService';
 import Container from '../ui/Continer';
+import Grid from '../ui/Grid';
+import { useHomePageRedirect, useRegister } from '../hooks/useAuth';
 
 function Signup() {
   const {
     register,
     handleSubmit,
     control,
+    watch,
     formState: { errors },
-  } = useForm<UserRegister>({
+  } = useForm<RegitserForm>({
     defaultValues: {
       email: '',
       password: '',
       userName: '',
       phone: '',
-      type: 'user',
+      roleDiscriminator: 1,
+      agencyName: '',
+      taxIdentificationNumber: 0,
+      experienceYears: 0,
     },
     mode: 'onSubmit',
   });
+  const { mutate: registerUser, error, isError, isPending } = useRegister();
   const navigate = useNavigate();
-
-  async function onSubmit(formData: UserRegister) {
+  const role = watch('roleDiscriminator');
+  async function onSubmit(formData: RegitserForm) {
     console.log(formData);
-    const res = await AuthService.register(formData);
-    if (res) navigate('/');
+    registerUser(formData, {
+      onSuccess: () => {
+        navigate('/');
+      },
+    });
   }
+  // useHomePageRedirect();
+  if (isPending) return <Loader />;
+  if (isError) return <p>Error : {error.message}</p>;
   return (
     <Container className="flex items-center justify-center bg-blue-100 text-black p-6 ">
       <div className="bg-white shadow-2xl rounded-2xl p-10 w-full max-w-md text-center">
@@ -56,14 +71,15 @@ function Signup() {
         <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
           {/* select Type */}
           <ControlledSelector
-            name="type"
+            name="roleDiscriminator"
             control={control}
             rules={{ required: 'Please select a user type' }}
             title="I am signing up as a:"
             className="border-b border-gray-300"
             options={[
-              { value: 'user', icon: <User /> },
-              { value: 'agent', icon: <Building2 /> },
+              { value: 1, label: 'agent', icon: <Building2 /> },
+              // { value: 2, label: 'broker', icon: <Building2 /> },
+              { value: 3, label: 'customer', icon: <User /> },
             ]}
           />
           {/* email */}
@@ -104,6 +120,49 @@ function Signup() {
             />
             {errors.phone && <ErrorMessage>{errors.phone.message}</ErrorMessage>}
           </InputField>
+
+          {/* AgencyName */}
+          {role == 1 && (
+            <>
+              <InputField id="agencyName" label="agencyName">
+                <Input
+                  type="text"
+                  id="agencyName"
+                  placeholder="Your Agency Name"
+                  {...register('agencyName', agencyNameValidation)}
+                />
+                {errors.agencyName && <ErrorMessage>{errors.agencyName.message}</ErrorMessage>}
+              </InputField>
+              {/* Experience Information */}
+              <Grid className="grid grid-cols-2 gap-4">
+                {/* Tax Identification Number */}
+                <InputField id="taxIdentificationNumber" label="Tax Identification Number">
+                  <Input
+                    type="text"
+                    id="taxIdentificationNumber"
+                    placeholder="Enter your tax identification number"
+                    {...register('taxIdentificationNumber', taxIdentificationNumberValidation)}
+                  />
+                  {errors.taxIdentificationNumber && (
+                    <ErrorMessage>{errors.taxIdentificationNumber.message}</ErrorMessage>
+                  )}
+                </InputField>
+                {/* Experience Years */}
+                <InputField id="experienceYears" label="Years of Experience">
+                  <Input
+                    type="number"
+                    id="experienceYears"
+                    placeholder="Enter total years of experience"
+                    {...register('experienceYears', experienceYearsValidation)}
+                  />
+                  {errors.experienceYears && (
+                    <ErrorMessage>{errors.experienceYears.message}</ErrorMessage>
+                  )}
+                </InputField>
+              </Grid>
+            </>
+          )}
+
           {/* actions  */}
           <AuthActions actionFor="create account" />
         </form>

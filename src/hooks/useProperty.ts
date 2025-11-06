@@ -1,7 +1,7 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { ListingFormInputs } from "../types/property";
 import { postImages } from "../services/imagesService";
-import { getPropertyById, postProperty, putProperty } from "../services/PropertyService";
+import { delPropertyById, getPropertyById, postProperty, putProperty } from "../services/PropertyService";
 import { useParams } from "react-router";
 import { useMemo } from "react";
 
@@ -10,7 +10,6 @@ export function useAddProperty() {
     return useMutation({
         mutationFn: async (formData: ListingFormInputs) => {
             const { images, ...property } = formData;
-
             //  post property first
             const propertyRes =
                 property.propertyType === 0
@@ -27,22 +26,36 @@ export function useAddProperty() {
                     images,
                 });
             }
-
             return propertyRes;
         },
     });
 }
 
-export function useEditProperty(id: string) {
+export function useEditProperty() {
     return useMutation({
-        mutationFn: async (formData: Omit<ListingFormInputs, 'images' | 'agentId'>) => {
+        mutationFn: async ({ formData, propertyId }: { formData: Omit<ListingFormInputs, 'images' | 'agentId'>, propertyId: string }) => {
             const property = formData;
             //  post property first
-            const propertyRes = await putProperty(id, property)
+            const propertyRes = await putProperty(propertyId, property)
             if (!propertyRes.isSuccess) {
                 throw new Error(propertyRes.message);
             }
             return propertyRes;
+        },
+    });
+}
+export function useDeleteProperty() {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: async ({ propertyId, propertyType }: { propertyId: string, propertyType: number }) => {
+            const propertyRes = await delPropertyById(propertyId, propertyType)
+            if (!propertyRes.isSuccess) {
+                throw new Error(propertyRes.message);
+            }
+            return propertyRes;
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["userProfile"] });
         },
     });
 }

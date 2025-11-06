@@ -1,41 +1,27 @@
 import Button from '../ui/Button';
 import CardSection from '../ui/CardSection';
-import AuthService from '../services/AuthService';
 import ProfileHeader from '../components/Profile/ProfileHeader';
 import ProfileTabs from '../components/Profile/ProfileTabs';
-import type { Profile } from '../types/User';
 import { useUserProfile } from '../hooks/useProfile';
 import { Loader } from 'lucide-react';
-import type { getAgentProfileResponse, getUserProfileResponse } from '../types/Responses';
-const handleLogout = () => {
-  AuthService.logout();
-};
-// const user: Profile = fakeUser;
-function destructUserProfile(data?: getUserProfileResponse | getAgentProfileResponse) {
-  if (!data || !data.isSuccess) return { user: null, listings: [] };
-
-  const profileData = data.data;
-  if ('agencyName' in profileData) {
-    const { properties, user, ...rest } = profileData;
-    const agentInfo = { ...rest, ...user };
-
-    const listings = [...properties.commercialProperties, ...properties.residentialProperties];
-    console.log(listings);
-    return {
-      user: agentInfo,
-      listings,
-    };
-  }
-  return {
-    user: profileData,
-    listings: [],
-  };
-}
+import { useLogout } from '../hooks/useAuth';
+import { destructUserProfile } from '../utils/helper';
+import { useNavigate } from 'react-router';
 
 function MyProfile() {
   const { isPending, isError, error, data } = useUserProfile();
   const { user, listings } = destructUserProfile(data);
-  // const { user } = userProfile;
+  const { mutate: logout } = useLogout();
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    if (user?.userId) {
+      logout(user.userId, {
+        onSuccess: () => {
+          navigate('/');
+        },
+      });
+    }
+  };
   if (isPending) return <Loader />;
   if (isError || !user) {
     const errorMessage = error instanceof Error ? error.message : 'An error occurred';

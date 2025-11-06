@@ -1,4 +1,4 @@
-type EndpointMethod = "GET" | "POST" | "PUT";
+type EndpointMethod = "GET" | "POST" | "PUT" | "DELETE";
 
 interface Endpoint<T> {
     method: EndpointMethod;
@@ -11,6 +11,112 @@ interface Endpoint<T> {
 
 interface Endpoints {
     [resource: string]: Endpoint<unknown>[];
+}
+
+// In-memory agent store so DELETE endpoints can remove properties from the
+// agent's list and subsequent GETs reflect the change.
+const agentStore: Record<string, any> = {
+    "3fa85f64-5717-4562-b3fc-2c963f66afa6": {
+        id: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        agencyName: "Premium Real Estate Agency",
+        taxIdentificationNumber: 123456789,
+        rating: 4.8,
+        experienceYears: 5,
+        user: {
+            userId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+            username: "JohnAgent",
+            email: "john.agent@example.com",
+            phoneNumber: "+201234567890",
+            dateJoined: "2025-11-04T18:52:40.887Z",
+        },
+        // Keep the same shape used elsewhere in this file (object with two arrays)
+        properties: {
+            commercialProperties: [
+                {
+                    propertyId: "3fa85f64-5717-4562-b3fc-2312963f66afa6",
+                    city: "Cairo",
+                    title: "MyHouse 2 ",
+                    address: "Downtown Business District",
+                    googleMapsUrl: "https://maps.google.com/example",
+                    propertyType: { 0: "Residential" },
+                    propertyPurpose: { 0: "Rent" },
+                    propertyStatus: { 0: "Accepted" },
+                    price: 500000,
+                    square: 200,
+                    description: "Prime commercial space in downtown",
+                    agentName: "John Agent",
+                    compoundName: "Business Complex One",
+                    businessType: "Office",
+                    floorNumber: 5,
+                    hasStorage: true,
+                    amenity: {
+                        hasElectricityLine: true,
+                        hasWaterLine: true,
+                        hasGasLine: true,
+                    },
+                    galleries: [
+                        {
+                            mediaId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                            propertyId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                            imageUrl: "https://images.dubizzle.com.eg/thumbnails/146038752-800x600.webp",
+                            uploadedAt: "2025-11-04T18:52:40.887Z",
+                        },
+                    ],
+                },
+            ],
+            residentialProperties: [
+                {
+                    propertyId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    title: "MyHouse",
+                    city: "Cairo",
+                    address: "New Cairo Residential Area",
+                    googleMapsUrl: "https://maps.google.com/example",
+                    propertyType: { 0: "Residential" },
+                    propertyPurpose: { 0: "Rent" },
+                    propertyStatus: { 0: "Accepted" },
+                    price: 300000,
+                    square: 150,
+                    description: "Modern residential apartment",
+                    dateListed: "2025-11-04T18:52:40.888Z",
+                    agentName: "John Agent",
+                    compoundName: "Green Valley Compound",
+                    bedrooms: 3,
+                    bathrooms: 2,
+                    floors: 1,
+                    kitchenType: 0,
+                    galleries: [
+                        {
+                            mediaId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                            propertyId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                            imageUrl: "https://images.dubizzle.com.eg/thumbnails/146038752-800x600.webp",
+                            uploadedAt: "2025-11-04T18:52:40.888Z",
+                        },
+                    ],
+                    amenity: {
+                        hasElectricityLine: true,
+                        hasWaterLine: true,
+                        hasGasLine: true,
+                    },
+                },
+            ],
+        },
+    },
+};
+
+function removePropertyFromAgents(propertyId: string) {
+    Object.values(agentStore).forEach((agent) => {
+        const groups = Array.isArray(agent.properties) ? agent.properties : [agent.properties];
+        groups.forEach((group: any) => {
+            if (Array.isArray(group.commercialProperties)) {
+                group.commercialProperties = group.commercialProperties.filter((p: any) => p.propertyId !== propertyId);
+            }
+            if (Array.isArray(group.residentialProperties)) {
+                group.residentialProperties = group.residentialProperties.filter((p: any) => p.propertyId !== propertyId);
+            }
+        });
+        // keep original shape (object or array)
+        agent.properties = Array.isArray(agent.properties) ? groups : groups[0];
+    });
 }
 
 export const endpoints: Endpoints = {
@@ -41,97 +147,36 @@ export const endpoints: Endpoints = {
             method: "GET",
             path: "/api/Agent/:AgentId",
             response: ({ params }) => {
+                const id = params.AgentId || "3fa85f64-5717-4562-b3fc-2c963f66afa6";
+                const agent = agentStore[id];
+                if (agent) {
+                    return {
+                        isSuccess: true,
+                        message: "Agent profile retrieved successfully",
+                        data: agent,
+                    };
+                }
+                // fallback to minimal default
                 return {
                     isSuccess: true,
                     message: "Agent profile retrieved successfully",
                     data: {
-                        id: params.AgentId || "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                        id,
                         agencyName: "Premium Real Estate Agency",
                         taxIdentificationNumber: 123456789,
                         rating: 4.8,
                         experienceYears: 5,
                         user: {
-                            userId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                            userId: id,
                             username: "JohnAgent",
                             email: "john.agent@example.com",
                             phoneNumber: "+201234567890",
-                            dateJoined: "2025-11-04T18:52:40.887Z"
+                            dateJoined: "2025-11-04T18:52:40.887Z",
                         },
-                        properties:
-                        {
-                            commercialProperties: [
-                                {
-                                    propertyId: "3fa85f64-5717-4562-b3fc-2312963f66afa6",
-                                    city: "Cairo",
-                                    title: "MyHouse 2 ",
-                                    address: "Downtown Business District",
-                                    googleMapsUrl: "https://maps.google.com/example",
-                                    propertyType: { 0: "Residential" },
-                                    propertyPurpose: { 0: "Rent" },
-                                    propertyStatus: { 0: "Accepted" },
-                                    price: 500000,
-                                    square: 200,
-                                    description: "Prime commercial space in downtown",
-                                    agentName: "John Agent",
-                                    compoundName: "Business Complex One",
-                                    businessType: "Office",
-                                    floorNumber: 5,
-                                    hasStorage: true,
-                                    amenity: {
-                                        hasElectricityLine: true,
-                                        hasWaterLine: true,
-                                        hasGasLine: true
-                                    },
-                                    galleries: [
-                                        {
-                                            mediaId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                                            propertyId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                                            imageUrl: "https://images.dubizzle.com.eg/thumbnails/146038752-800x600.webp",
-                                            uploadedAt: "2025-11-04T18:52:40.887Z"
-                                        }
-                                    ]
-                                }
-                            ],
-                            residentialProperties: [
-                                {
-                                    propertyId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                                    title: "MyHouse",
-                                    city: "Cairo",
-                                    address: "New Cairo Residential Area",
-                                    googleMapsUrl: "https://maps.google.com/example",
-                                    propertyType: { 0: "Residential" },
-                                    propertyPurpose: { 0: "Rent" },
-                                    propertyStatus: { 0: "Accepted" },
-                                    price: 300000,
-                                    square: 150,
-                                    description: "Modern residential apartment",
-                                    dateListed: "2025-11-04T18:52:40.888Z",
-                                    agentName: "John Agent",
-                                    compoundName: "Green Valley Compound",
-                                    bedrooms: 3,
-                                    bathrooms: 2,
-                                    floors: 1,
-                                    kitchenType: 0,
-                                    galleries: [
-                                        {
-                                            mediaId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                                            propertyId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                                            imageUrl: "https://images.dubizzle.com.eg/thumbnails/146038752-800x600.webp",
-                                            uploadedAt: "2025-11-04T18:52:40.888Z"
-                                        }
-                                    ],
-                                    amenity: {
-                                        hasElectricityLine: true,
-                                        hasWaterLine: true,
-                                        hasGasLine: true
-                                    }
-                                }
-                            ]
-                        }
-
-                    }
+                        properties: { commercialProperties: [], residentialProperties: [] },
+                    },
                 };
-            }
+            },
         }
     ],
     users: [
@@ -158,7 +203,6 @@ export const endpoints: Endpoints = {
         },
     ],
 
-    // 👇 Mock Auth endpoints
     auth: [
         {
             method: "POST",
@@ -168,7 +212,7 @@ export const endpoints: Endpoints = {
                     isSuccess: true,
                     message: "Login successful",
                     data: {
-                        userId: 1,
+                        userId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                         jwtToken: "mock-jwt-token-123",
                     },
                 };
@@ -182,7 +226,7 @@ export const endpoints: Endpoints = {
                     isSuccess: true,
                     message: "Login successful",
                     data: {
-                        userId: 1,
+                        userId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                         jwtToken: "mock-jwt-token-123",
                     },
                 };
@@ -323,6 +367,24 @@ export const endpoints: Endpoints = {
                 };
             },
         },
+        {
+            method: "DELETE",
+            path: "/api/CommercialProperty/:id",
+            response: ({ params }) => {
+                const { id } = params;
+                // remove property from any agent that references it
+                try {
+                    removePropertyFromAgents(id);
+                } catch (e) {
+                    // ignore errors in mock removal
+                }
+                return {
+                    isSuccess: true,
+                    message: "Commercial property deleted successfully",
+                    data: true,
+                };
+            },
+        },
     ],
 
 
@@ -443,6 +505,23 @@ export const endpoints: Endpoints = {
                             }
                         ],
                     },
+                };
+            },
+        },
+        {
+            method: "DELETE",
+            path: "/api/ResidentialProperty/:id",
+            response: ({ params }) => {
+                const { id } = params;
+                try {
+                    removePropertyFromAgents(id);
+                } catch (e) {
+                    // ignore errors in mock removal
+                }
+                return {
+                    isSuccess: true,
+                    message: "Residential property deleted successfully",
+                    data: true,
                 };
             },
         },

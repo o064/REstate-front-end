@@ -1,43 +1,60 @@
 import { Edit, Trash2 } from 'lucide-react';
 import { useState } from 'react';
+import Button from '../../ui/Button';
+import { useDeleteProperty } from '../../hooks/useProperty';
 
-function ListingControl({ id }: { id: string }) {
+function ListingControl({
+  propertyId,
+  propertyType,
+}: {
+  propertyId: string;
+  propertyType: number;
+}) {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState<boolean>(false);
-
+  const { mutate: delProperty, isError } = useDeleteProperty();
   const handleDelete = () => {
-    setShowDeleteConfirm(false);
+    delProperty({ propertyId, propertyType });
   };
+  if (isError) {
+    return <p>error while delete </p>;
+  }
   return (
     <div className="flex items-center space-x-2">
       {!showDeleteConfirm ? (
         <>
-          <button className="px-3 py-1.5 text-sm border border-gray-300 rounded-md hover:bg-gray-50 flex items-center space-x-1">
+          <Button
+            to={`/edit/property/${propertyType == 0 ? 'residential' : 'commerical'}/${propertyId}`}
+            size="small"
+            variant="secondary"
+            fullWidth={false}
+          >
             <Edit className="h-4 w-4" />
             <span>Edit</span>
-          </button>
-          <button
+          </Button>
+          <Button
             onClick={() => setShowDeleteConfirm(true)}
-            className="px-3 py-1.5 text-sm border border-red-200 text-red-600 rounded-md hover:bg-red-50 flex items-center space-x-1"
+            size="small"
+            variant="transDestructive"
+            fullWidth={false}
           >
             <Trash2 className="h-4 w-4" />
             <span>Delete</span>
-          </button>
+          </Button>
         </>
       ) : (
         <div className="flex items-center space-x-2">
           <span className="text-sm text-gray-600">Are you sure?</span>
-          <button
-            onClick={handleDelete}
-            className="px-3 py-1.5 text-sm bg-red-600 text-white rounded-md hover:bg-red-700"
-          >
-            Confirm
-          </button>
-          <button
+          <Button
             onClick={() => setShowDeleteConfirm(false)}
-            className="px-3 py-1.5 text-sm border border-gray-300 rounded-md hover:bg-gray-50"
+            size="small"
+            variant="secondary"
+            fullWidth={false}
           >
             Cancel
-          </button>
+          </Button>
+          <Button onClick={handleDelete} variant="destructive" fullWidth={false} size="small">
+            Confirm
+          </Button>
         </div>
       )}
     </div>

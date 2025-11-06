@@ -5,7 +5,7 @@ type ProfileInfoTabProps = {
   user: Profile;
 };
 function ProfileInfoTab({ user }: ProfileInfoTabProps) {
-  const userType = 'agencyName' in user ? 'agent' : 'user';
+  const userType = 'agencyName' in user ? 'agent' : 'customer';
   return (
     <div className="space-y-6">
       <div>

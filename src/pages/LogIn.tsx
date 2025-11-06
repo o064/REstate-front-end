@@ -9,8 +9,10 @@ import { useForm } from 'react-hook-form';
 import { emailValidation, passwordValidtion } from '../utils/validation';
 import ErrorMessage from '../ui/ErrorMessage';
 import type { UserSignIn } from '../types/User';
-import AuthService from '../services/AuthService';
 import Container from '../ui/Continer';
+import { useHomePageRedirect, useLogin } from '../hooks/useAuth';
+import Loader from '../ui/Loader';
+import { useEffect } from 'react';
 
 function Login() {
   const {
@@ -24,13 +26,22 @@ function Login() {
     },
     mode: 'onSubmit',
   });
+  const { mutate: login, isPending, isError, error } = useLogin();
   const navigate = useNavigate();
-
-  async function onSubmit(formData: UserSignIn) {
-    console.log(formData);
-    const res = await AuthService.login(formData);
-    if (res) navigate('/');
+  async function onSubmit({ email, password }: UserSignIn) {
+    login(
+      { email, password },
+      {
+        onSuccess: () => {
+          navigate('/');
+        },
+      }
+    );
   }
+
+  useHomePageRedirect();
+  if (isPending) return <Loader />;
+  if (isError) return <p>Error : {error.message}</p>;
   return (
     <Container className="flex items-center justify-center bg-blue-100 text-black p-6 ">
       <div className="bg-white shadow-2xl rounded-2xl p-10 w-full max-w-md text-center">

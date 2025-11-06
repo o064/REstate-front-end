@@ -41,7 +41,7 @@ export type baseLisintingForm = {
     description: string;
     amenity: Amenity; // multiple selections
     // Step 5
-    images?: File[];
+    images: File[];
 };
 export type residentialProperty = baseLisintingForm & {
     propertyType: 0;

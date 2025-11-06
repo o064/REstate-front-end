@@ -22,7 +22,7 @@ function PropertyListingCard({ property }: PropertyListingCardProps) {
         <div className="flex-1 min-w-0">
           <ListingInfo property={property} />
           <ListingFeatures property={property} />
-          <ListingControl id={property.propertyId} />
+          <ListingControl propertyId={property.propertyId} propertyType={property.propertyType} />
         </div>
       </div>
     </div>

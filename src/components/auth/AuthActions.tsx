@@ -1,23 +1,25 @@
 import Button from '../../ui/Button';
+import SpinnerMini from '../../ui/SpinnerMini';
 import Divider from './Divider';
 import Google from './Google';
 type AuthActionsProps = {
   actionFor: string;
+  isLoading?: boolean;
 };
-function AuthActions({ actionFor }: AuthActionsProps) {
+function AuthActions({ actionFor, isLoading }: AuthActionsProps) {
   return (
     <>
       {/* sign in / Signup*/}
       <Button variant="primary" type="submit">
-        {actionFor}
+        {isLoading ? <SpinnerMini /> : actionFor}
       </Button>
       {/* divider */}
-      <Divider></Divider>
+      {/* <Divider></Divider> */}
       {/* google login */}
-      <Button variant="secondary" type="button">
+      {/* <Button variant="secondary" type="button">
         <Google />
         <span className="font-medium text-gray-700">continue with Google</span>
-      </Button>
+      </Button> */}
     </>
   );
 }
