@@ -1,3 +1,5 @@
+import type { getAgentProfileResponse, getUserProfileResponse } from "../types/Responses";
+
 export function formatPrice(value: number): string {
     return new Intl.NumberFormat("en", {
         style: "currency",
@@ -20,4 +22,24 @@ export function capitalize(str: string) {
         .split(' ')
         .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
         .join(' ');;
+}
+export function destructUserProfile(data?: getUserProfileResponse | getAgentProfileResponse) {
+    if (!data || !data.isSuccess) return { user: null, listings: [] };
+
+    const profileData = data.data;
+    if ('agencyName' in profileData) {
+        const { properties, user, ...rest } = profileData;
+        const agentInfo = { ...rest, ...user };
+
+        const listings = [...properties.commercialProperties, ...properties.residentialProperties];
+        console.log(listings);
+        return {
+            user: agentInfo,
+            listings,
+        };
+    }
+    return {
+        user: profileData,
+        listings: [],
+    };
 }

@@ -7,7 +7,7 @@ import ErrorMessage from '../../ui/ErrorMessage';
 
 type FormDataInputs = { images: File[] };
 
-function ImageUploadStep() {
+function ImageUploadStep({ required = false }: { required?: boolean }) {
   const [formData, setFormData] = useState<FormDataInputs>({ images: [] });
   const { control, setValue } = useFormContext<FormDataInputs>();
 
@@ -59,6 +59,7 @@ function ImageUploadStep() {
             <Controller
               control={control}
               name="images"
+              rules={required ? { required: 'image upload is required' } : undefined}
               render={() => (
                 <>
                   <Input

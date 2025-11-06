@@ -1,16 +1,19 @@
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
+import { AuthProvider } from './context/AuthContext';
+import ProtectedRoute from './components/auth/ProtectedRoute';
 import SignUp from './pages/SignUp';
 import Layout from './layout/Layout';
 import Home from './pages/Home';
 import Login from './pages/LogIn';
 import EstateDetails from './pages/EstateDetails';
-import Profile from './pages/Profile';
 import WishList from './pages/WishList';
 import AddListing from './pages/AddListing';
 import EditLisiting from './pages/EditLisiting';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import EditImages from './pages/EditImages';
+import MyProfile from './pages/MyProfile';
 // Create a client
 const queryClient = new QueryClient();
 const router = createBrowserRouter(
@@ -19,10 +22,14 @@ const router = createBrowserRouter(
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="estateDetails" element={<EstateDetails />} />
-        <Route path="profile" element={<Profile />} />
-        <Route path="wishList" element={<WishList />} />
-        <Route path="edit" element={<EditLisiting />} />
-        <Route path="add" element={<AddListing />} />
+        {/* Protected Routes */}
+        <Route element={<ProtectedRoute />}>
+          <Route path="profile" element={<MyProfile />} />
+          <Route path="wishList" element={<WishList />} />
+          <Route path="edit/property/:propertyType/:propertyId" element={<EditLisiting />} />
+          {/* <Route path="edit/images/:propertyId" element={<EditImages />} /> */}
+          <Route path="add" element={<AddListing />} />
+        </Route>
       </Route>
       {/* login & signup layout */}
       <Route>
@@ -35,10 +42,11 @@ const router = createBrowserRouter(
 
 function App() {
   return (
-    // Provide the client to your App
     <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-      <ReactQueryDevtools initialIsOpen={false} />
+      <AuthProvider>
+        <RouterProvider router={router} />
+        <ReactQueryDevtools initialIsOpen={false} />
+      </AuthProvider>
     </QueryClientProvider>
   );
 }

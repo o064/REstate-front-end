@@ -1,7 +1,7 @@
 import React, { type ReactNode } from 'react';
 import { twMerge } from 'tailwind-merge'; // helps cleanly merge Tailwind classes
 import { Link } from 'react-router-dom'; // optional, for `to` support
-type ButtonVariants = 'primary' | 'secondary' | 'destructive';
+type ButtonVariants = 'primary' | 'secondary' | 'destructive' | 'transDestructive';
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   children: React.ReactNode;
   variant?: ButtonVariants;
@@ -10,12 +10,14 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   fullWidth?: boolean;
   icon?: ReactNode;
   onClick?: () => void;
-  type: 'submit' | 'reset' | 'button';
+  type?: 'submit' | 'reset' | 'button';
+  size?: 'base' | 'small';
 };
 
 function Button({
   children,
   variant = 'primary',
+  size = 'base',
   className,
   onClick,
   to,
@@ -31,14 +33,16 @@ function Button({
     primary: 'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500 disabled:bg-blue-300',
     secondary: 'border border-gray-300 text-gray-700 hover:bg-gray-100 focus:ring-gray-400',
     destructive: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500 disabled:bg-red-300',
+    transDestructive:
+      'border border-red-200 text-red-600 rounded-md hover:bg-red-50 disabled:bg-red-300 ',
   };
 
-  const size = 'px-4 py-3 text-base';
+  const btnSize = size === 'base' ? 'px-4 py-3 text-base' : 'px-3 py-1.5 text-sm';
 
   const combined = twMerge(
     base,
     variants[variant],
-    size,
+    btnSize,
     fullWidth ? 'w-full' : 'w-auto',
     className
   );

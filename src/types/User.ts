@@ -1,36 +1,56 @@
+import type { PropertyGroup } from "./Responses";
 
-export type UserType = 'buyer' | 'vendor';
+export type UserType = 'user' | 'agent';
 
-interface BaseProfile {
-    id: string;
-    avatar?: string;
-    name: string;
-    email: string;
-    phone: string;
-    dateJoined: Date;
-}
-
-interface BuyerProfile extends BaseProfile {
-    type: "buyer";
-}
-
-interface VendorProfile extends BaseProfile {
-    type: "vendor";
-    agencyName: string;
-    agencyType?: string;
-    experienceYears: number;
-    rating: number;
-}
 
 export type UserRegister = {
     email: string;
     password: string;
     userName: string;
     phone: string;
-    type: UserType;
 };
+export type customerRegister = UserRegister & {
+    roleDiscriminator: 3;
+};
+export type agentRegister = UserRegister & {
+    roleDiscriminator: 1;
+    agencyName: string,
+    taxIdentificationNumber: number,
+    experienceYears: number,
+};
+export type RegitserForm = agentRegister | agentRegister;
 export type UserSignIn = {
     email: string;
     password: string;
 };
-export type userProfile = BuyerProfile | VendorProfile;
+export type sessinToken = {
+    userId: string;
+    jwtToken: string;
+};
+// profile
+
+export type AgentData = UserData & {
+    id: string;
+    agencyName: string;
+    taxIdentificationNumber: number;
+    rating: number;
+    experienceYears: number;
+    user: UserData;
+    properties: PropertyGroup;
+};
+export type UserData = {
+    userId: string;
+    username: string;
+    email: string;
+    phoneNumber: string;
+    dateJoined: string;
+};
+export type UserProfile = UserData;
+export type AgentProfile = UserData & {
+    agencyName: string;
+    id: string;
+    taxIdentificationNumber: number;
+    rating: number;
+    experienceYears: number;
+}
+export type Profile = UserProfile | AgentProfile;

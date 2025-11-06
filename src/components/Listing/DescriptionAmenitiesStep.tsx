@@ -23,29 +23,29 @@ function DescriptionAmenitiesStep() {
 
       {/* amenity options */}
       <Grid className="grid-cols-3 gap-6">
-        <InputField id="amenities.hasElectricityLine" label="has Electricity Line">
+        <InputField id="amenity.hasElectricityLine" label="has Electricity Line">
           <BooleanInputField
-            id="amenities.hasElectricityLine"
+            id="amenity.hasElectricityLine"
             className="w-5 h-5 accent-blue-600"
-            {...register('amenities.hasElectricityLine')}
+            {...register('amenity.hasElectricityLine')}
           />
-          <ErrorMessage name="amenities.hasElectricityLine" />
+          <ErrorMessage name="amenity.hasElectricityLine" />
         </InputField>
-        <InputField id="amenities.hasWaterLine" label="Has Water Line">
+        <InputField id="amenity.hasWaterLine" label="Has Water Line">
           <BooleanInputField
-            id="amenities.hasWaterLine"
+            id="amenity.hasWaterLine"
             className="w-5 h-5 accent-blue-600"
-            {...register('amenities.hasWaterLine')}
+            {...register('amenity.hasWaterLine')}
           />
-          <ErrorMessage name="amenities.hasWaterLine" />
+          <ErrorMessage name="amenity.hasWaterLine" />
         </InputField>
-        <InputField id="amenities.hasGasLine" label="Has Gas Line">
+        <InputField id="amenity.hasGasLine" label="Has Gas Line">
           <BooleanInputField
-            id="amenities.hasGasLine"
+            id="amenity.hasGasLine"
             className="w-5 h-5 accent-blue-600"
-            {...register('amenities.hasGasLine')}
+            {...register('amenity.hasGasLine')}
           />
-          <ErrorMessage name="amenities.hasGasLine" />
+          <ErrorMessage name="amenity.hasGasLine" />
         </InputField>
       </Grid>
     </Step>

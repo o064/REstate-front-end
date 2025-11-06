@@ -12,16 +12,17 @@ import PageHeader from '../components/Listing/PageHeader';
 import { defaultResidentialValues } from '../constants/ListingDefaults';
 import { commercialStepFields, residentialStepFields } from '../constants/ListingFields';
 import Input from '../ui/Input';
-import { useMutateProperty } from '../hooks/useMutateProperty';
 import Loader from '../ui/Loader';
+import { useAddProperty } from '../hooks/useProperty';
+import Container from '../ui/Continer';
 
 function AddListing() {
   const methods = useForm<ListingFormInputs>({
     mode: 'onChange',
     defaultValues: defaultResidentialValues,
   });
-  const [step, setStep] = useState<number>(5);
-  const { mutate: mutateProperty, isPending, isError } = useMutateProperty();
+  const [step, setStep] = useState<number>(1);
+  const { mutate: AddProperty, isPending, isError } = useAddProperty();
 
   async function nextStep() {
     // invalid step
@@ -41,7 +42,7 @@ function AddListing() {
   }
   function onSubmit(formData: ListingFormInputs) {
     console.log(formData);
-    mutateProperty(formData);
+    AddProperty(formData);
     if (!isPending && !isError) setStep(6); // Move to success state
   }
   //  scroll to top when step changes
@@ -69,7 +70,7 @@ function AddListing() {
     return <Loader />;
   }
   return (
-    <main className="min-h-screen bg-gray-50 py-8">
+    <Container>
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <PageHeader
           title="Create New Listing"
@@ -98,7 +99,7 @@ function AddListing() {
             {step == 2 && <LocationStep />}
             {step == 3 && <PricePropertyDetailsStep />}
             {step == 4 && <DescriptionAmenitiesStep />}
-            {step == 5 && <ImageUploadStep />}
+            {step == 5 && <ImageUploadStep required={true} />}
             {/* Navigation Buttons */}
             <div className="flex justify-between gap-6 mt-8 pt-6 border-t border-gray-200">
               {step >= 1 && (
@@ -125,7 +126,7 @@ function AddListing() {
           </form>
         </FormProvider>
       </div>
-    </main>
+    </Container>
   );
 }
 

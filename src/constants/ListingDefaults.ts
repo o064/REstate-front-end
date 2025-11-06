@@ -14,7 +14,7 @@ export const defaultResidentialValues: ListingFormInputs = {
     square: 120, // square meters
     description:
         "A spacious and modern 2-bedroom apartment located in the heart of Cairo. Close to shops, schools, and public transport.",
-    amenities: {
+    amenity: {
         hasElectricityLine: true,
         hasWaterLine: true,
         hasGasLine: true,
@@ -39,7 +39,7 @@ export const defaultCommercialValues: ListingFormInputs = {
     price: 0,
     square: 0,
     description: "",
-    amenities: {
+    amenity: {
         hasElectricityLine: false,
         hasWaterLine: false,
         hasGasLine: false,
@@ -63,7 +63,7 @@ export const defaultCommercialValues: ListingFormInputs = {
 //     price: 0,
 //     square: 0,
 //     description: "",
-//     amenities: {
+//     amenit: {
 //         hasElectricityLine: false,
 //         hasWaterLine: false,
 //         hasGasLine: false,

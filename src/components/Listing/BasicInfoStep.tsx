@@ -8,22 +8,13 @@ import { useFormContext } from 'react-hook-form';
 import { PropertyNameValidation } from '../../utils/validation';
 import { ControlledSelector } from '../../ui/ControllerSelector';
 import ErrorMessage from '../../ui/ErrorMessage';
-import { useQuery } from '@tanstack/react-query';
-import { getAllCompounds } from '../../services/compoundService';
 import type { Compound } from '../../types/compound';
-import type { getAllCompoundsResponse } from '../../types/Responses';
+import { useCompounds } from '../../hooks/useCompound';
 
 function BasicInfoStep() {
   const { register, control } = useFormContext();
   // Access the client
-  const {
-    isLoading,
-    isError,
-    data: compoundOptions,
-  } = useQuery<getAllCompoundsResponse>({
-    queryKey: ['compounds'],
-    queryFn: getAllCompounds,
-  });
+  const { isLoading, isError, data: compoundOptions } = useCompounds();
 
   return (
     <Step title="basic information">

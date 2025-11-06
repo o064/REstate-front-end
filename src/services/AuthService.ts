@@ -1,76 +1,57 @@
-// ./services/authService.ts
 import Cookies from "js-cookie";
 import request from "../utils/request";
-import type { UserRegister, UserSignIn } from "../types/User";
+import type { RegitserForm, UserSignIn } from "../types/User";
+import { getUserById } from "./ProfileService";
+import type { LoginResponse } from "../types/Responses";
 
-type BadRequest = {
-    isSuccess: false;
-    message: string;
-    data?: string;
-};
 
-type LoginSuccess = {
-    isSuccess: true;
-    message: string;
-    data: {
-        userId: string;
-        jwtToken: string;
-    };
-};
 
-type LoginResponse = LoginSuccess | BadRequest;
+export async function loginService(user: UserSignIn) {
+    const res = await request<LoginResponse>("/Auth/login", {
+        method: "POST",
+        body: JSON.stringify(user),
+    });
 
-const AuthService = {
-    async login(user: UserSignIn): Promise<LoginResponse> {
-        try {
-            const res = await request<LoginResponse>("/auth/login", {
-                method: "POST",
-                body: JSON.stringify(user),
-            });
-            if (res.isSuccess) {
-                Cookies.set("user", JSON.stringify(res.data), { expires: 7 });
-            }
-            return res;
-        } catch (error) {
-            console.error(error);
-            return {
-                isSuccess: false,
-                message: "Unexpected error during login",
-                data: String(error),
-            };
-        }
-    },
+    if (!res.isSuccess) {
+        throw new Error(res.message || "Failed to log in");
+    }
 
-    async register(user: UserRegister): Promise<LoginResponse> {
-        try {
-            const res = await request<LoginResponse>("/register", {
-                method: "POST",
-                body: JSON.stringify(user),
-            });
+    return res;
+}
 
-            if (res.isSuccess) {
-                Cookies.set("user", JSON.stringify(res.data), { expires: 7 });
-            }
+export async function registerService(user: RegitserForm) {
+    const res = await request<LoginResponse>("/Auth/register", {
+        method: "POST",
+        body: JSON.stringify(user),
+    });
 
-            return res;
-        } catch (error) {
-            console.error(error);
-            return {
-                isSuccess: false,
-                message: "Unexpected error during registration",
-                data: String(error),
-            };
-        }
-    },
+    if (!res.isSuccess) {
+        throw new Error(res.message || "Failed to register");
+    }
+    return res;
+}
+export async function logoutService(id: string) {
+    const res = await request<LoginResponse>(`/Auth/logout/${id}`, {
+        method: "POST",
+    });
+    if (!res.isSuccess) {
+        throw new Error(res.message || "Failed to logout");
+    }
+    return res;
+}
 
-    logout() {
-        Cookies.remove("user");
-    },
+export async function getCurrentUser() {
+    const stored = Cookies.get("session");
+    if (!stored) return null;
 
-    getCurrentUser() {
-        const stored = Cookies.get("user");
-        return stored ? JSON.parse(stored) : null;
-    },
-};
+    const session = JSON.parse(stored);
+    const user = await getUserById(session.userId);
 
-export default AuthService;
+    if (!user?.isSuccess) {
+        Cookies.remove("session");
+        return null;
+    }
+
+    return user;
+}
+

@@ -4,7 +4,7 @@ export type PropertyType = "commercial" | "residential";
 export type Property = {
     id: string;
     name: string;
-    purpose: PropertyPurpose;
+    purpose: 0 | 1;
     square: number;
     price: number;
     address: string;
@@ -17,6 +17,12 @@ export type PropertyWithAgency = Property & {
     agencyName: string;
     vendorName: string;
 };
+export type Amenity = {
+    hasElectricityLine: boolean;
+    hasWaterLine: boolean;
+    hasGasLine: boolean;
+};
+
 export type baseLisintingForm = {
     agentId: string;
     propertyStatus: number;
@@ -33,13 +39,9 @@ export type baseLisintingForm = {
     square: number;
     // Step 4
     description: string;
-    amenities: {
-        hasElectricityLine: boolean;
-        hasWaterLine: boolean;
-        hasGasLine: boolean;
-    }; // multiple selections
+    amenity: Amenity; // multiple selections
     // Step 5
-    images?: File[];
+    images: File[];
 };
 export type residentialProperty = baseLisintingForm & {
     propertyType: 0;
@@ -57,3 +59,13 @@ export type CommercialProperty = baseLisintingForm & {
 export type ListingFormInputs =
     | CommercialProperty
     | residentialProperty;
+export type ListingImagesFormInputs = {
+    images: File[];
+}
+
+export type PropertyGallery = {
+    mediaId: string;
+    propertyId: string;
+    imageUrl: string;
+    uploadedAt: string;
+}
