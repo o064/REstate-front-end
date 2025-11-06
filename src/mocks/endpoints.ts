@@ -14,6 +14,126 @@ interface Endpoints {
 }
 
 export const endpoints: Endpoints = {
+    // 👇 User profile endpoints
+    userProfile: [
+        {
+            method: "GET",
+            path: "/api/User/:UserId",
+            response: ({ params }) => {
+                return {
+                    isSuccess: true,
+                    message: "User profile retrieved successfully",
+                    data: {
+                        userId: params.UserId || "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                        username: "JohnDoe",
+                        email: "john.doe@example.com",
+                        phoneNumber: "+201234567890",
+                        dateJoined: "2025-11-04T17:58:06.618Z"
+                    }
+                };
+            }
+        }
+    ],
+
+    //  Agent profile endpoints
+    agentProfile: [
+        {
+            method: "GET",
+            path: "/api/Agent/:AgentId",
+            response: ({ params }) => {
+                return {
+                    isSuccess: true,
+                    message: "Agent profile retrieved successfully",
+                    data: {
+                        id: params.AgentId || "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                        agencyName: "Premium Real Estate Agency",
+                        taxIdentificationNumber: 123456789,
+                        rating: 4.8,
+                        experienceYears: 5,
+                        user: {
+                            userId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                            username: "JohnAgent",
+                            email: "john.agent@example.com",
+                            phoneNumber: "+201234567890",
+                            dateJoined: "2025-11-04T18:52:40.887Z"
+                        },
+                        properties:
+                        {
+                            commercialProperties: [
+                                {
+                                    propertyId: "3fa85f64-5717-4562-b3fc-2312963f66afa6",
+                                    city: "Cairo",
+                                    title: "MyHouse 2 ",
+                                    address: "Downtown Business District",
+                                    googleMapsUrl: "https://maps.google.com/example",
+                                    propertyType: { 0: "Residential" },
+                                    propertyPurpose: { 0: "Rent" },
+                                    propertyStatus: { 0: "Accepted" },
+                                    price: 500000,
+                                    square: 200,
+                                    description: "Prime commercial space in downtown",
+                                    agentName: "John Agent",
+                                    compoundName: "Business Complex One",
+                                    businessType: "Office",
+                                    floorNumber: 5,
+                                    hasStorage: true,
+                                    amenity: {
+                                        hasElectricityLine: true,
+                                        hasWaterLine: true,
+                                        hasGasLine: true
+                                    },
+                                    galleries: [
+                                        {
+                                            mediaId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                            propertyId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                            imageUrl: "https://images.dubizzle.com.eg/thumbnails/146038752-800x600.webp",
+                                            uploadedAt: "2025-11-04T18:52:40.887Z"
+                                        }
+                                    ]
+                                }
+                            ],
+                            residentialProperties: [
+                                {
+                                    propertyId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                    title: "MyHouse",
+                                    city: "Cairo",
+                                    address: "New Cairo Residential Area",
+                                    googleMapsUrl: "https://maps.google.com/example",
+                                    propertyType: { 0: "Residential" },
+                                    propertyPurpose: { 0: "Rent" },
+                                    propertyStatus: { 0: "Accepted" },
+                                    price: 300000,
+                                    square: 150,
+                                    description: "Modern residential apartment",
+                                    dateListed: "2025-11-04T18:52:40.888Z",
+                                    agentName: "John Agent",
+                                    compoundName: "Green Valley Compound",
+                                    bedrooms: 3,
+                                    bathrooms: 2,
+                                    floors: 1,
+                                    kitchenType: 0,
+                                    galleries: [
+                                        {
+                                            mediaId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                            propertyId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                            imageUrl: "https://images.dubizzle.com.eg/thumbnails/146038752-800x600.webp",
+                                            uploadedAt: "2025-11-04T18:52:40.888Z"
+                                        }
+                                    ],
+                                    amenity: {
+                                        hasElectricityLine: true,
+                                        hasWaterLine: true,
+                                        hasGasLine: true
+                                    }
+                                }
+                            ]
+                        }
+
+                    }
+                };
+            }
+        }
+    ],
     users: [
         {
             method: "GET",
@@ -148,9 +268,13 @@ export const endpoints: Endpoints = {
                             hasWaterLine: true,
                             hasGasLine: false,
                         },
-                        images: [
-                            "https://placehold.co/600x400/commercial1.jpg",
-                            "https://placehold.co/600x400/commercial2.jpg",
+                        galleries: [
+                            {
+                                mediaId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                propertyId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                imageUrl: "https://images.dubizzle.com.eg/thumbnails/146038752-800x600.webp",
+                                uploadedAt: "2025-11-04T18:52:40.887Z"
+                            }
                         ],
                     },
                 };
@@ -187,9 +311,13 @@ export const endpoints: Endpoints = {
                             hasWaterLine: true,
                             hasGasLine: false,
                         },
-                        images: [
-                            "https://placehold.co/600x400/commercial1.jpg",
-                            "https://placehold.co/600x400/commercial2.jpg",
+                        galleries: [
+                            {
+                                mediaId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                propertyId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                imageUrl: "https://images.dubizzle.com.eg/thumbnails/146038752-800x600.webp",
+                                uploadedAt: "2025-11-04T18:52:40.887Z"
+                            }
                         ],
                     },
                 };
@@ -262,9 +390,13 @@ export const endpoints: Endpoints = {
                             hasWaterLine: true,
                             hasGasLine: true,
                         },
-                        images: [
-                            "https://placehold.co/600x400/residential1.jpg",
-                            "https://placehold.co/600x400/residential2.jpg",
+                        galleries: [
+                            {
+                                mediaId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                propertyId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                imageUrl: "https://images.dubizzle.com.eg/thumbnails/146038752-800x600.webp",
+                                uploadedAt: "2025-11-04T18:52:40.887Z"
+                            }
                         ],
                     },
                 };
@@ -302,9 +434,13 @@ export const endpoints: Endpoints = {
                             hasWaterLine: true,
                             hasGasLine: true,
                         },
-                        images: [
-                            "https://placehold.co/600x400/residential1.jpg",
-                            "https://placehold.co/600x400/residential2.jpg",
+                        galleries: [
+                            {
+                                mediaId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                propertyId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                imageUrl: "https://images.dubizzle.com.eg/thumbnails/146038752-800x600.webp",
+                                uploadedAt: "2025-11-04T18:52:40.887Z"
+                            }
                         ],
                     },
                 };

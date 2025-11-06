@@ -2,19 +2,13 @@
 import type { getAllCompoundsResponse } from "../types/Responses";
 import request from "../utils/request";
 export async function getAllCompounds() {
-    try {
-        const res = await request<getAllCompoundsResponse>("/Compound/GetAll", {
-            method: "GET",
-        });
+    const res = await request<getAllCompoundsResponse>("/Compound/GetAll?PageSize=1000", { method: "GET" });
 
-        if (res.isSuccess) {
-            return res;
-        }
-
-        return { isSuccess: false, message: "Failed" };
-    } catch (error) {
-        return { isSuccess: false, message: `Error occurred : ${error}` };
+    if (!res.isSuccess) {
+        throw new Error(res.message || "Failed to fetch compounds");
     }
+
+    return res;
 }
 
 

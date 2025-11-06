@@ -1,20 +1,19 @@
 import PropertyListingCard from './PropertyListingCard';
 import EmptyListing from './EmptyListing';
-import { fakeUserProperties } from '../../dev-data/properites';
-const properties = fakeUserProperties;
+import type { PropertyGroupList } from '../../types/Responses';
 
-function ProfileListingsTab() {
+function ProfileListingsTab({ properties }: { properties: PropertyGroupList }) {
+  console.log(properties);
   if (properties.length === 0) {
     return <EmptyListing />;
   }
-  function onDelete() {}
   return (
     <div className="space-y-6">
       <div>
         <h2 className="text-lg font-semibold text-gray-900 mb-4">Your Property Listings</h2>
         <div className="space-y-4">
           {properties.map((property) => (
-            <PropertyListingCard key={property.id} property={property} onDelete={onDelete} />
+            <PropertyListingCard key={property.propertyId} property={property} />
           ))}
         </div>
       </div>

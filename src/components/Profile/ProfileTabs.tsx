@@ -3,14 +3,16 @@ import ProfileTabButton from './ProfileTabButton';
 import ProfileInfoTab from './ProfileInfoTab';
 import ProfileListingsTab from './ProfileListingsTab';
 import type { Profile } from '../../types/User';
+import type { PropertyGroupList } from '../../types/Responses';
 
 export type ActiveTab = 'profile' | 'listings';
 
 type ProfileTabsProps = {
   user: Profile;
+  properties?: PropertyGroupList | [];
 };
 
-function ProfileTabs({ user }: ProfileTabsProps) {
+function ProfileTabs({ user, properties }: ProfileTabsProps) {
   const [activeTab, setActiveTab] = useState<ActiveTab>('profile');
   return (
     <div>
@@ -29,7 +31,7 @@ function ProfileTabs({ user }: ProfileTabsProps) {
 
       <div className="p-6">
         {activeTab === 'profile' && <ProfileInfoTab user={user} />}
-        {activeTab === 'listings' && <ProfileListingsTab />}
+        {activeTab === 'listings' && properties && <ProfileListingsTab properties={properties} />}
       </div>
     </div>
   );

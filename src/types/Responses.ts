@@ -1,5 +1,6 @@
 import type { Compound } from "./compound";
-import type { CommercialProperty, residentialProperty } from "./property";
+import type { Amenity, CommercialProperty, PropertyGallery, residentialProperty } from "./property";
+import type { AgentData, UserData } from "./User";
 
 export type BadRequest = {
     isSuccess: false,
@@ -21,7 +22,7 @@ export type getResidentialPropertyById = {
     message: string;
     data?: Omit<residentialProperty, "images" | "agentId"> & {
         propertyId: string;
-        images: string[];
+        galleries: PropertyGallery[];
         compoundName: string;
         agentName: string;
         dateListed: string;
@@ -30,23 +31,16 @@ export type getResidentialPropertyById = {
 export type postResPropertyResponse = {
     isSuccess: true;
     message: string;
-    data: Omit<residentialProperty, "images" | "compoundId" | "agentId"> & {
-        compoundName: string;
-        agentName: string;
-        propertyId: string;
-    };
+    data: ResidentialPropertyResponse;
 } | BadRequest;
 export type getCommercialPropertyById = {
     isSuccess: true;
     message: string;
-    data?: Omit<CommercialProperty, "images" | "compoundId" | "agentId"> & {
-        propertyId: string;
-        images: string[];
-        compoundName: string;
-        agentName: string;
-        dateListed: string;
-    };
+    data?: CommercialPropertyResponse;
 }
+
+
+
 export type postComPropertyResponse =
     | {
         isSuccess: true;
@@ -59,3 +53,40 @@ export type postComPropertyResponse =
         };
     }
     | BadRequest;
+// Agent profile response types
+
+export type CommercialPropertyResponse = Omit<CommercialProperty, "images" | "compoundId" | "agentId"> & {
+    propertyId: string;
+    galleries: PropertyGallery[];
+    compoundName: string;
+    agentName: string;
+    dateListed: string;
+};;
+
+export type ResidentialPropertyResponse = Omit<residentialProperty, "images" | "agentId"> & {
+    propertyId: string;
+    galleries: PropertyGallery[];
+    compoundName: string;
+    agentName: string;
+    dateListed: string;
+}
+export type PropertyGroup = {
+    commercialProperties: CommercialPropertyResponse[];
+    residentialProperties: ResidentialPropertyResponse[];
+};
+export type PropertyGroupList = (CommercialPropertyResponse | ResidentialPropertyResponse)[];
+export type PropertyGroupListItem = (CommercialPropertyResponse | ResidentialPropertyResponse);
+
+export type getAgentProfileResponse = {
+    isSuccess: true;
+    message: string;
+    data: AgentData;
+} | BadRequest;
+
+// User profile response
+
+export type getUserProfileResponse = {
+    isSuccess: true;
+    message: string;
+    data: UserData;
+} | BadRequest;

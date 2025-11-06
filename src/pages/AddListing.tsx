@@ -21,7 +21,7 @@ function AddListing() {
     mode: 'onChange',
     defaultValues: defaultResidentialValues,
   });
-  const [step, setStep] = useState<number>(5);
+  const [step, setStep] = useState<number>(1);
   const { mutate: AddProperty, isPending, isError } = useAddProperty();
 
   async function nextStep() {

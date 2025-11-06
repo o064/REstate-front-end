@@ -17,6 +17,12 @@ export type PropertyWithAgency = Property & {
     agencyName: string;
     vendorName: string;
 };
+export type Amenity = {
+    hasElectricityLine: boolean;
+    hasWaterLine: boolean;
+    hasGasLine: boolean;
+};
+
 export type baseLisintingForm = {
     agentId: string;
     propertyStatus: number;
@@ -33,11 +39,7 @@ export type baseLisintingForm = {
     square: number;
     // Step 4
     description: string;
-    amenity: {
-        hasElectricityLine: boolean;
-        hasWaterLine: boolean;
-        hasGasLine: boolean;
-    }; // multiple selections
+    amenity: Amenity; // multiple selections
     // Step 5
     images?: File[];
 };
@@ -59,4 +61,11 @@ export type ListingFormInputs =
     | residentialProperty;
 export type ListingImagesFormInputs = {
     images: File[];
+}
+
+export type PropertyGallery = {
+    mediaId: string;
+    propertyId: string;
+    imageUrl: string;
+    uploadedAt: string;
 }

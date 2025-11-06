@@ -5,6 +5,7 @@ type ProfileInfoTabProps = {
   user: Profile;
 };
 function ProfileInfoTab({ user }: ProfileInfoTabProps) {
+  const userType = 'agencyName' in user ? 'agent' : 'user';
   return (
     <div className="space-y-6">
       <div>
@@ -15,7 +16,7 @@ function ProfileInfoTab({ user }: ProfileInfoTabProps) {
             <User className="h-5 w-5 text-gray-400 mt-0.5 mr-3" />
             <div>
               <div className="text-sm text-gray-500">Full Name</div>
-              <div className="font-medium text-gray-900">{user.name}</div>
+              <div className="font-medium text-gray-900">{user.username}</div>
             </div>
           </div>
           {/* email */}
@@ -31,7 +32,7 @@ function ProfileInfoTab({ user }: ProfileInfoTabProps) {
             <Phone className="h-5 w-5 text-gray-400 mt-0.5 mr-3" />
             <div>
               <div className="text-sm text-gray-500">Phone</div>
-              <div className="font-medium text-gray-900">{user.phone}</div>
+              <div className="font-medium text-gray-900">{user.phoneNumber}</div>
             </div>
           </div>
           {/* user type */}
@@ -39,34 +40,20 @@ function ProfileInfoTab({ user }: ProfileInfoTabProps) {
             <Building2 className="h-5 w-5 text-gray-400 mt-0.5 mr-3" />
             <div>
               <div className="text-sm text-gray-500">Account Type</div>
-              <div className="font-medium text-gray-900 capitalize">{user.type}</div>
+              <div className="font-medium text-gray-900 capitalize">
+                {'agencyName' in user ? 'agent' : 'user'}
+              </div>
             </div>
           </div>
-
-          {user.type === 'agent' && (
-            <>
-              {user.agencyName && (
-                <div className="flex items-start">
-                  <Building2 className="h-5 w-5 text-gray-400 mt-0.5 mr-3" />
-                  <div>
-                    <div className="text-sm text-gray-500">Business Name</div>
-                    <div className="font-medium text-gray-900">{user.agencyName}</div>
-                  </div>
-                </div>
-              )}
-
-              {user.agencyType && (
-                <div className="flex items-start">
-                  <Building2 className="h-5 w-5 text-gray-400 mt-0.5 mr-3" />
-                  <div>
-                    <div className="text-sm text-gray-500">Business Type</div>
-                    <div className="font-medium text-gray-900 capitalize">
-                      {user.agencyType.replace(/_/g, ' ')}
-                    </div>
-                  </div>
-                </div>
-              )}
-            </>
+          {/* agency name  */}
+          {userType === 'agent' && 'agencyName' in user && user.agencyName && (
+            <div className="flex items-start">
+              <Building2 className="h-5 w-5 text-gray-400 mt-0.5 mr-3" />
+              <div>
+                <div className="text-sm text-gray-500">Business Name</div>
+                <div className="font-medium text-gray-900">{user.agencyName}</div>
+              </div>
+            </div>
           )}
         </div>
       </div>

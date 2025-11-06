@@ -25,7 +25,7 @@ function EditLisiting() {
     if (prevData && Object.keys(prevData).length > 0) {
       // const { dateListed, agentName, compoundName, ...rest } = prevData;
       console.log('reset', prevData);
-      const { compoundName, dateListed, agentName, images, ...rest } = prevData;
+      const { compoundName, dateListed, agentName, galleries, ...rest } = prevData;
       reset({ ...rest, propertyStatus: 0, compoundId: '' } as Omit<
         ListingFormInputs,
         'images' | 'agentId'

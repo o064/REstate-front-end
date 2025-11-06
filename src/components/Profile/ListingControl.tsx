@@ -1,11 +1,10 @@
 import { Edit, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 
-function ListingControl({ id, onDelete }: { id: string; onDelete: (string: any) => void }) {
+function ListingControl({ id }: { id: string }) {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState<boolean>(false);
 
   const handleDelete = () => {
-    onDelete(id);
     setShowDeleteConfirm(false);
   };
   return (

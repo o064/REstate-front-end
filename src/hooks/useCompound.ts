@@ -6,4 +6,5 @@ export const useCompounds = () =>
     useQuery<getAllCompoundsResponse>({
         queryKey: ['compounds'],
         queryFn: getAllCompounds,
+        retry: false,
     });
