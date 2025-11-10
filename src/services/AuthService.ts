@@ -7,7 +7,7 @@ import type { LoginResponse } from "../types/Responses";
 
 
 export async function loginService(user: UserSignIn) {
-    const res = await request<LoginResponse>("/Auth/login", {
+    const res = await request<LoginResponse>("/api/Auth/login", {
         method: "POST",
         body: JSON.stringify(user),
     });
@@ -20,7 +20,7 @@ export async function loginService(user: UserSignIn) {
 }
 
 export async function registerService(user: RegitserForm) {
-    const res = await request<LoginResponse>("/Auth/register", {
+    const res = await request<LoginResponse>("/api/Auth/register", {
         method: "POST",
         body: JSON.stringify(user),
     });
@@ -31,7 +31,7 @@ export async function registerService(user: RegitserForm) {
     return res;
 }
 export async function logoutService(id: string) {
-    const res = await request<LoginResponse>(`/Auth/logout/${id}`, {
+    const res = await request<LoginResponse>(`/api/Auth/logout/${id}`, {
         method: "POST",
     });
     if (!res.isSuccess) {

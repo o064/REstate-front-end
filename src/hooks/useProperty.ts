@@ -19,7 +19,7 @@ export function useAddProperty() {
                 throw new Error(propertyRes.message);
             }
             const propertyId = propertyRes.data?.propertyId
-            // Step 2️⃣ upload images after property is created
+
             if (propertyId && images && images.length > 0) {
                 await postImages({
                     propertyId,
@@ -73,9 +73,6 @@ export function usePrevData() {
 
     const { data: queryData, isLoading, isError, error } = query;
 
-    // We memoize the final data object.
-    // This hook will now return the *same object reference* on re-renders
-    // as long as queryData and agentId haven't changed.
     const memoizedData = useMemo(() => {
         if (queryData?.isSuccess && queryData.data) {
             return { ...queryData.data };

@@ -5,7 +5,7 @@ import request from "../utils/request"
 export const getUserProfile = async (id: string, userType: "agent" | "customer" = "agent") => {
     const res = userType === "agent" ? await request<getAgentProfileResponse>(`/Agent/${id}`, {
         method: "GET"
-    }) : await request<getUserProfileResponse>(`/User/${id}`, {
+    }) : await request<getUserProfileResponse>(`/api/User/${id}`, {
         method: "GET"
     });
     if (!res.isSuccess) {
@@ -16,7 +16,7 @@ export const getUserProfile = async (id: string, userType: "agent" | "customer" 
 
 }
 export const getUserById = async (id: string) => {
-    const res = await request<getUser>(`/User/${id}`, {
+    const res = await request<getUser>(`/api/User/${id}`, {
         method: "GET"
     })
     if (!res.isSuccess) {

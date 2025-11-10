@@ -9,8 +9,8 @@ export async function postProperty(
 ) {
     const endpoint =
         propertyType === 0
-            ? "/ResidentialProperty/AddResidentialProperty"
-            : "/CommercialProperty/AddCommercialProperty";
+            ? "/api/ResidentialProperty/AddResidentialProperty"
+            : "/api/CommercialProperty/AddCommercialProperty";
     const res = propertyType ? await request<postResPropertyResponse>(endpoint, {
         method: "POST",
         body: JSON.stringify(property),
@@ -31,8 +31,8 @@ export async function putProperty(
 ) {
     const endpoint =
         property.propertyType === 0
-            ? `/ResidentialProperty/${id}`
-            : `/CommercialProperty/${id}`;
+            ? `/api/ResidentialProperty/${id}`
+            : `/api/CommercialProperty/${id}`;
     const res = property.propertyType == 0 ? await request<postResPropertyResponse>(endpoint, {
         method: "PUT",
         body: JSON.stringify(property),
@@ -51,9 +51,9 @@ export async function delPropertyById(
     id: string,
     propertyType: number
 ) {
-    const res = propertyType ? await request<deletePropertyResponse>(`/ResidentialProperty/${id}`, {
+    const res = propertyType ? await request<deletePropertyResponse>(`/api/ResidentialProperty/${id}`, {
         method: "DELETE",
-    }) : await request<deletePropertyResponse>(`/CommercialProperty/${id}`, {
+    }) : await request<deletePropertyResponse>(`/api/CommercialProperty/${id}`, {
         method: "DELETE",
     });
     if (!res.isSuccess) {
@@ -65,8 +65,8 @@ export async function delPropertyById(
 export async function getPropertyById(id: string, type: 0 | 1) {
     const url =
         type === 0
-            ? `/ResidentialProperty/${id}`
-            : `/CommercialProperty/${id}`;
+            ? `/api/ResidentialProperty/${id}`
+            : `/api/CommercialProperty/${id}`;
     // Dynamically pick the correct response type
     const res =
         type === 0

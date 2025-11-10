@@ -26,7 +26,7 @@ export async function postImages({
     }
 
     //  send to API
-    const res = await request<postImagesResponse>("/PropertyGallery", {
+    const res = await request<postImagesResponse>("/api/PropertyGallery", {
         method: "POST",
         body: formData,
         headers: {
