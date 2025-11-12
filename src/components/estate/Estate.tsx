@@ -7,7 +7,7 @@ const properties = fakePropertyWithAgency;
 
 const Estate = () => {
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="py-16 bg-gray-50 mt-96 lg:mt-40">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:justify-between md:items-center px-6 mb-10">
         <Header

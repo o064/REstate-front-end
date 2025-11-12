@@ -14,6 +14,7 @@ import AddListing from './pages/AddListing';
 import EditLisiting from './pages/EditLisiting';
 import MyProfile from './pages/MyProfile';
 import RoleBasedRoute from './components/auth/RoleBaseRoute';
+import Search from './pages/Search';
 // Create a client
 const queryClient = new QueryClient();
 const router = createBrowserRouter(
@@ -21,7 +22,8 @@ const router = createBrowserRouter(
     <>
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
-        <Route path="estateDetails" element={<EstateDetails />} />
+        <Route path="estateDetails/:id" element={<EstateDetails />} />
+        <Route path="search" element={<Search />} />
         {/* Protected Routes */}
         <Route element={<ProtectedRoute />}>
           <Route path="profile" element={<MyProfile />} />

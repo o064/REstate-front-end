@@ -54,14 +54,14 @@ const Main = () => {
                 Pfont="semibold"
                 count={'0'}
                 title="For Sale"
-                Hcolor="green-500"
+                Hcolor="blue-700"
               />
               <CardDetils
                 Hfont="bold"
                 Pfont="semibold"
                 count={'0'}
                 title="For Rent"
-                Hcolor="indigo-600"
+                Hcolor="blue-700"
               />
             </div>
           </div>

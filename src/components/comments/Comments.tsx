@@ -1,8 +1,8 @@
 import { useState } from "react";
 import Button from "../../ui/Button";
 import Input from "../../ui/Input";
-import InputField from "../Form/InputField";
 import { MessagesSquareIcon, User } from "lucide-react";
+import InputField from "../../ui/InputField";
 
 type CommentProps = {
   comment: string[];
