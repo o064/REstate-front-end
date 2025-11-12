@@ -2,7 +2,7 @@ import type { getAgentProfileResponse, getUser, getUserProfileResponse } from ".
 import request from "../utils/request"
 
 
-export const getUserProfile = async (id: string, userType: "agent" | "customer" = "agent") => {
+export const getUserProfile = async (id: string, userType: "agent" | "customer" = "customer" ) => {
     const res = userType === "agent" ? await request<getAgentProfileResponse>(`/Agent/${id}`, {
         method: "GET"
     }) : await request<getUserProfileResponse>(`/api/User/${id}`, {

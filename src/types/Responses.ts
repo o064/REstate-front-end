@@ -1,5 +1,5 @@
 import type { Compound } from "./compound";
-import type { Amenity, CommercialProperty, PropertyGallery, residentialProperty } from "./property";
+import type {  CommercialProperty, PropertyGallery, residentialProperty } from "./property";
 import type { AgentData, UserData } from "./User";
 
 export type BadRequest = {
@@ -111,3 +111,14 @@ export type LoginSuccess = {
 };
 
 export type LoginResponse = LoginSuccess | BadRequest;
+
+export type CommentResponse = {
+    commentText:string;
+    propertyId:string;
+}
+
+export type postCommentResponse = {
+    isSuccess: true;
+    message: string;
+    data: [];
+} | BadRequest;
