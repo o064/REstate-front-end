@@ -9,8 +9,8 @@ type FormDataInputs = { images: File[] };
 
 function ImageUploadStep({ required = false }: { required?: boolean }) {
   const [formData, setFormData] = useState<FormDataInputs>({ images: [] });
-  const { control, setValue } = useFormContext<FormDataInputs>();
-
+  const { control, setValue, watch } = useFormContext<FormDataInputs>();
+  const images = watch('images');
   // Handle file selection
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -44,7 +44,7 @@ function ImageUploadStep({ required = false }: { required?: boolean }) {
           </p>
         </div>
 
-        {/* 🔹 File Upload Button */}
+        {/*  File Upload Button */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">Select Images</label>
           <div className="flex items-center space-x-4">
@@ -60,7 +60,7 @@ function ImageUploadStep({ required = false }: { required?: boolean }) {
               control={control}
               name="images"
               rules={required ? { required: 'image upload is required' } : undefined}
-              render={() => (
+              render={({ field: { onChange, value } }) => (
                 <>
                   <Input
                     id="file-upload"
@@ -68,7 +68,15 @@ function ImageUploadStep({ required = false }: { required?: boolean }) {
                     multiple
                     accept="image/png, image/jpeg, image/webp"
                     className="hidden"
-                    onChange={handleFileChange}
+                    onChange={(e) => {
+                      const files = e.target.files;
+                      if (files && files.length > 0) {
+                        const fileArray = Array.from(files);
+                        const newImages = [...(value || []), ...fileArray];
+                        onChange(newImages);
+                        setFormData({ images: newImages });
+                      }
+                    }}
                   />
                   <ErrorMessage name="images" />
                 </>
@@ -84,7 +92,7 @@ function ImageUploadStep({ required = false }: { required?: boolean }) {
           </div>
         </div>
 
-        {/* 🔹 Preview Section */}
+        {/*  Preview Section */}
         {formData.images.length > 0 && (
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">

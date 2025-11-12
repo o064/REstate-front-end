@@ -10,12 +10,12 @@ import { ControlledSelector } from '../../ui/ControllerSelector';
 import ErrorMessage from '../../ui/ErrorMessage';
 import type { Compound } from '../../types/compound';
 import { useCompounds } from '../../hooks/useCompound';
+import Loader from '../../ui/Loader';
 
 function BasicInfoStep() {
   const { register, control } = useFormContext();
   // Access the client
   const { isLoading, isError, data: compoundOptions } = useCompounds();
-
   return (
     <Step title="basic information">
       {/* property title */}
@@ -54,7 +54,7 @@ function BasicInfoStep() {
           {!isLoading &&
             !isError &&
             compoundOptions &&
-            compoundOptions?.data?.data.map((compound: Compound) => (
+            compoundOptions?.data?.data?.map((compound: Compound) => (
               <Option key={compound.compoundId} value={compound.compoundId} label={compound.name} />
             ))}
         </Select>

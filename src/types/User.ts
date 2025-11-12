@@ -24,8 +24,9 @@ export type UserSignIn = {
     password: string;
 };
 export type sessinToken = {
-    userId: string;
+    user: UserProfile;
     jwtToken: string;
+    roles: [string];
 };
 // profile
 

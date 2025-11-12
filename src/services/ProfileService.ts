@@ -1,4 +1,4 @@
-import type { getAgentProfileResponse, getUser, getUserProfileResponse } from "../types/Responses";
+import type { getAgentProfileResponse, getUser, getUserProfileResponse, getUserRolesResponse } from "../types/Responses";
 import request from "../utils/request"
 
 
@@ -25,4 +25,13 @@ export const getUserById = async (id: string) => {
 
     return res;
 
+}
+export const getUserRoles = async (id: string) => {
+    const res = await request<getUserRolesResponse>(`/api/UserRole/user-roles/${id}`, {
+        method: "GET"
+    })
+    if (!res.isSuccess) {
+        throw new Error(res.message || "Failed to fetch compounds");
+    }
+    return res;
 }

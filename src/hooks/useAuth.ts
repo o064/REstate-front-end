@@ -4,9 +4,11 @@ import type { getUser } from '../types/Responses';
 
 import { useMutation } from "@tanstack/react-query";
 import { useAuth } from '../context/AuthContext';
-import type { RegitserForm, UserRegister } from '../types/User';
+import type { RegitserForm, sessinToken, UserRegister } from '../types/User';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
+import { getUserById, getUserRoles } from '../services/ProfileService';
+import { setAuthToken } from '../utils/request';
 
 export function useUser() {
     return useQuery<getUser | null>({
@@ -16,6 +18,20 @@ export function useUser() {
     });
 }
 
+async function fetchAuthData(userId: string, jwtToken: string): Promise<sessinToken> {
+    const userRole = await getUserRoles(userId);
+    if (!userRole.isSuccess) throw new Error('Failed to fetch user roles');
+
+    const userProfile = await getUserById(userId);
+    if (!userProfile.isSuccess) throw new Error('Failed to fetch user profile');
+
+    return {
+        jwtToken,
+        roles: userRole.data.roles,
+        user: userProfile.data,
+    };
+}
+
 export function useLogin() {
     const { login } = useAuth();
 
@@ -23,11 +39,11 @@ export function useLogin() {
         mutationFn: async ({ userName, password }: { userName: string; password: string }) => {
             const res = await loginService({ userName, password });
             if (!res.isSuccess) throw new Error(res.message);
-            return res.data;
+
+            return fetchAuthData(res.data.userId, res.data.jwtToken);
         },
-        onSuccess: (data) => {
-            login(data);
-        },
+        onSuccess: (data) => login(data),
+
     });
 }
 
@@ -38,14 +54,12 @@ export function useRegister() {
         mutationFn: async (user: RegitserForm) => {
             const res = await registerService(user);
             if (!res.isSuccess) throw new Error(res.message);
-            return res.data;
+
+            return fetchAuthData(res.data.userId, res.data.jwtToken);
         },
-        onSuccess: (data) => {
-            login(data);
-        },
+        onSuccess: (data) => login(data),
     });
 }
-
 export function useLogout() {
     const { logout } = useAuth();
     return useMutation({

@@ -9,8 +9,8 @@ export async function postProperty(
 ) {
     const endpoint =
         propertyType === 0
-            ? "/api/ResidentialProperty/AddResidentialProperty"
-            : "/api/CommercialProperty/AddCommercialProperty";
+            ? "/api/ResidentialProperty"
+            : "/api/CommercialProperty";
     const res = propertyType ? await request<postResPropertyResponse>(endpoint, {
         method: "POST",
         body: JSON.stringify(property),

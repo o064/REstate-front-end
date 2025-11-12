@@ -12,8 +12,8 @@ import EstateDetails from './pages/EstateDetails';
 import WishList from './pages/WishList';
 import AddListing from './pages/AddListing';
 import EditLisiting from './pages/EditLisiting';
-import EditImages from './pages/EditImages';
 import MyProfile from './pages/MyProfile';
+import RoleBasedRoute from './components/auth/RoleBaseRoute';
 // Create a client
 const queryClient = new QueryClient();
 const router = createBrowserRouter(
@@ -28,7 +28,9 @@ const router = createBrowserRouter(
           <Route path="wishList" element={<WishList />} />
           <Route path="edit/property/:propertyType/:propertyId" element={<EditLisiting />} />
           {/* <Route path="edit/images/:propertyId" element={<EditImages />} /> */}
-          <Route path="add" element={<AddListing />} />
+          <Route element={<RoleBasedRoute allowedRoles={['Admin', 'Agent']} />}>
+            <Route path="add" element={<AddListing />} />
+          </Route>
         </Route>
       </Route>
       {/* login & signup layout */}

@@ -70,6 +70,7 @@ export type ResidentialPropertyResponse = Omit<residentialProperty, "images" | "
     agentName: string;
     dateListed: string;
 }
+
 export type PropertyGroup = {
     commercialProperties: CommercialPropertyResponse[];
     residentialProperties: ResidentialPropertyResponse[];
@@ -109,5 +110,12 @@ export type LoginSuccess = {
         jwtToken: string;
     };
 };
-
+export type getUserRolesResponse = {
+    isSuccess: true;
+    message: string;
+    data: {
+        userId: string;
+        roles: [string];
+    };
+} | BadRequest
 export type LoginResponse = LoginSuccess | BadRequest;

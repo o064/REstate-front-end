@@ -26,6 +26,25 @@ export const defaultResidentialValues: ListingFormInputs = {
     images: [], // will be uploaded later
 };
 
+{
+  "propertyType": "Residential",
+  "propertyPurpose": "Rent",
+  "propertyStatus": "Accepted",
+  "price": 0,
+  "square": 0,
+  "description": "string",
+  "agentId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "compoundId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "bedrooms": 0,
+  "bathrooms": 0,
+  "floors": 0,
+  "kitchenType": "American",
+  "amenity": {
+    "hasElectricityLine": true,
+    "hasWaterLine": true,
+    "hasGasLine": true
+  }
+}
 export const defaultCommercialValues: ListingFormInputs = {
     propertyPurpose: 0,
     title: "",
