@@ -4,15 +4,16 @@ export type PropertyType = "commercial" | "residential";
 export type Property = {
     id: string;
     name: string;
-    purpose: 0 | 1 ;
-    square: number ;
-    price: number ;
+
+    purpose: PropertyPurpose;
+    square: number;
+    price: number;
     address: string;
     bedrooms?: number;
     bathrooms?: number;
     imageUrl: string;
-    type:string
-    images:[]
+    type: string
+    images: []
 };
 
 export type PropertyWithAgency = Property & {

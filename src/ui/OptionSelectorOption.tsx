@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 
+<<<<<<< HEAD
 type OptionSelectorOptionProps<T extends string> =
   | {
       multiple: false;
@@ -17,12 +18,21 @@ type OptionSelectorOptionProps<T extends string> =
       option: T;
       label?: string;
     };
+=======
+type OptionSelectorOptionProps<T extends string> = {
+  value: T;
+  onChange: (type: T) => void;
+  icon: ReactNode;
+  option: T;
+};
+>>>>>>> 78f30e4 (finish basic info step)
 
 function OptionSelectorOption<T extends string>({
   onChange,
   value,
   icon,
   option,
+<<<<<<< HEAD
   label,
   multiple,
 }: OptionSelectorOptionProps<T>) {
@@ -42,11 +52,19 @@ function OptionSelectorOption<T extends string>({
       typedOnChange(option);
     }
   }
+=======
+}: OptionSelectorOptionProps<T>) {
+  const isSelected = value === option;
+>>>>>>> 78f30e4 (finish basic info step)
 
   return (
     <button
       type="button"
+<<<<<<< HEAD
       onClick={handleChange}
+=======
+      onClick={() => onChange(option)}
+>>>>>>> 78f30e4 (finish basic info step)
       className={`p-4 rounded-xl border-2 transition-all duration-200 shadow-sm flex flex-col items-center group ${
         isSelected
           ? 'border-blue-500 bg-blue-50 text-blue-700 font-semibold'
@@ -54,8 +72,12 @@ function OptionSelectorOption<T extends string>({
       }`}
     >
       <span className="h-6 w-6 mb-1 transition-colors group-hover:text-blue-600">{icon}</span>
+<<<<<<< HEAD
       {/* <span className="text-l  font-semibold capitalize">{option}</span> */}
       {label && <span className="text-l  font-semibold capitalize">{label}</span>}
+=======
+      <span className="text-l  font-semibold capitalize">{option}</span>
+>>>>>>> 78f30e4 (finish basic info step)
     </button>
   );
 }

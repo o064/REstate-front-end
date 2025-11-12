@@ -22,6 +22,7 @@ export function capitalize(str: string) {
         .split(' ')
         .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
         .join(' ');;
+
 }
 export function destructUserProfile(data?: getUserProfileResponse | getAgentProfileResponse) {
     if (!data || !data.isSuccess) return { user: null, listings: [] };
@@ -42,4 +43,5 @@ export function destructUserProfile(data?: getUserProfileResponse | getAgentProf
         user: profileData,
         listings: [],
     };
+
 }
