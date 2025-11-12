@@ -6,10 +6,7 @@ import { useFormContext } from 'react-hook-form';
 import { addressValidation, cityValidation } from '../../utils/validation';
 
 function LocationStep() {
-  const {
-    register,
-    formState: { errors },
-  } = useFormContext();
+  const { register } = useFormContext();
   return (
     <Step title="Location Details">
       {/* street  address */}
@@ -21,10 +18,18 @@ function LocationStep() {
           type="text"
           placeholder="enter the property address e.g., 15 El Tahrir St, Cairo, Egypt"
         />
+<<<<<<< HEAD
+=======
+        <ErrorMessage name="address" />
+>>>>>>> 1708d8d (modify error msg)
       </InputField>
       {/* city */}
       <InputField id="city" label="city *">
         <Input id="city" type="text" placeholder="city" {...register('city', cityValidation)} />
+<<<<<<< HEAD
+=======
+        <ErrorMessage name="city" />
+>>>>>>> 1708d8d (modify error msg)
       </InputField>
     </Step>
   );

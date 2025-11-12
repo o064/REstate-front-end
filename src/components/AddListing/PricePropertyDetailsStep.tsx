@@ -9,10 +9,7 @@ import Step from './Step';
 import { priceValidation, sizeValidation } from '../../utils/validation';
 
 function PricePropertyDetailsStep() {
-  const {
-    register,
-    formState: { errors },
-  } = useFormContext();
+  const { register } = useFormContext();
   return (
     <Step title="Price & Property Details">
       {/* price */}
@@ -23,6 +20,10 @@ function PricePropertyDetailsStep() {
           placeholder="enter price"
           {...register('price', priceValidation)}
         />
+<<<<<<< HEAD
+=======
+        <ErrorMessage name="price" />
+>>>>>>> 1708d8d (modify error msg)
       </InputField>
       <Grid className="grid-cols-2 gap-6">
         {/* bedrooms */}
@@ -32,6 +33,10 @@ function PricePropertyDetailsStep() {
               <Option label={opt.label} value={opt.value} key={opt.value} />
             ))}
           </Select>
+<<<<<<< HEAD
+=======
+          <ErrorMessage name="bedrooms" />
+>>>>>>> 1708d8d (modify error msg)
         </InputField>
         {/* Bathrooms */}
         <InputField id="bathrooms" label="Bathrooms *">
@@ -40,6 +45,10 @@ function PricePropertyDetailsStep() {
               <Option label={opt.label} value={opt.value} key={opt.value} />
             ))}
           </Select>
+<<<<<<< HEAD
+=======
+          <ErrorMessage name="bathrooms" />
+>>>>>>> 1708d8d (modify error msg)
         </InputField>
       </Grid>
       {/* size */}
@@ -50,6 +59,10 @@ function PricePropertyDetailsStep() {
           placeholder="enter size"
           {...register('square', sizeValidation)}
         />
+<<<<<<< HEAD
+=======
+        <ErrorMessage name="square" />
+>>>>>>> 1708d8d (modify error msg)
       </InputField>
     </Step>
   );

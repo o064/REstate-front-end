@@ -1,4 +1,4 @@
-import { Building2, Mail } from 'lucide-react';
+import { Building2 } from 'lucide-react';
 import InputField from '../ui/InputField';
 import Input from '../ui/Input';
 import PasswordInput from '../components/auth/PasswordInput';

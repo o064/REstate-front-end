@@ -1,5 +1,4 @@
 import InputField from '../../ui/InputField';
-import OptionSelector from '../../ui/OptionSelector';
 import TextArea from '../../ui/TextArea';
 import Step from './Step';
 import { amenityOptions } from '../../constants/options';
@@ -8,11 +7,7 @@ import { descriptionValidation } from '../../utils/validation';
 import { ControlledSelector } from '../../ui/ControllerSelector';
 
 function DescriptionAmenitiesStep() {
-  const {
-    register,
-    control,
-    formState: { errors },
-  } = useFormContext();
+  const { register, control } = useFormContext();
   return (
     <Step title="Description & Amenities">
       {/* Property Description  */}
@@ -22,6 +17,10 @@ function DescriptionAmenitiesStep() {
           placeholder="Describe your property, its features, neighborhood, and what makes it special..."
           rows={6}
         />
+<<<<<<< HEAD
+=======
+        <ErrorMessage name="description" />
+>>>>>>> 1708d8d (modify error msg)
       </InputField>
       {/* amenity options */}
       {/* allow multiple choice */}
