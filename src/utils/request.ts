@@ -1,4 +1,4 @@
-const API_URL = "https://re-estate.runasp.net/";
+const API_URL = "https://re-estate.runasp.net";
 export default async function request<T>(endpoint: string, options: RequestInit): Promise<T> {
     const response = await fetch(`${API_URL}${endpoint}`, {
         headers: {
