@@ -20,8 +20,8 @@ export function useLogin() {
     const { login } = useAuth();
 
     return useMutation({
-        mutationFn: async ({ email, password }: { email: string; password: string }) => {
-            const res = await loginService({ email, password });
+        mutationFn: async ({ userName, password }: { userName: string; password: string }) => {
+            const res = await loginService({ userName, password });
             if (!res.isSuccess) throw new Error(res.message);
             return res.data;
         },

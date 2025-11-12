@@ -6,13 +6,12 @@ import AuthActions from '../components/auth/AuthActions';
 import { Link, useNavigate } from 'react-router';
 import FormHeader from '../components/auth/FormHeader';
 import { useForm } from 'react-hook-form';
-import { emailValidation, passwordValidtion } from '../utils/validation';
+import { nameValidation, passwordValidtion } from '../utils/validation';
 import ErrorMessage from '../ui/ErrorMessage';
 import type { UserSignIn } from '../types/User';
 import Container from '../ui/Continer';
 import { useHomePageRedirect, useLogin } from '../hooks/useAuth';
 import Loader from '../ui/Loader';
-import { useEffect } from 'react';
 
 function Login() {
   const {
@@ -21,16 +20,16 @@ function Login() {
     formState: { errors },
   } = useForm<UserSignIn>({
     defaultValues: {
-      email: '',
+      userName: '',
       password: '',
     },
     mode: 'onSubmit',
   });
   const { mutate: login, isPending, isError, error } = useLogin();
   const navigate = useNavigate();
-  async function onSubmit({ email, password }: UserSignIn) {
+  async function onSubmit({ userName, password }: UserSignIn) {
     login(
-      { email, password },
+      { userName, password },
       {
         onSuccess: () => {
           navigate('/');
@@ -55,19 +54,18 @@ function Login() {
         />
         {/* Sign in Form */}
         <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
-          {/* email */}
-          <InputField id="email" label="Email address" icon={<Mail />}>
+          {/* userName */}
+          <InputField id="userName" label="User Name *">
             <Input
-              id="email"
-              type="email"
-              placeholder="you@example.com"
-              className="pl-10"
-              {...register('email', emailValidation)}
+              id="userName"
+              type="text"
+              placeholder="user name"
+              {...register('userName', nameValidation)}
             />
-            {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
+            {errors.userName && <ErrorMessage>{errors.userName.message}</ErrorMessage>}
           </InputField>
           {/* password */}
-          <InputField id="password" label="Password">
+          <InputField id="password" label="Password *">
             <PasswordInput id="password" {...register('password', passwordValidtion)} />
             {errors.password && <ErrorMessage>{errors.password.message}</ErrorMessage>}
           </InputField>

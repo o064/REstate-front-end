@@ -12,18 +12,18 @@ const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [token, setToken] = useState<string | null>(() => {
-    const stored = Cookies.get('session');
+    const stored = Cookies.get('Authentication');
     return stored ? JSON.parse(stored).jwtToken : null;
   });
 
   const login = (data: sessinToken) => {
-    const jwtToken = data.jwtToken;
+    const jwtToken = 'Bearer' + data.jwtToken;
     setToken(jwtToken);
-    Cookies.set('session', JSON.stringify(data), { expires: 7 });
+    Cookies.set('Authentication', JSON.stringify(data), { expires: 7 });
   };
 
   const logout = () => {
-    Cookies.remove('session');
+    Cookies.remove('Authentication');
     setToken(null);
   };
 

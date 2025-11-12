@@ -20,7 +20,7 @@ export type agentRegister = UserRegister & {
 };
 export type RegitserForm = agentRegister | agentRegister;
 export type UserSignIn = {
-    email: string;
+    userName: string;
     password: string;
 };
 export type sessinToken = {
