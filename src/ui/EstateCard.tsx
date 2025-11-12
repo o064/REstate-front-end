@@ -33,7 +33,7 @@ const EstateCard = ({ property }: EstateCardPropse) => {
   return (
     <>
       <Link
-        to="/estateDetails"
+        to={`/estateDetails/${property.id}`}
         className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow overflow-hidden border border-gray-200"
       >
         {/* Property Image */}
