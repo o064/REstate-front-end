@@ -18,7 +18,7 @@ export type agentRegister = UserRegister & {
     taxIdentificationNumber: number,
     experienceYears: number,
 };
-export type RegitserForm = agentRegister | agentRegister;
+export type RegitserForm = agentRegister;
 export type UserSignIn = {
     userName: string;
     password: string;

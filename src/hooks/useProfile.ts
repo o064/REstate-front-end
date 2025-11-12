@@ -4,7 +4,7 @@ import { getUserProfile } from "../services/ProfileService";
 import type { getAgentProfileResponse, getUserProfileResponse } from "../types/Responses";
 
 export function useUserProfile() {
-    const stored = Cookies.get("user");
+    const stored = Cookies.get("Authentication");
     if (!stored) throw new Error("User not found in cookies");
 
     const { userId } = JSON.parse(stored);

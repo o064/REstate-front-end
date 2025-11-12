@@ -1,8 +1,7 @@
-// context/AuthContext.tsx
 import { createContext, useContext, useState, useCallback, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import type { sessinToken, Profile } from '../types/User';
-import { setAuthToken } from '../utils/request';
+// import { setAuthToken } from '../utils/request';
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -50,7 +49,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setToken(data.jwtToken);
       setRoles(data.roles);
       setUserState(data.user);
-      setAuthToken(data.jwtToken); // set token for API requests
+      // setAuthToken(data.jwtToken); // set token for API requests
     }
     setIsLoading(false);
   }, []);
@@ -64,7 +63,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setRoles(Array.isArray(data.roles) ? data.roles : []);
     setUserState(data.user);
 
-    setAuthToken(formattedToken); // make token available for API calls
+    // setAuthToken(formattedToken); // make token available for API calls
 
     // Store all in one cookie
     Cookies.set(
@@ -86,7 +85,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setToken(null);
     setRoles([]);
     setUserState(null);
-    setAuthToken(null);
+    // setAuthToken(null);
 
     Cookies.remove(COOKIE_NAME);
   }, []);

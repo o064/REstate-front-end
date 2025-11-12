@@ -1,17 +1,15 @@
 import { MapPin, Phone, Bed, Bath, Ruler, Heart } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import EstateCard from '../ui/EstateCard';
-import SiteMap from '../components/siteMap/SiteMap';
 import Button from '../ui/Button';
 import { fakePropertyWithAgency } from '../dev-data/properites';
 import Comments from '../components/comments/Comments';
 import { useParams } from 'react-router';
-import type { Property, PropertyWithAgency } from '../types/property';
+import type { PropertyWithAgency } from '../types/property';
 
 const EstateDetails = () => {
   const [src, setSrc] = useState(0);
   const [property , setProperty] = useState<PropertyWithAgency>()
-  const [comment, setComment] = useState<string[]>([]);
   const { id } = useParams<{ id: string }>();
   const propertyes = fakePropertyWithAgency;
    
@@ -162,7 +160,7 @@ getProperty()
           ))}
         </div>
       </section>
-      <Comments comment={comment} Func={setComment} />
+      <Comments  id={id!}/>
     </div>
   );
 };
