@@ -13,8 +13,6 @@ interface Endpoints {
     [resource: string]: Endpoint<unknown>[];
 }
 
-// In-memory agent store so DELETE endpoints can remove properties from the
-// agent's list and subsequent GETs reflect the change.
 const agentStore: Record<string, any> = {
     "3fa85f64-5717-4562-b3fc-2c963f66afa6": {
         id: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -120,7 +118,7 @@ function removePropertyFromAgents(propertyId: string) {
 }
 
 export const endpoints: Endpoints = {
-    // 👇 User profile endpoints
+    //  User profile endpoints
     userProfile: [
         {
             method: "GET",

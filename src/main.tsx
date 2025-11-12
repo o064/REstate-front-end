@@ -4,13 +4,20 @@ import './index.css';
 import App from './App.js';
 import store from './store.js';
 import { Provider } from 'react-redux';
-async function enableMocking() {
-  const { worker } = await import('./mocks/browser.js');
 
-  // `worker.start()` returns a Promise that resolves
-  // once the Service Worker is up and ready to intercept requests.
+async function enableMocking() {
+  const shouldUseMocking = import.meta.env.VITE_USE_MSW === 'true';
+
+  if (!shouldUseMocking) {
+    console.log('MSW is disabled.');
+    return Promise.resolve();
+  }
+
+  console.log('Enabling MSW...');
+  const { worker } = await import('./mocks/browser.js');
   return worker.start();
 }
+
 enableMocking()
   .then(() => {
     createRoot(document.getElementById('root')!).render(
