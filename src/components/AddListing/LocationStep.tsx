@@ -8,7 +8,16 @@ function LocationStep() {
     <Step title="Location Details">
       {/* street  address */}
       <InputField id="adress" label="street address *" icon={<MapPinHouse />}>
-        <Input />
+        <Input
+          className="pl-10 "
+          id="adress"
+          type="text"
+          placeholder="enter the property address"
+        />
+      </InputField>
+      {/* city */}
+      <InputField id="city" label="city *">
+        <Input id="city" type="text" placeholder="city" />
       </InputField>
     </Step>
   );

@@ -1,20 +1,15 @@
 import { capitalize } from '../utils/helper';
 
-type optionProps = {
-<<<<<<< HEAD
+type OptionProps = {
   value: string | number;
-=======
-  value: string;
->>>>>>> 78f30e4 (finish basic info step)
   label: string;
 };
-function Option({ value, label }: optionProps) {
+
+function Option({ value, label }: OptionProps) {
+  const stringValue = typeof value === 'string' ? value.toLowerCase() : value.toString();
+
   return (
-<<<<<<< HEAD
-    <option value={typeof value === 'string' ? value.toLowerCase() : value} className="">
-=======
-    <option value={value.toLowerCase()} className="">
->>>>>>> 78f30e4 (finish basic info step)
+    <option value={stringValue} className="">
       {capitalize(label)}
     </option>
   );
