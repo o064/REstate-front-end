@@ -20,7 +20,7 @@ import { ControlledSelector } from '../ui/ControllerSelector';
 import ErrorMessage from '../ui/ErrorMessage';
 import Container from '../ui/Continer';
 import Grid from '../ui/Grid';
-import { useHomePageRedirect, useRegister } from '../hooks/useAuth';
+import { useRegister } from '../hooks/useAuth';
 
 function Signup() {
   const {
