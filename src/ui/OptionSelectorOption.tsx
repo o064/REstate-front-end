@@ -24,6 +24,7 @@ type OptionSelectorOptionProps<T extends string> = {
   onChange: (type: T) => void;
   icon: ReactNode;
   option: T;
+  label?: string;
 };
 >>>>>>> 78f30e4 (finish basic info step)
 
@@ -32,6 +33,7 @@ function OptionSelectorOption<T extends string>({
   value,
   icon,
   option,
+<<<<<<< HEAD
 <<<<<<< HEAD
   label,
   multiple,
@@ -53,6 +55,9 @@ function OptionSelectorOption<T extends string>({
     }
   }
 =======
+=======
+  label,
+>>>>>>> d66c19d (add loc and price step , delete conact step)
 }: OptionSelectorOptionProps<T>) {
   const isSelected = value === option;
 >>>>>>> 78f30e4 (finish basic info step)
@@ -77,7 +82,11 @@ function OptionSelectorOption<T extends string>({
       {label && <span className="text-l  font-semibold capitalize">{label}</span>}
 =======
       <span className="text-l  font-semibold capitalize">{option}</span>
+<<<<<<< HEAD
 >>>>>>> 78f30e4 (finish basic info step)
+=======
+      {label && <span className="text-xs font-medium">{label}</span>}
+>>>>>>> d66c19d (add loc and price step , delete conact step)
     </button>
   );
 }
