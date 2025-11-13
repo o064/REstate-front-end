@@ -5,13 +5,15 @@ export const emailValidation = {
         message: 'Invalid email format',
     },
 };
+
 export const passwordValidtion = {
     required: 'A password is required—security first!',
     minLength: {
         value: 6,
-        message: 'Make it at least 6 characters—short ',
-    }
+        message: 'Make it at least 6 characters—short passwords are weak!',
+    },
 };
+
 export const phoneValidation = {
     required: 'Phone number is required',
     pattern: {
@@ -31,7 +33,7 @@ export const nameValidation = {
         message: 'Name should only contain letters and spaces',
     },
 };
-<<<<<<< HEAD
+
 export const agencyNameValidation = {
     required: 'Agency Name is required',
     minLength: {
@@ -43,6 +45,7 @@ export const agencyNameValidation = {
         message: 'Name should only contain letters and spaces',
     },
 };
+
 export const taxIdentificationNumberValidation = {
     required: 'Tax identification number is required',
     minLength: {
@@ -58,14 +61,13 @@ export const taxIdentificationNumberValidation = {
         message: 'Tax ID must contain only letters and numbers',
     },
 };
+
 export const experienceYearsValidation = {
     required: 'Experience is required',
     min: { value: 0, message: 'Experience cannot be negative' },
     max: { value: 50, message: 'Please enter a valid number of years' },
 };
 
-=======
->>>>>>> ebc48fa (add useForm data)
 export const descriptionValidation = {
     required: "Description is required",
     minLength: {
@@ -76,28 +78,20 @@ export const descriptionValidation = {
         value: 500,
         message: "Description cannot exceed 500 characters",
     },
-}
-<<<<<<< HEAD
+};
 
-=======
->>>>>>> ebc48fa (add useForm data)
 export const addressValidation = {
     required: "Address is required",
     pattern: {
         value: /^\d+\s+[A-Za-z\s]+,\s*[A-Za-z\s]+,\s*[A-Za-z\s]+$/,
-        message:
-            "Address must follow the format: '15 El Tahrir St, Cairo, Egypt'",
+        message: "Address must follow the format: '15 El Tahrir St, Cairo, Egypt'",
     },
     minLength: {
         value: 10,
         message: "Address seems too short",
     },
-}
+};
 
-<<<<<<< HEAD
-
-=======
->>>>>>> ebc48fa (add useForm data)
 export const cityValidation = {
     required: "City is required",
     pattern: {
@@ -108,8 +102,8 @@ export const cityValidation = {
         value: 2,
         message: "City name must be at least 2 characters",
     },
-}
-<<<<<<< HEAD
+};
+
 export const googleMapsUrlValidation = {
     required: "Google Maps URL is required",
     pattern: {
@@ -118,10 +112,6 @@ export const googleMapsUrlValidation = {
     },
 };
 
-
-
-=======
->>>>>>> ebc48fa (add useForm data)
 export const priceValidation = {
     required: "Price is required",
     valueAsNumber: true,
@@ -133,7 +123,8 @@ export const priceValidation = {
         value: 100000000,
         message: "Price seems too high",
     },
-}
+};
+
 export const sizeValidation = {
     required: "Property size is required",
     valueAsNumber: true,
@@ -145,9 +136,7 @@ export const sizeValidation = {
         value: 10000,
         message: "Size cannot exceed 10,000 m²",
     },
-<<<<<<< HEAD
-}
-
+};
 
 export const PropertyNameValidation = {
     required: 'Property title is required',
@@ -160,6 +149,3 @@ export const PropertyNameValidation = {
         message: 'Property Name should only contain letters and spaces',
     },
 };
-=======
-}
->>>>>>> ebc48fa (add useForm data)

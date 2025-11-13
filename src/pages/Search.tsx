@@ -2,6 +2,28 @@ import { useState } from "react";
 import { fakePropertyWithAgency } from "../dev-data/properites";
 import type { Property } from "../types/property";
 import EstateCard from "../ui/EstateCard";
+import OptionSelector from "../ui/OptionSelector";
+import { HomeIcon, House, SquareActivity, DollarSign, Ruler, Bed } from "lucide-react";
+import Input from "../ui/Input";
+
+const propertyTypeOptions = [
+  { value: "villa", icon: <House />, label: "Villa" },
+  { value: "studio", icon: <SquareActivity />, label: "Studio" },
+  { value: "house", icon: <HomeIcon />, label: "House" },
+];
+
+const priceOptions = [
+  { value: "100000", icon: <DollarSign />, label: "≤ 100k" },
+  { value: "500000", icon: <DollarSign />, label: "≤ 500k" },
+  { value: "1000000", icon: <DollarSign />, label: "≤ 1M" },
+];
+
+const areaOptions = [
+  { value: "50", icon: <Ruler />, label: "≥ 50 m²" },
+  { value: "100", icon: <Ruler />, label: "≥ 100 m²" },
+  { value: "200", icon: <Ruler />, label: "≥ 200 m²" },
+];
+
 
 const Search = () => {
   const [query, setQuery] = useState("");
@@ -19,8 +41,8 @@ const Search = () => {
       property.name.toLowerCase().includes(query.toLowerCase()) &&
       (maxPrice === "" || property.price <= parseFloat(maxPrice)) &&
       (minArea === "" || property.square >= parseFloat(minArea)) &&
-      (type === "" || property.type === type) &&
-      (rooms === "" || property.bedrooms === parseInt(rooms))
+      (type === "" || property.type!.toLowerCase() === type.toLowerCase()) &&
+      (rooms === "" || property.bedrooms! >= parseInt(rooms))
     );
   });
 
@@ -30,47 +52,40 @@ const Search = () => {
     <div className="max-w-6xl mx-auto p-4 mb-80">
       <h1 className="text-2xl font-bold mb-4">Property Search</h1>
 
+
+      {/* Search Text */}
+      <Input
+        type="text"
+        placeholder="Search by city or neighborhood"
+        className="border p-3 rounded-lg w-full shadow-sm h-20 my-auto mb-2.5"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+      />
       {/* Search Filters */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-6">
-        <input
-          type="text"
-          placeholder="Search by city or neighborhood"
-          className="border p-2 rounded w-full"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-        />
-        <input
-          type="number"
-          placeholder="Max Price"
-          className="border p-2 rounded w-full"
-          value={maxPrice}
-          onChange={(e) => setMaxPrice(e.target.value)}
-        />
-        <input
-          type="number"
-          placeholder="Min Area (m²)"
-          className="border p-2 rounded w-full"
-          value={minArea}
-          onChange={(e) => setMinArea(e.target.value)}
-        />
-        <select
-          className="border p-2 rounded w-full"
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+
+        <OptionSelector
+          title="Property Type"
           value={type}
-          onChange={(e) => setType(e.target.value)}
-        >
-          <option value="">Property Type</option>
-          <option value="apartment">Apartment</option>
-          <option value="villa">Villa</option>
-          <option value="studio">Studio</option>
-          <option value="house">House</option>
-        </select>
-        <input
-          type="number"
-          placeholder="Number of Bedrooms"
-          className="border p-2 rounded w-full"
-          value={rooms}
-          onChange={(e) => setRooms(e.target.value)}
+          onChange={setType}
+          options={propertyTypeOptions}
         />
+
+        <OptionSelector
+          title="Max Price"
+          value={maxPrice}
+          onChange={setMaxPrice}
+          options={priceOptions}
+        />
+
+        <OptionSelector
+          title="Min Area"
+          value={minArea}
+          onChange={setMinArea}
+          options={areaOptions}
+
+        />
+
       </div>
 
       {/* Properties List */}
