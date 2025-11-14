@@ -10,7 +10,16 @@ export const passwordValidtion = {
     minLength: {
         value: 6,
         message: 'Make it at least 6 characters—short ',
-    }
+    },
+    validate: (value: string) => {
+        const hasLetter = /[a-zA-Z]/.test(value);
+        const hasNumber = /\d/.test(value);
+        const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(value);
+        return (
+            (hasLetter && hasNumber && hasSpecial) ||
+            "Use at least one letter, number, and symbol!"
+        );
+    },
 };
 export const phoneValidation = {
     required: 'Phone number is required',

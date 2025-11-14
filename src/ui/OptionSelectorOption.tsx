@@ -36,6 +36,7 @@ function OptionSelectorOption<T extends string>({
       const newValue = typedValue.includes(option)
         ? typedValue.filter((v) => v !== option)
         : [...typedValue, option];
+
       typedOnChange(newValue);
     } else {
       const typedOnChange = onChange as (type: T) => void;

@@ -12,8 +12,8 @@ export type Property = {
     bedrooms?: number;
     bathrooms?: number;
     imageUrl: string;
-    type: string
-    images: []
+    type?: string
+    images?:string []
 };
 
 export type PropertyWithAgency = Property & {

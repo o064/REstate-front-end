@@ -8,7 +8,7 @@ type Option<T> = {
 };
 
 type SingleSelectProps<T extends string> = {
-  multiple?: false; // default
+  multiple?: false;
   title: string;
   value: T;
   onChange: (value: T) => void;
@@ -17,7 +17,7 @@ type SingleSelectProps<T extends string> = {
 };
 
 type MultiSelectProps<T extends string> = {
-  multiple: true; // explicitly multi
+  multiple: true;
   title: string;
   value: T[];
   onChange: (value: T[]) => void;
@@ -33,45 +33,45 @@ function OptionSelector<T extends string>({
   onChange,
   options,
   multiple = false,
-  className = '',
+  className = 'border-2 border-blue-400 p-2.5 rounded-2xl',
 }: OptionSelectorProps<T>) {
   return (
     <div className={`mb-6 pb-4 ${className}`}>
       <label className="block text-base font-semibold text-gray-700 mb-3">{title}</label>
-      <div className="grid grid-cols-2 gap-3">
+
+      <div className="grid grid-cols-3 gap-3 ">
         {options.map((opt) => {
+          const commonProps = {
+            key: opt.value,
+            icon: opt.icon,
+            option: opt.value,
+            label: opt.label,
+          };
+
           if (multiple) {
-            // Type casting to MultiSelectProps<T> to satisfy OptionSelectorOptionProps<T>
             const multiProps = { value, onChange } as Pick<
               MultiSelectProps<T>,
               'value' | 'onChange'
             >;
             return (
               <OptionSelectorOption
-                key={opt.value}
+                {...commonProps}
                 multiple={true}
-                icon={opt.icon}
-                option={opt.value}
                 value={multiProps.value}
                 onChange={multiProps.onChange}
-                label={opt.label}
               />
             );
           } else {
-            // Type casting to SingleSelectProps<T> to satisfy OptionSelectorOptionProps<T>
             const singleProps = { value, onChange } as Pick<
               SingleSelectProps<T>,
               'value' | 'onChange'
             >;
             return (
               <OptionSelectorOption
-                key={opt.value}
-                multiple={false} // Explicitly set to false
-                icon={opt.icon}
-                option={opt.value}
+                {...commonProps}
+                multiple={false}
                 value={singleProps.value}
                 onChange={singleProps.onChange}
-                label={opt.label}
               />
             );
           }
