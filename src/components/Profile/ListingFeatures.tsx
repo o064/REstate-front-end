@@ -1,13 +1,4 @@
-import {
-  Bath,
-  Bed,
-  Square,
-  Building2,
-  Briefcase,
-  UtensilsCrossed,
-  Package,
-  Layers,
-} from 'lucide-react';
+import { Bath, Bed, Square, Briefcase, UtensilsCrossed, Package, Layers } from 'lucide-react';
 import { formatPrice } from '../../utils/helper';
 import type { PropertyGroupListItem } from '../../types/Responses';
 import { KitchenTypeOptions } from '../../constants/options';

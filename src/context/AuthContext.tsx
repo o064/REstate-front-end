@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useCallback, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import type { sessinToken, Profile } from '../types/User';
-// import { setAuthToken } from '../utils/request';
+import { setAuthToken } from '../utils/request';
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -15,7 +15,7 @@ interface AuthContextType {
 }
 
 const COOKIE_NAME = 'Authentication';
-const COOKIE_EXPIRES = 7;
+const COOKIE_EXPIRES = new Date(Date.now() + 20 * 60 * 1000); // 20 min
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
@@ -49,7 +49,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setToken(data.jwtToken);
       setRoles(data.roles);
       setUserState(data.user);
-      // setAuthToken(data.jwtToken); // set token for API requests
+      setAuthToken(data.jwtToken); // set token for API requests
     }
     setIsLoading(false);
   }, []);
@@ -63,7 +63,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setRoles(Array.isArray(data.roles) ? data.roles : []);
     setUserState(data.user);
 
-    // setAuthToken(formattedToken); // make token available for API calls
+    setAuthToken(formattedToken); // make token available for API calls
 
     // Store all in one cookie
     Cookies.set(

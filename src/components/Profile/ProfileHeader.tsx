@@ -3,11 +3,11 @@ import { Building2, User } from 'lucide-react';
 type ProfileHeaderProps = {
   name: string;
   email: string;
-  type?: string;
+  role?: string;
   agencyName?: string;
 };
 
-function ProfileHeader({ name, email, type = '', agencyName }: ProfileHeaderProps) {
+function ProfileHeader({ name, email, role = '', agencyName }: ProfileHeaderProps) {
   return (
     <div className="flex items-center space-x-4">
       <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center">
@@ -16,7 +16,7 @@ function ProfileHeader({ name, email, type = '', agencyName }: ProfileHeaderProp
       <div className="flex-1">
         <h1 className="text-2xl font-bold text-gray-900">{name}</h1>
         <p className="text-gray-600">{email}</p>
-        {type === 'agent' && agencyName && (
+        {role === 'Agent' && agencyName && (
           <div className="flex items-center text-sm text-gray-500 mt-1">
             <Building2 className="h-4 w-4 mr-1" />
             <span>{agencyName}</span>

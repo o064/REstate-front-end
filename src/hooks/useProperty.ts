@@ -26,6 +26,7 @@ export function useAddProperty() {
                     images,
                 });
             }
+            console.log(propertyRes);
             return propertyRes;
         },
     });

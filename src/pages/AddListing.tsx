@@ -42,8 +42,15 @@ function AddListing() {
   }
   function onSubmit(formData: ListingFormInputs) {
     console.log(formData);
-    AddProperty(formData);
-    if (!isPending && !isError) setStep(6); // Move to success state
+    AddProperty(formData, {
+      onSuccess: () => {
+        setStep(6);
+      },
+      onError: (err) => {
+        console.log(err);
+      },
+    });
+    // if (!isPending && !isError) setStep(6); // Move to success state
   }
   //  scroll to top when step changes
   useEffect(() => {

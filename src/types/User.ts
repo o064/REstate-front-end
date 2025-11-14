@@ -1,13 +1,13 @@
 import type { PropertyGroup } from "./Responses";
 
-export type UserType = 'user' | 'agent';
+export type UserRole = 'Customer' | 'Agent' | "Admin";
 
 
 export type UserRegister = {
     email: string;
     password: string;
     userName: string;
-    phone: string;
+    phoneNumber: string;
 };
 export type customerRegister = UserRegister & {
     roleDiscriminator: 3;
@@ -45,6 +45,7 @@ export type UserData = {
     email: string;
     phoneNumber: string;
     dateJoined: string;
+    role?: UserRole;
 };
 export type UserProfile = UserData;
 export type AgentProfile = UserData & {

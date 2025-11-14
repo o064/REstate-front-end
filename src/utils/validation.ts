@@ -31,7 +31,6 @@ export const nameValidation = {
         message: 'Name should only contain letters and spaces',
     },
 };
-<<<<<<< HEAD
 export const agencyNameValidation = {
     required: 'Agency Name is required',
     minLength: {
@@ -64,8 +63,6 @@ export const experienceYearsValidation = {
     max: { value: 50, message: 'Please enter a valid number of years' },
 };
 
-=======
->>>>>>> ebc48fa (add useForm data)
 export const descriptionValidation = {
     required: "Description is required",
     minLength: {
@@ -77,10 +74,6 @@ export const descriptionValidation = {
         message: "Description cannot exceed 500 characters",
     },
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> ebc48fa (add useForm data)
 export const addressValidation = {
     required: "Address is required",
     pattern: {
@@ -94,10 +87,6 @@ export const addressValidation = {
     },
 }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> ebc48fa (add useForm data)
 export const cityValidation = {
     required: "City is required",
     pattern: {
@@ -109,7 +98,6 @@ export const cityValidation = {
         message: "City name must be at least 2 characters",
     },
 }
-<<<<<<< HEAD
 export const googleMapsUrlValidation = {
     required: "Google Maps URL is required",
     pattern: {
@@ -120,8 +108,6 @@ export const googleMapsUrlValidation = {
 
 
 
-=======
->>>>>>> ebc48fa (add useForm data)
 export const priceValidation = {
     required: "Price is required",
     valueAsNumber: true,
@@ -145,7 +131,6 @@ export const sizeValidation = {
         value: 10000,
         message: "Size cannot exceed 10,000 m²",
     },
-<<<<<<< HEAD
 }
 
 
@@ -160,6 +145,3 @@ export const PropertyNameValidation = {
         message: 'Property Name should only contain letters and spaces',
     },
 };
-=======
-}
->>>>>>> ebc48fa (add useForm data)

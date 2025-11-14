@@ -56,15 +56,15 @@ function PricePropertyDetailsStep() {
           </Grid>
           <Grid className="grid-cols-2 gap-6">
             {/* KitchenType */}
-            <InputField id="KitchenType" label="KitchenType *">
+            <InputField id="kitchenType" label="KitchenType *">
               <Select
-                {...register('KitchenType', { required: 'Please select number of KitchenType' })}
+                {...register('kitchenType', { required: 'Please select number of KitchenType' })}
               >
                 {KitchenTypeOptions.map((opt) => (
                   <Option label={opt.label} value={opt.value} key={opt.value} />
                 ))}
               </Select>
-              <ErrorMessage name="KitchenType" />
+              <ErrorMessage name="kitchenType" />
             </InputField>
             {/* floors */}
             <InputField id="floors" label="floors *">

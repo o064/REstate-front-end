@@ -6,10 +6,8 @@ type OptionProps = {
 };
 
 function Option({ value, label }: OptionProps) {
-  const stringValue = typeof value === 'string' ? value.toLowerCase() : value.toString();
-
   return (
-    <option value={stringValue} className="">
+    <option value={value} className="">
       {capitalize(label)}
     </option>
   );

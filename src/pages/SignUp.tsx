@@ -20,7 +20,7 @@ import { ControlledSelector } from '../ui/ControllerSelector';
 import ErrorMessage from '../ui/ErrorMessage';
 import Container from '../ui/Continer';
 import Grid from '../ui/Grid';
-import { useHomePageRedirect, useRegister } from '../hooks/useAuth';
+import { useRegister } from '../hooks/useAuth';
 
 function Signup() {
   const {
@@ -34,7 +34,7 @@ function Signup() {
       email: '',
       password: '',
       userName: '',
-      phone: '',
+      phoneNumber: '',
       roleDiscriminator: 1,
       agencyName: '',
       taxIdentificationNumber: 0,
@@ -109,16 +109,16 @@ function Signup() {
 
             {errors.userName && <ErrorMessage>{errors.userName.message}</ErrorMessage>}
           </InputField>
-          {/* phone number */}
-          <InputField id="phone" label="Phone Number" icon={<Phone />}>
+          {/* phoneNumber number */}
+          <InputField id="phoneNumber" label="phone Number" icon={<Phone />}>
             <Input
               type="tel"
-              id="phone"
+              id="phoneNumber"
               placeholder="(555) 555 - 555"
               className="pl-10"
-              {...register('phone', phoneValidation)}
+              {...register('phoneNumber', phoneValidation)}
             />
-            {errors.phone && <ErrorMessage>{errors.phone.message}</ErrorMessage>}
+            {errors.phoneNumber && <ErrorMessage>{errors.phoneNumber.message}</ErrorMessage>}
           </InputField>
 
           {/* AgencyName */}

@@ -7,10 +7,10 @@ export function useUserProfile() {
     const stored = Cookies.get("Authentication");
     if (!stored) throw new Error("User not found in cookies");
 
-    const { userId } = JSON.parse(stored);
-
+    const { user } = JSON.parse(stored);
     return useQuery<getAgentProfileResponse | getUserProfileResponse>({
-        queryKey: ["userProfile", userId],
-        queryFn: () => getUserProfile(userId),
+        queryKey: ["userProfile", user.userId],
+        queryFn: () => getUserProfile(user.userId, user.role)
+        ,
     });
 }

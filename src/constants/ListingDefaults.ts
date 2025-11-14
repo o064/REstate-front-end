@@ -3,10 +3,10 @@ import type { ListingFormInputs } from "../types/property";
 export const defaultResidentialValues: ListingFormInputs = {
     propertyPurpose: 0, // 0 -> For Sale, 1 -> For Rent
     title: "Modern Bedroom Apartment",
-    agentId: "agent_12345",
-    propertyStatus: 1, // 1 -> Available
-    propertyType: 0, // 0 -> Apartment, 1 -> Villa, etc.
-    compoundId: "compound_001",
+    agentId: "416dfe46-2094-450d-fe6e-08de22a25c54",
+    propertyStatus: 1,
+    propertyType: 0,
+    compoundId: "ff929561-30fb-4b69-90ce-6fc264a91925",
     address: "123 Nile Street, Zamalek,egypt",
     city: "Cairo",
     googleMapsUrl: "https://www.google.com/maps/@29.9609231,32.5484151,13z?entry=ttu&g_ep=EgoyMDI1MTAyOS4yIKXMDSoASAFQAw%3D%3D",
@@ -21,7 +21,7 @@ export const defaultResidentialValues: ListingFormInputs = {
     },
     bathrooms: 2,
     bedrooms: 2,
-    kitchenType: 1, // 0 -> Closed, 1 -> Open
+    kitchenType: 0,
     floors: 5,
     images: [], // will be uploaded later
 };

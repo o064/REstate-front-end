@@ -11,7 +11,7 @@ export type getAllCompoundsResponse = {
     isSuccess: boolean;
     message: string;
     data?: {
-        data: Compound[];
+        items: Compound[];
         totalCount: number;
         totalPages: number;
     };
