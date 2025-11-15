@@ -5,7 +5,6 @@ const url = "https://re-estate.runasp.net/api/Like/ToggleLikeProperty"
 export const Like = async (id:any) => {
     try {
         const token = getToken()
-        console.log(token);
         
         const setLike = await fetch(`${url}/${id}`, {
             method: "POST",
