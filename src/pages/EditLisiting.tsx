@@ -10,6 +10,7 @@ import Loader from '../ui/Loader';
 import { useEditProperty, usePrevData } from '../hooks/useProperty';
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router';
+import { toast } from 'react-hot-toast';
 import Container from '../ui/Continer';
 
 function EditLisiting() {
@@ -30,27 +31,38 @@ function EditLisiting() {
       >); // fill all fields
     }
   }, [prevData, reset]);
+
   // mutuate fun to make put req
   if (!propertyId) {
-    return <p>Error: Missing property ID</p>;
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-red-600">Error: Missing property ID</p>
+      </div>
+    );
   }
   const { mutate: EditProperty, isPending, isError: isErrorMutate } = useEditProperty();
   if (isLoading || isPending) return <Loader />;
-  if (isErrorPrevData || isErrorMutate) {
-    const errorMessage = error instanceof Error ? error.message : 'An error occurred';
-    return <p>Error: {errorMessage}</p>;
-  }
+
+  useEffect(() => {
+    if (isErrorPrevData || isErrorMutate) {
+      const errorMessage =
+        error instanceof Error ? JSON.parse(error.message).message : 'An error occurred';
+      toast.error(errorMessage);
+    }
+  }, [isErrorPrevData, isErrorMutate, error]);
   function onSubmit(formData: Omit<ListingFormInputs, 'images' | 'agentId'>) {
     if (propertyId) {
       EditProperty(
         { formData, propertyId },
         {
           onSuccess: () => {
-            navigate('/', { replace: true });
+            toast.success('Listing updated successfully');
+            setTimeout(() => navigate('/', { replace: true }), 1200);
           },
           onError: (error) => {
             console.error('Edit failed:', error);
-            alert(`Error updating property: ${error.message}`);
+            const message = error instanceof Error ? error.message : 'Error updating property';
+            toast.error(message);
           },
         }
       );
@@ -86,6 +98,7 @@ function EditLisiting() {
           </div>
         </form>
       </FormProvider>
+      {/* toasts are rendered globally via react-hot-toast Toaster in App */}
     </Container>
   );
 }

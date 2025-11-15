@@ -1,4 +1,5 @@
-import { Building2, Loader, Mail, Phone, User } from 'lucide-react';
+import { Building2, Mail, Phone, User } from 'lucide-react';
+import Loader from '../ui/Loader';
 import InputField from '../ui/InputField';
 import Input from '../ui/Input';
 import PasswordInput from '../components/auth/PasswordInput';
@@ -10,17 +11,43 @@ import {
   agencyNameValidation,
   emailValidation,
   experienceYearsValidation,
+  licenseIDValidation,
   nameValidation,
+  nationalIDValidation,
   passwordValidtion,
   phoneValidation,
   taxIdentificationNumberValidation,
 } from '../utils/validation';
-import type { RegitserForm } from '../types/User';
+import type { agentRegister, brokerRegister, customerRegister, RegitserForm } from '../types/User';
 import { ControlledSelector } from '../ui/ControllerSelector';
 import ErrorMessage from '../ui/ErrorMessage';
 import Container from '../ui/Continer';
 import Grid from '../ui/Grid';
-import { useRegister } from '../hooks/useAuth';
+import { useHomePageRedirect, useRegister } from '../hooks/useAuth';
+import { useEffect } from 'react';
+import { toast } from 'react-hot-toast';
+
+const defaultCustomer: customerRegister = {
+  userName: '',
+  email: '',
+  password: '',
+  phone: '',
+  roleDiscriminator: 3,
+};
+
+const defaultAgent: agentRegister = {
+  ...defaultCustomer,
+  roleDiscriminator: 1,
+  agencyName: '',
+  taxIdentificationNumber: 0,
+  experienceYears: 0,
+};
+const defaultBroker: brokerRegister = {
+  ...defaultCustomer,
+  roleDiscriminator: 2,
+  nationalID: '',
+  licenseID: '',
+};
 
 function Signup() {
   const {
@@ -28,34 +55,37 @@ function Signup() {
     handleSubmit,
     control,
     watch,
+    reset,
+    getValues,
     formState: { errors },
   } = useForm<RegitserForm>({
-    defaultValues: {
-      email: '',
-      password: '',
-      userName: '',
-      phoneNumber: '',
-      roleDiscriminator: 1,
-      agencyName: '',
-      taxIdentificationNumber: 0,
-      experienceYears: 0,
-    },
+    defaultValues: defaultCustomer,
     mode: 'onSubmit',
   });
-  const { mutate: registerUser, error, isError, isPending } = useRegister();
+  const { mutate: registerUser, isPending } = useRegister();
   const navigate = useNavigate();
   const role = watch('roleDiscriminator');
+  console.log(getValues());
+  useHomePageRedirect();
+
+  useEffect(() => {
+    if (role === 1) reset(defaultAgent);
+    else if (role === 2) reset(defaultBroker);
+    else reset(defaultCustomer);
+  }, [role, reset]);
+
   async function onSubmit(formData: RegitserForm) {
     console.log(formData);
     registerUser(formData, {
       onSuccess: () => {
-        navigate('/');
+        toast.success('Account created successfully');
+        setTimeout(() => navigate('/'), 1400);
       },
     });
   }
-  // useHomePageRedirect();
+  useHomePageRedirect();
+
   if (isPending) return <Loader />;
-  if (isError) return <p>Error : {error.message}</p>;
   return (
     <Container className="flex items-center justify-center bg-blue-100 text-black p-6 ">
       <div className="bg-white shadow-2xl rounded-2xl p-10 w-full max-w-md text-center">
@@ -77,9 +107,9 @@ function Signup() {
             title="I am signing up as a:"
             className="border-b border-gray-300"
             options={[
-              { value: 1, label: 'agent', icon: <Building2 /> },
-              // { value: 2, label: 'broker', icon: <Building2 /> },
               { value: 3, label: 'customer', icon: <User /> },
+              { value: 1, label: 'agent', icon: <Building2 /> },
+              { value: 2, label: 'broker', icon: <Building2 /> },
             ]}
           />
           {/* email */}
@@ -99,26 +129,26 @@ function Signup() {
             {errors.password && <ErrorMessage>{errors.password.message}</ErrorMessage>}
           </InputField>
           {/* full Name */}
-          <InputField id="name" label="Full Name">
+          <InputField id="name" label="User Name">
             <Input
               type="text"
               id="name"
-              placeholder="Your Full Name"
+              placeholder="Your User Name"
               {...register('userName', nameValidation)}
             />
 
             {errors.userName && <ErrorMessage>{errors.userName.message}</ErrorMessage>}
           </InputField>
           {/* phoneNumber number */}
-          <InputField id="phoneNumber" label="phone Number" icon={<Phone />}>
+          <InputField id="phone" label="phone Number" icon={<Phone />}>
             <Input
               type="tel"
-              id="phoneNumber"
+              id="phone"
               placeholder="(555) 555 - 555"
               className="pl-10"
-              {...register('phoneNumber', phoneValidation)}
+              {...register('phone', phoneValidation)}
             />
-            {errors.phoneNumber && <ErrorMessage>{errors.phoneNumber.message}</ErrorMessage>}
+            {errors.phone && <ErrorMessage>{errors.phone.message}</ErrorMessage>}
           </InputField>
 
           {/* AgencyName */}
@@ -131,7 +161,9 @@ function Signup() {
                   placeholder="Your Agency Name"
                   {...register('agencyName', agencyNameValidation)}
                 />
-                {errors.agencyName && <ErrorMessage>{errors.agencyName.message}</ErrorMessage>}
+                {errors.agencyName?.message && (
+                  <ErrorMessage>{errors.agencyName.message}</ErrorMessage>
+                )}
               </InputField>
               {/* Experience Information */}
               <Grid className="grid grid-cols-2 gap-4">
@@ -162,7 +194,30 @@ function Signup() {
               </Grid>
             </>
           )}
-
+          {role == 2 && (
+            <>
+              <InputField id="nationalID" label="Years of Experience">
+                <Input
+                  type="number"
+                  id="nationalID"
+                  placeholder="Enter total years of experience"
+                  {...register('nationalID', nationalIDValidation)}
+                />
+                {errors.nationalID && <ErrorMessage>{errors.nationalID.message}</ErrorMessage>}
+              </InputField>
+              <InputField id="licenseID" label="Years of Experience">
+                <Input
+                  type="number"
+                  id="licenseID"
+                  placeholder="Enter total years of experience"
+                  {...register('licenseID', licenseIDValidation)}
+                />
+                {errors.experienceYears && (
+                  <ErrorMessage>{errors.experienceYears.message}</ErrorMessage>
+                )}
+              </InputField>
+            </>
+          )}
           {/* actions  */}
           <AuthActions actionFor="create account" />
         </form>
@@ -174,6 +229,7 @@ function Signup() {
           </Link>
         </p>
       </div>
+      {/* toasts are rendered globally via Toaster in App */}
     </Container>
   );
 }

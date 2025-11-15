@@ -4,11 +4,10 @@ import type { getUser } from '../types/Responses';
 
 import { useMutation } from "@tanstack/react-query";
 import { useAuth } from '../context/AuthContext';
-import type { RegitserForm, sessinToken, UserRegister } from '../types/User';
+import type { RegitserForm, sessinToken } from '../types/User';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { getUserById, getUserRoles } from '../services/ProfileService';
-import { setAuthToken } from '../utils/request';
 
 export function useUser() {
     return useQuery<getUser | null>({

@@ -8,7 +8,7 @@ function getToken(): string {
     const user = token ? JSON.parse(token) : null;
     if (!user?.jwtToken) throw new Error("No authentication token found");
     return user.jwtToken;
-    
+
 }
 
 // إضافة تعليق

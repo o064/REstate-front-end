@@ -1,63 +1,56 @@
-import { useEffect, useState } from "react";
-import Button from "../../ui/Button";
-import Input from "../../ui/Input";
-import { MessagesSquareIcon, User } from "lucide-react";
-import InputField from "../../ui/InputField";
-import { useUserProfile } from "../../hooks/useProfile";
-import { destructUserProfile } from "../../utils/helper";
-import { getPropertyComments, postComment } from "../../services/commentsService";
-import type { CommentResponse } from "../../types/Responses";
+import { useEffect, useState } from 'react';
+import Button from '../../ui/Button';
+import Input from '../../ui/Input';
+import { MessagesSquareIcon, User } from 'lucide-react';
+import InputField from '../../ui/InputField';
+import { useUserProfile } from '../../hooks/useProfile';
+import { destructUserProfile } from '../../utils/helper';
+import { getPropertyComments, postComment } from '../../services/commentsService';
+import type { CommentResponse } from '../../types/Responses';
 
 type CommentProps = {
-  id:string 
+  id: string;
 };
 
-const Comments = ({  id }: CommentProps) => {
-
-  const [commentText, setCommentText] = useState("");
-
+const Comments = ({ id }: CommentProps) => {
+  const [commentText, setCommentText] = useState('');
 
   const [comments, setComments] = useState<CommentResponse[]>([]);
 
   const { data } = useUserProfile();
   const { user } = destructUserProfile(data);
-  
 
-useEffect(()=>{
+  useEffect(() => {
     const getComments = async () => {
-    const {data} = await getPropertyComments(id)
-    setComments(data || [])
-  }
-  getComments()
-},[id])
+      const { data } = await getPropertyComments(id);
+      setComments(data || []);
+    };
+    getComments();
+  }, [id]);
 
- const handleAddComment = async () => {
+  const handleAddComment = async () => {
     if (!commentText.trim()) return;
 
     try {
       const newComment = {
         commentText: commentText,
         propertyId: id,
-        userId: user?.userId, 
+        userId: user?.userId,
       };
 
       const res = await postComment(newComment);
 
       if (res.isSuccess) {
-        setComments((prev:any) => [
-          ...prev,
-          { text: commentText, userName: user?.username },
-        ]);
-        setCommentText("");
+        setComments((prev: any) => [...prev, { text: commentText, userName: user?.username }]);
+        setCommentText('');
       }
     } catch (err) {
-      console.error("Failed to post comment:", err);
+      console.error('Failed to post comment:', err);
     }
   };
 
-
   return (
- <section className="mb-36">
+    <section className="mb-36">
       {/* Input Box */}
       <div className="relative">
         <InputField id="comment">

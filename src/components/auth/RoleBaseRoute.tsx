@@ -13,7 +13,7 @@ const RoleBasedRoute: React.FC<RoleBasedRouteProps> = ({ allowedRoles, children 
   if (!isAuthenticated) return <Navigate to="/login" replace />;
 
   const hasAccess = roles?.some((role) => allowedRoles.includes(role));
-  if (!hasAccess) return <Navigate to="/unAuthized" replace />;
+  if (!hasAccess) return <Navigate to="/unAuthorized" replace />;
 
   if (children) return children;
   return <Outlet />;

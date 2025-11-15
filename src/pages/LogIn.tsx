@@ -3,7 +3,7 @@ import InputField from '../ui/InputField';
 import Input from '../ui/Input';
 import PasswordInput from '../components/auth/PasswordInput';
 import AuthActions from '../components/auth/AuthActions';
-import { Link, useNavigate } from 'react-router';
+import { Link, useNavigate } from 'react-router-dom';
 import FormHeader from '../components/auth/FormHeader';
 import { useForm } from 'react-hook-form';
 import { nameValidation, passwordValidtion } from '../utils/validation';
@@ -12,6 +12,8 @@ import type { UserSignIn } from '../types/User';
 import Container from '../ui/Continer';
 import { useHomePageRedirect, useLogin } from '../hooks/useAuth';
 import Loader from '../ui/Loader';
+import { toast } from 'react-hot-toast';
+import { useEffect } from 'react';
 
 function Login() {
   const {
@@ -25,7 +27,7 @@ function Login() {
     },
     mode: 'onSubmit',
   });
-  const { mutate: login, isPending, isError, error } = useLogin();
+  const { mutate: login, isPending } = useLogin();
   const navigate = useNavigate();
   async function onSubmit({ userName, password }: UserSignIn) {
     login(
@@ -39,8 +41,8 @@ function Login() {
   }
 
   useHomePageRedirect();
+
   if (isPending) return <Loader />;
-  if (isError) return <p>Error : {error.message}</p>;
   return (
     <Container className="flex items-center justify-center bg-blue-100 text-black p-6 ">
       <div className="bg-white shadow-2xl rounded-2xl p-10 w-full max-w-md text-center">
@@ -80,6 +82,7 @@ function Login() {
           </Link>
         </p>
       </div>
+      {/* toasts rendered globally via Toaster in App */}
     </Container>
   );
 }

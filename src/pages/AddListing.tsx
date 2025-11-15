@@ -5,6 +5,8 @@ import LocationStep from '../components/Listing/LocationStep';
 import PricePropertyDetailsStep from '../components/Listing/PricePropertyDetailsStep';
 import Button from '../ui/Button';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
 import ImageUploadStep from '../components/Listing/ImageUploadStep';
 import { CheckCircle } from 'lucide-react';
 import type { ListingFormInputs } from '../types/property';
@@ -22,7 +24,8 @@ function AddListing() {
     defaultValues: defaultResidentialValues,
   });
   const [step, setStep] = useState<number>(1);
-  const { mutate: AddProperty, isPending, isError } = useAddProperty();
+  const { mutate: AddProperty, isPending } = useAddProperty();
+  const navigate = useNavigate();
 
   async function nextStep() {
     // invalid step
@@ -45,12 +48,10 @@ function AddListing() {
     AddProperty(formData, {
       onSuccess: () => {
         setStep(6);
-      },
-      onError: (err) => {
-        console.log(err);
+        toast.success('Listing created successfully');
+        setTimeout(() => navigate('/'), 2000);
       },
     });
-    // if (!isPending && !isError) setStep(6); // Move to success state
   }
   //  scroll to top when step changes
   useEffect(() => {

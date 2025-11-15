@@ -7,7 +7,7 @@ export type UserRegister = {
     email: string;
     password: string;
     userName: string;
-    phoneNumber: string;
+    phone: string;
 };
 export type customerRegister = UserRegister & {
     roleDiscriminator: 3;
@@ -18,7 +18,28 @@ export type agentRegister = UserRegister & {
     taxIdentificationNumber: number,
     experienceYears: number,
 };
-export type RegitserForm = agentRegister;
+export type brokerRegister = UserRegister & {
+    roleDiscriminator: 2;
+    nationalID: string,
+    licenseID: string,
+};
+export type RegitserForm = {
+    email: string;
+    password: string;
+    userName: string;
+    phone: string;
+    roleDiscriminator: number;
+
+    // For agent
+    agencyName?: string;
+    taxIdentificationNumber?: number;
+    experienceYears?: number;
+
+    // For broker
+    nationalID?: string;
+    licenseID?: string;
+};
+;
 export type UserSignIn = {
     userName: string;
     password: string;

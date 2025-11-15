@@ -9,18 +9,15 @@ export const passwordValidtion = {
     required: 'A password is required—security first!',
     minLength: {
         value: 6,
-        message: 'Make it at least 6 characters—short ',
+        message: 'Make it at least 6 characters—short',
     },
     validate: (value: string) => {
         const hasLetter = /[a-zA-Z]/.test(value);
         const hasNumber = /\d/.test(value);
-        const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(value);
-        return (
-            (hasLetter && hasNumber && hasSpecial) ||
-            "Use at least one letter, number, and symbol!"
-        );
+        return hasLetter || hasNumber || "Use at least one letter and one number!";
     },
 };
+
 export const phoneValidation = {
     required: 'Phone number is required',
     pattern: {
@@ -36,10 +33,11 @@ export const nameValidation = {
         message: 'Name must be at least 3 characters long',
     },
     pattern: {
-        value: /^[a-zA-Z\s]+$/,
-        message: 'Name should only contain letters and spaces',
+        value: /^[a-zA-Z0-9]+$/,
+        message: 'Name should contain only letters and numbers, without spaces',
     },
 };
+
 export const agencyNameValidation = {
     required: 'Agency Name is required',
     minLength: {
@@ -71,6 +69,39 @@ export const experienceYearsValidation = {
     min: { value: 0, message: 'Experience cannot be negative' },
     max: { value: 50, message: 'Please enter a valid number of years' },
 };
+
+export const licenseIDValidation = {
+    required: "License ID is required",
+    minLength: {
+        value: 6,
+        message: "License ID must be at least 6 characters",
+    },
+    maxLength: {
+        value: 20,
+        message: "License ID must be less than 20 characters",
+    },
+    pattern: {
+        value: /^[A-Za-z0-9]+$/,
+        message: "License ID must contain only letters and numbers",
+    },
+};
+
+export const nationalIDValidation = {
+    required: "National ID is required",
+    minLength: {
+        value: 14,
+        message: "National ID must be 14 digits",
+    },
+    maxLength: {
+        value: 14,
+        message: "National ID must be 14 digits",
+    },
+    pattern: {
+        value: /^[0-9]{14}$/,
+        message: "National ID must be numbers only",
+    },
+};
+
 
 export const descriptionValidation = {
     required: "Description is required",

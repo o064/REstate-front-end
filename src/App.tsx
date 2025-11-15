@@ -1,9 +1,17 @@
-import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router';
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Navigate,
+  Route,
+  RouterProvider,
+  useNavigate,
+} from 'react-router';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/auth/ProtectedRoute';
+import ErrorBoundary from './components/common/ErrorBoundary';
 import SignUp from './pages/SignUp';
 import Layout from './layout/Layout';
 import Home from './pages/Home';
@@ -15,8 +23,44 @@ import EditLisiting from './pages/EditLisiting';
 import MyProfile from './pages/MyProfile';
 import RoleBasedRoute from './components/auth/RoleBaseRoute';
 import Search from './pages/Search';
+import UnAuthorized from './ui/unAuthorized';
+import NotFound from './ui/NotFound';
+import toast, { Toaster } from 'react-hot-toast';
+import ErrorPage from './pages/ErrorPage';
+
 // Create a client
-const queryClient = new QueryClient();
+
+export const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false, // disable automatic retry
+      onError: (error: any) => {
+        console.error('Query Error:', error);
+
+        if (error.response?.status === 401) {
+          toast.error('Unauthorized! Please login.');
+          window.location.href = '/login'; // redirect
+        } else if (error.response?.status === 403) {
+          toast.error('Access denied!');
+          window.location.href = '/unAuthorized';
+        } else if (error.response?.status === 404) {
+          toast.error('Resource not found!');
+          window.location.href = '/404';
+        } else {
+          toast.error(JSON.parse(error.message).message || 'Something went wrong!');
+        }
+      },
+    },
+    mutations: {
+      retry: false,
+      onError: (error: any) => {
+        console.error('Mutation Error:', error);
+        toast.error(JSON.parse(error.message).message || 'Mutation failed!');
+      },
+    },
+  },
+});
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
@@ -24,22 +68,30 @@ const router = createBrowserRouter(
         <Route index element={<Home />} />
         <Route path="estateDetails/:id" element={<EstateDetails />} />
         <Route path="search" element={<Search />} />
+
         {/* Protected Routes */}
         <Route element={<ProtectedRoute />}>
           <Route path="profile" element={<MyProfile />} />
           <Route path="wishList" element={<WishList />} />
-          <Route path="edit/property/:propertyType/:propertyId" element={<EditLisiting />} />
-          {/* <Route path="edit/images/:propertyId" element={<EditImages />} /> */}
+
+          {/* agent routes */}
           <Route element={<RoleBasedRoute allowedRoles={['Admin', 'Agent']} />}>
+            <Route path="edit/property/:propertyType/:propertyId" element={<EditLisiting />} />
             <Route path="add" element={<AddListing />} />
           </Route>
         </Route>
       </Route>
+
       {/* login & signup layout */}
       <Route>
         <Route path="signup" element={<SignUp />} />
         <Route path="login" element={<Login />} />
+        <Route path="unAuthorized" element={<UnAuthorized />} />
+        <Route path="error" element={<ErrorPage />} />
       </Route>
+
+      {/* 404 Not Found */}
+      <Route path="*" element={<NotFound />} />
     </>
   )
 );
@@ -47,10 +99,14 @@ const router = createBrowserRouter(
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <RouterProvider router={router} />
-        <ReactQueryDevtools initialIsOpen={false} />
-      </AuthProvider>
+      <Toaster position="top-right" reverseOrder={false} />
+
+      <ErrorBoundary>
+        <AuthProvider>
+          <RouterProvider router={router} />
+          <ReactQueryDevtools initialIsOpen={false} />
+        </AuthProvider>
+      </ErrorBoundary>
     </QueryClientProvider>
   );
 }

@@ -3,13 +3,15 @@ import CardSection from '../ui/CardSection';
 import ProfileHeader from '../components/Profile/ProfileHeader';
 import ProfileTabs from '../components/Profile/ProfileTabs';
 import { useUserProfile } from '../hooks/useProfile';
-import { Loader } from 'lucide-react';
+import Loader from '../ui/Loader';
 import { useLogout } from '../hooks/useAuth';
 import { destructUserProfile } from '../utils/helper';
 import { useNavigate } from 'react-router';
+import { toast } from 'react-hot-toast';
+import { useEffect } from 'react';
 
 function MyProfile() {
-  const { isPending, isError, error, data } = useUserProfile();
+  const { isPending, error, data } = useUserProfile();
   const { user, listings } = destructUserProfile(data);
   const { mutate: logout } = useLogout();
   console.log(user);
@@ -19,15 +21,22 @@ function MyProfile() {
     if (user?.userId) {
       logout(user.userId, {
         onSuccess: () => {
-          navigate('/');
+          toast('Logged out successfully');
+          setTimeout(() => navigate('/'), 900);
         },
       });
     }
   };
+
   if (isPending) return <Loader />;
-  if (isError || !user) {
-    const errorMessage = error instanceof Error ? error.message : 'An error occurred';
-    return <p>Error: {errorMessage}</p>;
+  if (!user) {
+    const errorMessage = error instanceof Error ? JSON.parse(error.message) : 'An error occurred';
+    navigate('/error');
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-red-600">Error: {errorMessage}</p>
+      </div>
+    );
   }
   return (
     <main className="min-h-screen bg-gray-50 py-8">
@@ -54,6 +63,7 @@ function MyProfile() {
           </Button>
         </CardSection>
       </div>
+      {/* toasts are rendered globally via Toaster in App */}
     </main>
   );
 }
