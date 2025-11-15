@@ -1,13 +1,6 @@
-import {
-  createBrowserRouter,
-  createRoutesFromElements,
-  Navigate,
-  Route,
-  RouterProvider,
-  useNavigate,
-} from 'react-router';
+import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider, QueryCache, MutationCache } from '@tanstack/react-query';
 
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/auth/ProtectedRoute';
@@ -31,32 +24,44 @@ import ErrorPage from './pages/ErrorPage';
 // Create a client
 
 export const queryClient = new QueryClient({
+  queryCache: new QueryCache({
+    onError: (error: any) => {
+      console.error('Query Error:', error);
+
+      if (error?.response?.status === 401) {
+        toast.error('Unauthorized! Please login.');
+        window.location.href = '/login'; // redirect
+      } else if (error?.response?.status === 403) {
+        toast.error('Access denied!');
+        window.location.href = '/unAuthorized';
+      } else if (error?.response?.status === 404) {
+        toast.error('Resource not found!');
+        window.location.href = '/404';
+      } else {
+        try {
+          toast.error(JSON.parse(error.message).message || 'Something went wrong!');
+        } catch {
+          toast.error('Something went wrong!');
+        }
+      }
+    },
+  }),
+  mutationCache: new MutationCache({
+    onError: (error: any) => {
+      console.error('Mutation Error:', error);
+      try {
+        toast.error(JSON.parse(error.message).message || 'Mutation failed!');
+      } catch {
+        toast.error('Mutation failed!');
+      }
+    },
+  }),
   defaultOptions: {
     queries: {
       retry: false, // disable automatic retry
-      onError: (error: any) => {
-        console.error('Query Error:', error);
-
-        if (error.response?.status === 401) {
-          toast.error('Unauthorized! Please login.');
-          window.location.href = '/login'; // redirect
-        } else if (error.response?.status === 403) {
-          toast.error('Access denied!');
-          window.location.href = '/unAuthorized';
-        } else if (error.response?.status === 404) {
-          toast.error('Resource not found!');
-          window.location.href = '/404';
-        } else {
-          toast.error(JSON.parse(error.message).message || 'Something went wrong!');
-        }
-      },
     },
     mutations: {
       retry: false,
-      onError: (error: any) => {
-        console.error('Mutation Error:', error);
-        toast.error(JSON.parse(error.message).message || 'Mutation failed!');
-      },
     },
   },
 });
