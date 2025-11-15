@@ -1,54 +1,47 @@
-import type { CommentResponse, postCommentResponse, postResPropertyResponse } from "../types/Responses";
-import request from "../utils/request";
+import type { CommentResponse } from "../types/Responses";
 import Cookies from "js-cookie";
 
 
-function getToken(): string {
+export function getToken(): string {
     const token = Cookies.get("Authentication");
     const user = token ? JSON.parse(token) : null;
     if (!user?.jwtToken) throw new Error("No authentication token found");
     return user.jwtToken;
-
 }
 
 // إضافة تعليق
 export async function postComment(comment: CommentResponse) {
-    const URL = "/api/Comment";
     const jwtToken = getToken();
 
 
-    const res = await request<postResPropertyResponse>(URL, {
+    const res = await fetch("https://re-estate.runasp.net/api/Comment", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${jwtToken}`,
+            "Authorization": jwtToken,
         },
         body: JSON.stringify(comment),
     });
 
-    if (!res.isSuccess) {
-        throw new Error(res.message || "Failed to post comment");
-    }
+
 
     return res;
 }
 
 //  تعليقات العقار
 export async function getPropertyComments(id: string) {
-    const URL = `/api/Comment/property/${id}`;
+    const URL = `https://re-estate.runasp.net/api/Comment/property/${id}`;
     const jwtToken = getToken();
-
-    const res = await request<postCommentResponse>(URL, {
+    
+    const res = await fetch(URL, {
         method: "GET",
         headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${jwtToken}`,
+            "Authorization": jwtToken,
         },
     });
 
-    if (!res.isSuccess) {
-        throw new Error(res.message || "Failed to fetch comments");
-    }
+    const data = await res.json()
 
-    return res;
+
+    return data.data.items;
 }

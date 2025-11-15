@@ -1,32 +1,33 @@
-import { useEffect, useState } from 'react';
-import Button from '../../ui/Button';
-import Input from '../../ui/Input';
-import { MessagesSquareIcon, User } from 'lucide-react';
-import InputField from '../../ui/InputField';
-import { useUserProfile } from '../../hooks/useProfile';
-import { destructUserProfile } from '../../utils/helper';
-import { getPropertyComments, postComment } from '../../services/commentsService';
-import type { CommentResponse } from '../../types/Responses';
+import { useEffect, useState } from "react";
+import Button from "../../ui/Button";
+import Input from "../../ui/Input";
+import { MessagesSquareIcon, User } from "lucide-react";
+import InputField from "../../ui/InputField";
+import { getPropertyComments, postComment } from "../../services/commentsService";
+import type { CommentResponse } from "../../types/Responses";
+import { useAuth } from "../../context/AuthContext";
 
 type CommentProps = {
-  id: string;
+  id: string
 };
 
 const Comments = ({ id }: CommentProps) => {
-  const [commentText, setCommentText] = useState('');
 
+  const [commentText, setCommentText] = useState("");
+  const [write,setwritw]  =useState(false);
   const [comments, setComments] = useState<CommentResponse[]>([]);
 
-  const { data } = useUserProfile();
-  const { user } = destructUserProfile(data);
+  const { user } = useAuth();
+
 
   useEffect(() => {
     const getComments = async () => {
-      const { data } = await getPropertyComments(id);
-      setComments(data || []);
-    };
-    getComments();
-  }, [id]);
+      const data = await getPropertyComments(id)
+      setComments(data || [])
+    }
+    getComments()
+  }, [id,write])
+
 
   const handleAddComment = async () => {
     if (!commentText.trim()) return;
@@ -40,14 +41,19 @@ const Comments = ({ id }: CommentProps) => {
 
       const res = await postComment(newComment);
 
-      if (res.isSuccess) {
-        setComments((prev: any) => [...prev, { text: commentText, userName: user?.username }]);
-        setCommentText('');
+      if (res) {
+        setwritw(true)
+        setComments((prev: any) => [
+          ...prev,
+          { text: commentText, userName: user?.username },
+        ]);
+        setCommentText("");
       }
     } catch (err) {
-      console.error('Failed to post comment:', err);
+      console.error("Failed to post comment:", err);
     }
   };
+
 
   return (
     <section className="mb-36">

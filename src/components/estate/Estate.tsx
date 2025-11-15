@@ -2,6 +2,7 @@ import { MapPin, TrendingUp } from 'lucide-react';
 import Header from '../auth/FormHeader';
 import EstateCard from '../../ui/EstateCard';
 import { fakePropertyWithAgency } from '../../dev-data/properites';
+import { Link } from 'react-router';
 
 const properties = fakePropertyWithAgency;
 
@@ -15,9 +16,10 @@ const Estate = () => {
           Pchildren="Discover the latest listings in prime locations"
           Pcolor="gray-500"
         />
-        <p className="text-blue-600 flex items-center gap-1 font-semibold cursor-pointer mt-4 md:mt-0 hover:text-blue-700 transition">
+        <Link to={"/search"}>
+                <p className="text-blue-600 flex items-center gap-1 font-semibold cursor-pointer mt-4 md:mt-0 hover:text-blue-700 transition">
           View All <TrendingUp className="w-4 h-4" />
-        </p>
+        </p></Link>
       </div>
 
       {/* Estate Grid */}

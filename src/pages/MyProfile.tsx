@@ -8,15 +8,14 @@ import { useLogout } from '../hooks/useAuth';
 import { destructUserProfile } from '../utils/helper';
 import { useNavigate } from 'react-router';
 import { toast } from 'react-hot-toast';
-import { useEffect } from 'react';
 
 function MyProfile() {
+
   const { isPending, error, data } = useUserProfile();
-  const { user, listings } = destructUserProfile(data);
+  const {  user,listings } = destructUserProfile(data);
   const { mutate: logout } = useLogout();
-  console.log(user);
-  console.log(listings);
   const navigate = useNavigate();
+  
   const handleLogout = () => {
     if (user?.userId) {
       logout(user.userId, {

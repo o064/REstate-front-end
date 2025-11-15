@@ -14,11 +14,15 @@ export type Property = {
     imageUrl: string;
     type?: string
     images?:string []
+    likes?:boolean | number | any
+    likesCount:number
+    isLiked:boolean
 };
 
 export type PropertyWithAgency = Property & {
     agencyName: string;
     vendorName: string;
+    propertyId?:string
 };
 export type Amenity = {
     hasElectricityLine: boolean;
