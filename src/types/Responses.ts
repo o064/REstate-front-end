@@ -124,6 +124,8 @@ export type LoginResponse = LoginSuccess | BadRequest;
 export type CommentResponse = {
     commentText: string;
     propertyId: string;
+    commentId?:string
+    userID?:string
 }
 
 export type postCommentResponse = {
