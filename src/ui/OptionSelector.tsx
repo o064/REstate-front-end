@@ -42,7 +42,6 @@ function OptionSelector<T extends string>({
       <div className="grid grid-cols-3 gap-3 ">
         {options.map((opt) => {
           const commonProps = {
-            key: opt.value,
             icon: opt.icon,
             option: opt.value,
             label: opt.label,
@@ -55,6 +54,7 @@ function OptionSelector<T extends string>({
             >;
             return (
               <OptionSelectorOption
+                key={opt.value}
                 {...commonProps}
                 multiple={true}
                 value={multiProps.value}
@@ -68,6 +68,7 @@ function OptionSelector<T extends string>({
             >;
             return (
               <OptionSelectorOption
+                key={opt.value}
                 {...commonProps}
                 multiple={false}
                 value={singleProps.value}

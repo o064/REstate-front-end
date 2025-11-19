@@ -1,4 +1,3 @@
-import type { Compound } from "./compound";
 import type { CommercialProperty, PropertyGallery, residentialProperty } from "./property";
 import type { AgentData, UserData } from "./User";
 
@@ -11,7 +10,7 @@ export type getAllCompoundsResponse = {
     isSuccess: boolean;
     message: string;
     data?: {
-        items: Compound[];
+        items: any[];
         totalCount: number;
         totalPages: number;
     };

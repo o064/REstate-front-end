@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { ListingFormInputs } from "../types/property";
 import { postImages } from "../services/imagesService";
-import { delPropertyById, getPropertyById, postProperty, putProperty } from "../services/PropertyService";
+import { delPropertyById, getAllProperties, getPropertyById, postProperty, putProperty } from "../services/PropertyService";
 import { useParams } from "react-router";
 import { useMemo } from "react";
 
@@ -45,6 +45,7 @@ export function useEditProperty() {
         },
     });
 }
+
 export function useDeleteProperty() {
     const queryClient = useQueryClient();
     return useMutation({
@@ -87,4 +88,19 @@ export function usePrevData() {
         isError,
         error,
     };
+}
+
+export function useAllProperties() {
+  const query = useQuery({
+    queryKey: ["properties"], 
+    queryFn: getAllProperties, 
+    staleTime: 5 * 60 * 1000, 
+  });
+
+  return {
+    data: query.data?.data || [],
+    isLoading: query.isLoading,
+    isError: query.isError,
+    error: query.error,
+  };
 }

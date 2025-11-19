@@ -1,14 +1,13 @@
 import { Link } from 'react-router';
 import { Bath, Bed, Heart, MapPin, Square, ThumbsUp } from 'lucide-react';
 import { formatPrice } from '../utils/helper';
-import type { PropertyWithAgency } from '../types/property';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItemtoWishList, delItemFromWishList, getWishList } from '../store/wishListSlice';
 import { Like } from '../services/LikesServices';
 
 type EstateCardPropse = {
-  property: PropertyWithAgency;
+  property: any;
 };
 
 const EstateCard = ({ property }: EstateCardPropse) => {
@@ -48,11 +47,11 @@ const EstateCard = ({ property }: EstateCardPropse) => {
     const response = await Like(id);
 
     if (response?.data === "Added") {
-      setLikes(prev => prev + 1);
+      setLikes((prev:number) => prev + 1);
       setIsLiked(true);
     } 
     else if (response?.data === "Deleted") {
-      setLikes(prev => prev - 1);
+      setLikes((prev:number) => prev - 1);
       setIsLiked(false);
     }
   };
