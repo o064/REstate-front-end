@@ -72,7 +72,7 @@ getProperty()
           />
         </div>
         <div className="flex md:flex-col gap-1.5 sm:gap-3.5 justify-center mx-auto  w-26 sm:w-auto  md:w-[30%]">
-          {property?.images.map((img, index) => (
+          {property?.images!.map((img, index) => (
             <img
               key={index}
               src={img}

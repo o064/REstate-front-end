@@ -1,17 +1,24 @@
 import { Link } from 'react-router';
-import { Bath, Bed, Heart, MapPin, Square } from 'lucide-react';
+import { Bath, Bed, Heart, MapPin, Square, ThumbsUp } from 'lucide-react';
 import { formatPrice } from '../utils/helper';
-import type { PropertyWithAgency } from '../types/property';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItemtoWishList, delItemFromWishList, getWishList } from '../store/wishListSlice';
+import { Like } from '../services/LikesServices';
+
 type EstateCardPropse = {
-  property: PropertyWithAgency;
+  property: any;
 };
+
 const EstateCard = ({ property }: EstateCardPropse) => {
   const dispatch = useDispatch();
   const wishList = useSelector(getWishList);
+
   const [isWishList, setIsWishList] = useState(false);
+
+  // ⭐ لايكات
+  const [likes, setLikes] = useState(property.likesCount ?? 0); 
+  const [isLiked, setIsLiked] = useState(property.isLiked ?? false);
 
   // check if property is already in wishlist
   useEffect(() => {
@@ -30,15 +37,35 @@ const EstateCard = ({ property }: EstateCardPropse) => {
     }
     setIsWishList(!isWishList);
   };
+
+  // ⭐ دالة اللايك
+  const handleLike = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const id = property.id ?? property.propertyId;
+    const response = await Like(id);
+
+    if (response?.data === "Added") {
+      setLikes((prev:number) => prev + 1);
+      setIsLiked(true);
+    } 
+    else if (response?.data === "Deleted") {
+      setLikes((prev:number) => prev - 1);
+      setIsLiked(false);
+    }
+  };
+
   return (
     <>
       <Link
-        to={`/estateDetails/${property.id}`}
+        to={`/estateDetails/${property.id || property.propertyId}`}
         className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow overflow-hidden border border-gray-200"
       >
         {/* Property Image */}
         <div className="relative h-48 bg-gray-200 cursor-pointer">
           <img src={property.imageUrl} alt={property.name} className="w-full h-full object-cover" />
+
           {/* Badge */}
           <div className="absolute top-3 left-3">
             <span
@@ -72,6 +99,15 @@ const EstateCard = ({ property }: EstateCardPropse) => {
 
           {/* name */}
           <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2">{property.name}</h3>
+
+          {/* ⭐ زر اللايك */}
+          <button
+            onClick={handleLike}
+            className="flex items-center space-x-2 mb-3 px-3 py-1 rounded-lg border text-sm hover:bg-gray-100 transition"
+          >
+            <ThumbsUp className={`h-4 w-4 ${isLiked ? 'text-blue-600 fill-blue-600' : 'text-gray-600'}`} />
+            <span className="text-gray-700">{likes} Likes</span>
+          </button>
 
           {/* Location */}
           <div className="flex items-center text-gray-600 mb-3">
@@ -114,4 +150,5 @@ const EstateCard = ({ property }: EstateCardPropse) => {
     </>
   );
 };
+
 export default EstateCard;

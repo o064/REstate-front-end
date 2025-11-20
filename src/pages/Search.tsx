@@ -1,15 +1,16 @@
 import { useState } from "react";
-import { fakePropertyWithAgency } from "../dev-data/properites";
-import type { Property } from "../types/property";
+import { useAllProperties } from "../hooks/useProperty";
+import { Search, SlidersHorizontal } from "lucide-react";
+
 import EstateCard from "../ui/EstateCard";
 import OptionSelector from "../ui/OptionSelector";
-import { HomeIcon, House, SquareActivity, DollarSign, Ruler, Bed } from "lucide-react";
-import Input from "../ui/Input";
+
+import { Home, Building2, DollarSign, Ruler } from "lucide-react";
+import type { PropertyGroup } from "../types/Responses";
 
 const propertyTypeOptions = [
-  { value: "villa", icon: <House />, label: "Villa" },
-  { value: "studio", icon: <SquareActivity />, label: "Studio" },
-  { value: "house", icon: <HomeIcon />, label: "House" },
+  { value: "Commercial", icon: <Building2 />, label: "Commercial" },
+  { value: "Residential", icon: <Home />, label: "Residential" },
 ];
 
 const priceOptions = [
@@ -25,45 +26,65 @@ const areaOptions = [
 ];
 
 
-const Search = () => {
+
+export default function SearchPage() {
   const [query, setQuery] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
   const [minArea, setMinArea] = useState("");
   const [type, setType] = useState("");
-  const [rooms, setRooms] = useState("");
+
   const [page, setPage] = useState(1);
   const itemsPerPage = 6;
 
-  const property = fakePropertyWithAgency;
+  const { data } = useAllProperties();
 
-  const filteredProperties = property.filter((property: Property) => {
+  const allProperties = [
+    ...(data?.items?.flatMap((i:PropertyGroup) => i.commercialProperties) || []),
+    ...(data?.items?.flatMap((i:PropertyGroup) => i.residentialProperties) || []),
+  ];
+
+  const filtered = allProperties.filter((p) => {
+    const matchesQuery =
+      p.title.toLowerCase().includes(query.toLowerCase()) ||
+      p.city?.toLowerCase().includes(query.toLowerCase()) ||
+      p.address?.toLowerCase().includes(query.toLowerCase());
+
     return (
-      property.name.toLowerCase().includes(query.toLowerCase()) &&
-      (maxPrice === "" || property.price <= parseFloat(maxPrice)) &&
-      (minArea === "" || property.square >= parseFloat(minArea)) &&
-      (type === "" || property.type!.toLowerCase() === type.toLowerCase()) &&
-      (rooms === "" || property.bedrooms! >= parseInt(rooms))
+      matchesQuery &&
+      (maxPrice === "" || p.price <= +maxPrice) &&
+      (minArea === "" || p.square >= +minArea) &&
+      (type === "" || p.propertyType==type)
     );
   });
 
-  const displayedProperties = filteredProperties.slice(0, page * itemsPerPage);
+  const displayed = filtered.slice(0, page * itemsPerPage);
 
   return (
-    <div className="max-w-6xl mx-auto p-4 mb-80">
-      <h1 className="text-2xl font-bold mb-4">Property Search</h1>
+    <div className="max-w-7xl mx-auto p-4 mb-40">
+      {/* Header */}
+      <h1
+        className="text-3xl font-bold mb-6 flex items-center gap-2"
+      >
+        <SlidersHorizontal className="text-blue-600" />
+        Search Properties
+      </h1>
 
+      {/* Search Input */}
+      <div className="relative mb-6">
+        <input
+          type="text"
+          placeholder="Search by city, title or neighborhood..."
+          className="w-full p-4 pl-12 border rounded-2xl shadow-sm text-lg"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
+        <Search className="absolute left-4 top-4 text-gray-400" />
+      </div>
 
-      {/* Search Text */}
-      <Input
-        type="text"
-        placeholder="Search by city or neighborhood"
-        className="border p-3 rounded-lg w-full shadow-sm h-20 my-auto mb-2.5"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-      />
-      {/* Search Filters */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
-
+      {/* Filters */}
+      <div
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12"
+      >
         <OptionSelector
           title="Property Type"
           value={type}
@@ -83,16 +104,20 @@ const Search = () => {
           value={minArea}
           onChange={setMinArea}
           options={areaOptions}
-
         />
-
       </div>
 
-      {/* Properties List */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {displayedProperties.length > 0 ? (
-          displayedProperties.map((property) => (
-            <EstateCard property={property} key={property.id} />
+      {/* Property List */}
+      <div
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+      >
+        {displayed.length > 0 ? (
+          displayed.map((property) => (
+            <div
+              key={property.propertyId}
+            >
+              <EstateCard property={property} />
+            </div>
           ))
         ) : (
           <p>No properties match your search.</p>
@@ -100,11 +125,11 @@ const Search = () => {
       </div>
 
       {/* Load More */}
-      {displayedProperties.length < filteredProperties.length && (
+      {displayed.length < filtered.length && (
         <div className="text-center mt-6">
           <button
-            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
             onClick={() => setPage(page + 1)}
+            className="bg-blue-600 text-white px-6 py-3 rounded-xl shadow hover:bg-blue-700 transition"
           >
             Load More
           </button>
@@ -112,6 +137,4 @@ const Search = () => {
       )}
     </div>
   );
-};
-
-export default Search;
+}

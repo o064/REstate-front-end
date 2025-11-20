@@ -1,40 +1,46 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import { fakePropertyWithAgency } from "../dev-data/properites";
 import type { RootState } from "../store";
 import type { PropertyWithAgency } from "../types/property";
 import type { WishList } from "../types/WishList";
 
+// قراءة الـ localStorage عند البداية
+const savedWishList = localStorage.getItem("wishList");
+
 const initialState: WishList = {
-    items: fakePropertyWithAgency,
-}
-const cartSlice = createSlice({
-    name: "wishList",
-    initialState,
-    reducers: {
-        addItemtoWishList(state, action: PayloadAction<PropertyWithAgency>) {
-            const newItem = action.payload;
-            state.items.push(newItem);
-        },
-        delItemFromWishList(state, action: PayloadAction<string>) {
-            const id = action.payload;
-            state.items = state.items.filter(item => item.id !== id);
-        }
+  items: savedWishList ? JSON.parse(savedWishList) : [],
+};
 
+const wishListSlice = createSlice({
+  name: "wishList",
+  initialState,
+  reducers: {
+    addItemtoWishList(state, action: PayloadAction<PropertyWithAgency>) {
+      const exists = state.items.find(item => item.id === action.payload.id);
+      if (!exists) {
+        state.items.push(action.payload);
+
+        // حفظ في localStorage
+        localStorage.setItem("wishList", JSON.stringify(state.items));
+      }
+    },
+    delItemFromWishList(state, action: PayloadAction<string>) {
+      state.items = state.items.filter(item => item.id !== action.payload);
+
+      // حفظ في localStorage
+      localStorage.setItem("wishList", JSON.stringify(state.items));
+    },
+    clearWishList(state) {
+      state.items = [];
+      localStorage.removeItem("wishList");
     }
+  }
+});
 
-})
-// Action creators
-export const {
-    addItemtoWishList,
-    delItemFromWishList,
-} = cartSlice.actions;
-// export reducer
-const cartReducer = cartSlice.reducer;
-export default cartReducer;
+// Export actions
+export const { addItemtoWishList, delItemFromWishList, clearWishList } = wishListSlice.actions;
 
-// selectors
+// Export reducer
+export default wishListSlice.reducer;
 
-
-// get all cart items
+// Selector
 export const getWishList = (state: RootState): PropertyWithAgency[] => state.wishList.items;
-
