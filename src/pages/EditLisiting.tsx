@@ -29,7 +29,7 @@ function EditLisiting() {
       reset({
         ...rest,
         propertyStatus: 0,
-        compoundId: compound.compoundId,
+        compoundId: compound ? compound.compoundId : '',
         propertyType: rest.propertyType == 'Residential' ? 0 : 1,
         propertyPurpose: rest.propertyPurpose == 'Sale' ? 0 : 1,
       } as Omit<ListingFormInputs, 'images' | 'agentId'>); // fill all fields
