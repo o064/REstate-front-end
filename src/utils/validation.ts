@@ -51,18 +51,20 @@ export const agencyNameValidation = {
 };
 export const taxIdentificationNumberValidation = {
     required: 'Tax identification number is required',
-    minLength: {
-        value: 10,
-        message: 'Tax ID must be at least 10 characters long',
-    },
-    maxLength: {
-        value: 15,
-        message: 'Tax ID cannot exceed 15 characters',
-    },
-    pattern: {
-        value: /^[A-Za-z0-9]+$/,
-        message: 'Tax ID must contain only letters and numbers',
-    },
+    // min: { value: 0, message: 'Experience cannot be negative' },
+    // max: { value: 50, message: 'Please enter a valid number of years' },
+    // minLength: {
+    //     value: 10,
+    //     message: 'Tax ID must be at least 10 characters long',
+    // },
+    // maxLength: {
+    //     value: 15,
+    //     message: 'Tax ID cannot exceed 15 characters',
+    // },
+    // pattern: {
+    //     value: /^[A-Za-z0-9]+$/,
+    //     message: 'Tax ID must contain only letters and numbers',
+    // },
 };
 export const experienceYearsValidation = {
     required: 'Experience is required',

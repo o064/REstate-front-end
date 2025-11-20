@@ -105,7 +105,6 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <Toaster position="top-right" reverseOrder={false} />
-
       <ErrorBoundary>
         <AuthProvider>
           <RouterProvider router={router} />

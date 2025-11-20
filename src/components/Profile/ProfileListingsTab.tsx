@@ -3,10 +3,10 @@ import EmptyListing from './EmptyListing';
 import type { PropertyGroupList } from '../../types/Responses';
 
 function ProfileListingsTab({ properties }: { properties: PropertyGroupList }) {
-  console.log(properties);
   if (properties.length === 0) {
     return <EmptyListing />;
   }
+  console.log(properties);
   return (
     <div className="space-y-6">
       <div>

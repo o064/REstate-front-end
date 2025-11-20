@@ -65,7 +65,7 @@ function Signup() {
   const { mutate: registerUser, isPending } = useRegister();
   const navigate = useNavigate();
   const role = watch('roleDiscriminator');
-  console.log(getValues());
+  getValues();
   useHomePageRedirect();
 
   useEffect(() => {
@@ -75,7 +75,7 @@ function Signup() {
   }, [role, reset]);
 
   async function onSubmit(formData: RegitserForm) {
-    console.log(formData);
+    formData;
     registerUser(formData, {
       onSuccess: () => {
         toast.success('Account created successfully');
@@ -170,7 +170,7 @@ function Signup() {
                 {/* Tax Identification Number */}
                 <InputField id="taxIdentificationNumber" label="Tax Identification Number">
                   <Input
-                    type="text"
+                    type="number"
                     id="taxIdentificationNumber"
                     placeholder="Enter your tax identification number"
                     {...register('taxIdentificationNumber', taxIdentificationNumberValidation)}

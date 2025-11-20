@@ -18,24 +18,27 @@ export async function postImages({
     propertyId: string;
 }) {
     //build FormData
-    const formData = new FormData();
-    formData.append("propertyId", propertyId);
 
-    for (const img of images) {
-        formData.append("images", img);
-    }
+    const formData = new FormData();
+    formData.append("PropertyId", propertyId);
+    (propertyId);
+    images.forEach((file) => formData.append("MediaFiles", file));
+
+
+    (formData);
 
     //  send to API
     const res = await request<postImagesResponse>("/api/PropertyGallery", {
         method: "POST",
         body: formData,
         headers: {
-            Accept: "application/json",
+            "Accept": "application/json",
+
         },
     });
 
     if (!res.isSuccess) {
-        throw new Error(res.message || "Failed to fetch compounds");
+        throw new Error(res.message || "Failed to upload image");
     }
     return res.data;
 

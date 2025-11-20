@@ -14,8 +14,7 @@ function MyProfile() {
   const { isPending, error, data } = useUserProfile();
   const { user, listings } = destructUserProfile(data);
   const { mutate: logout } = useLogout();
-  console.log(user);
-  console.log(listings);
+ 
   const navigate = useNavigate();
   const handleLogout = () => {
     if (user?.userId) {

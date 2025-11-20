@@ -9,15 +9,16 @@ export function setAuthToken(token: string | null) {
 }
 
 export default async function request<T>(endpoint: string, options: RequestInit): Promise<T> {
-
+  const isFormData = options.body instanceof FormData;
+  (authToken);
+  const { headers: optionHeaders, ...restOptions } = options;
   const response = await fetch(`${API_URL}${endpoint}`, {
     headers: {
-      "Content-Type": "application/json",
-      ...options.headers,
-      ...(authToken ? { Authorization: authToken } : {}),
-
+      ...(isFormData ? {} : { "Content-Type": "application/json" }),
+      ...optionHeaders,
+      ...(authToken ? { Authorization: authToken } : {})
     },
-    ...options,
+    ...restOptions
   });
   if (!response.ok) {
     const error = await response.text();

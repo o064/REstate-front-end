@@ -28,12 +28,13 @@ export function destructUserProfile(data?: getUserProfileResponse | getAgentProf
     if (!data || !data.isSuccess) return { user: null, listings: [] };
 
     const profileData = data.data;
+    (profileData);
     if ('agencyName' in profileData) {
         const { properties, user, ...rest } = profileData;
         const agentInfo = { ...rest, ...user };
 
-        const listings = [...properties.commercialProperties, ...properties.residentialProperties];
-        console.log(listings);
+        const listings = properties;
+        (listings);
         return {
             user: agentInfo,
             listings,

@@ -3,10 +3,10 @@ import type { ListingFormInputs } from "../types/property";
 export const defaultResidentialValues: ListingFormInputs = {
     propertyPurpose: 0, // 0 -> For Sale, 1 -> For Rent
     title: "Modern Bedroom Apartment",
-    agentId: "416dfe46-2094-450d-fe6e-08de22a25c54",
+    userId: "",
     propertyStatus: 1,
     propertyType: 0,
-    compoundId: "ff929561-30fb-4b69-90ce-6fc264a91925",
+    compoundId: "",
     address: "123 Nile Street, Zamalek,egypt",
     city: "Cairo",
     googleMapsUrl: "https://www.google.com/maps/@29.9609231,32.5484151,13z?entry=ttu&g_ep=EgoyMDI1MTAyOS4yIKXMDSoASAFQAw%3D%3D",
@@ -26,29 +26,10 @@ export const defaultResidentialValues: ListingFormInputs = {
     images: [], // will be uploaded later
 };
 
-// {
-//   "propertyType": "Residential",
-//   "propertyPurpose": "Rent",
-//   "propertyStatus": "Accepted",
-//   "price": 0,
-//   "square": 0,
-//   "description": "string",
-//   "agentId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-//   "compoundId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-//   "bedrooms": 0,
-//   "bathrooms": 0,
-//   "floors": 0,
-//   "kitchenType": "American",
-//   "amenity": {
-//     "hasElectricityLine": true,
-//     "hasWaterLine": true,
-//     "hasGasLine": true
-//   }
-// }
 export const defaultCommercialValues: ListingFormInputs = {
     propertyPurpose: 0,
     title: "",
-    agentId: "",
+    userId: "",
     propertyStatus: 0,
     propertyType: 1,
     compoundId: "",
@@ -68,28 +49,3 @@ export const defaultCommercialValues: ListingFormInputs = {
     hasStorage: false,
     images: [],
 };
-
-// {
-//     propertyPurpose: 0,
-//     title: "",
-//     agentId: "",
-//     propertyStatus: 0,
-//     propertyType: 0,
-//     compoundId: "",
-//     address: "",
-//     city: "",
-//     googleMapsUrl: "",
-//     price: 0,
-//     square: 0,
-//     description: "",
-//     amenit: {
-//         hasElectricityLine: false,
-//         hasWaterLine: false,
-//         hasGasLine: false,
-//     },
-//     bathrooms: 0,
-//     bedrooms: 0,
-//     kitchenType: 0,
-//     floors: 0,
-//     images: [],
-// }

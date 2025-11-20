@@ -2,19 +2,23 @@ import { Edit, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import Button from '../../ui/Button';
 import { useDeleteProperty } from '../../hooks/useProperty';
+import Loader from '../../ui/Loader';
 
 function ListingControl({
   propertyId,
   propertyType,
 }: {
   propertyId: string;
-  propertyType: number;
+  propertyType: string;
 }) {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState<boolean>(false);
-  const { mutate: delProperty, isError } = useDeleteProperty();
+  const { mutate: delProperty, isError, isPending } = useDeleteProperty();
   const handleDelete = () => {
     delProperty({ propertyId, propertyType });
   };
+  if (isPending) {
+    return <Loader />;
+  }
   if (isError) {
     return <p>error while delete </p>;
   }
@@ -23,7 +27,7 @@ function ListingControl({
       {!showDeleteConfirm ? (
         <>
           <Button
-            to={`/edit/property/${propertyType == 0 ? 'residential' : 'commerical'}/${propertyId}`}
+            to={`/edit/property/${propertyType}/${propertyId}`}
             size="small"
             variant="secondary"
             fullWidth={false}

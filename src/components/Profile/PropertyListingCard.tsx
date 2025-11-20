@@ -15,8 +15,8 @@ function PropertyListingCard({ property }: PropertyListingCardProps) {
       <div className="flex flex-col sm:flex-row gap-4">
         {/* Image */}
         <ImageListing
-          imageUrl={property.galleries[0].imageUrl}
-          imageName={property.galleries[0].mediaId}
+          imageUrl={property.galleries[0]?.imageUrl}
+          imageName={property.galleries[0]?.mediaId}
         />
         {/* Details */}
         <div className="flex-1 min-w-0">

@@ -4,6 +4,7 @@ import { postImages } from "../services/imagesService";
 import { delPropertyById, getPropertyById, postProperty, putProperty } from "../services/PropertyService";
 import { useParams } from "react-router";
 import { useMemo } from "react";
+import toast from "react-hot-toast";
 
 
 export function useAddProperty() {
@@ -18,15 +19,16 @@ export function useAddProperty() {
             if (!propertyRes.isSuccess) {
                 throw new Error(propertyRes.message);
             }
-            const propertyId = propertyRes.data?.propertyId
+            const propertyId = propertyRes.data?.propertyId;
 
+            (images);
             if (propertyId && images && images.length > 0) {
                 await postImages({
                     propertyId,
                     images,
                 });
+
             }
-            console.log(propertyRes);
             return propertyRes;
         },
     });
@@ -48,7 +50,7 @@ export function useEditProperty() {
 export function useDeleteProperty() {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: async ({ propertyId, propertyType }: { propertyId: string, propertyType: number }) => {
+        mutationFn: async ({ propertyId, propertyType }: { propertyId: string, propertyType: string }) => {
             const propertyRes = await delPropertyById(propertyId, propertyType)
             if (!propertyRes.isSuccess) {
                 throw new Error(propertyRes.message);
@@ -57,17 +59,21 @@ export function useDeleteProperty() {
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["userProfile"] });
+            toast.success("Property deleted successfully!");
+
+        },
+        onError: () => {
+            toast.error("Failed to delete property");
         },
     });
 }
 
 export function usePrevData() {
     const { propertyId, propertyType } = useParams<{ propertyId: string; propertyType: string }>();
-    const numericType = propertyType === "residential" ? 0 : 1;
 
     const query = useQuery({
-        queryKey: ["property", propertyId, numericType],
-        queryFn: () => getPropertyById(propertyId!, numericType),
+        queryKey: ["property", propertyId, propertyType],
+        queryFn: () => getPropertyById(propertyId!, propertyType!),
         enabled: !!propertyId && !!propertyType,
         staleTime: Infinity,
     });

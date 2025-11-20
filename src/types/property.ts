@@ -13,7 +13,7 @@ export type Property = {
     bathrooms?: number;
     imageUrl: string;
     type?: string
-    images?:string []
+    images?: string[]
 };
 
 export type PropertyWithAgency = Property & {
@@ -27,12 +27,12 @@ export type Amenity = {
 };
 
 export type baseLisintingForm = {
-    agentId: string;
+    userId: string;
     propertyStatus: number;
     // Step 1 info
     title: string;
     propertyPurpose: 0 | 1;
-    compoundId?: string;
+    compoundId?: string | null;
     // Step 2
     address: string;
     city: string;
@@ -71,4 +71,5 @@ export type PropertyGallery = {
     propertyId: string;
     imageUrl: string;
     uploadedAt: string;
+    videoUrl?: string | null;
 }

@@ -15,7 +15,7 @@ interface AuthContextType {
 }
 
 const COOKIE_NAME = 'Authentication';
-const COOKIE_EXPIRES = new Date(Date.now() + 20 * 60 * 1000); // 20 min
+const COOKIE_EXPIRES = new Date(Date.now() + 20 * 60 * 60 * 1000); // 20 min
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
@@ -108,7 +108,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated: !!token, token, roles, user, isLoading, login, logout, setUser }}
+      value={{
+        isAuthenticated: !!Cookies.get(COOKIE_NAME),
+        token,
+        roles,
+        user,
+        isLoading,
+        login,
+        logout,
+        setUser,
+      }}
     >
       {children}
     </AuthContext.Provider>

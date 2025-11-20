@@ -16,16 +16,25 @@ export type getAllCompoundsResponse = {
         totalPages: number;
     };
 };
-
+export type compoundResposne = {
+    address: string;
+    city: string;
+    compoundId: string;
+    description: string;
+    name: string;
+}
 export type getResidentialPropertyById = {
     isSuccess: true;
     message: string;
-    data?: Omit<residentialProperty, "images" | "agentId"> & {
+    data?: Omit<residentialProperty, "images" | "agentId" | "propertyStatus" | "propertyType" | "propertyPurpose"> & {
         propertyId: string;
         galleries: PropertyGallery[];
-        compoundName: string;
+        compound: compoundResposne;
         agentName: string;
         dateListed: string;
+        propertyStatus:string;
+        propertyType:string;
+        propertyPurpose:string;
     };
 }
 export type postResPropertyResponse = {
@@ -55,28 +64,30 @@ export type postComPropertyResponse =
     | BadRequest;
 // Agent profile response types
 
-export type CommercialPropertyResponse = Omit<CommercialProperty, "images" | "compoundId" | "agentId"> & {
+export type CommercialPropertyResponse = Omit<CommercialProperty, "images" | "compoundId" | "agentId" | "propertyType" |"propertyPurpose"| "propertyStatus"> & {
     propertyId: string;
     galleries: PropertyGallery[];
-    compoundName: string;
+    compound: compoundResposne;
     agentName: string;
     dateListed: string;
+            propertyStatus:string;
+        propertyType:string;
+        propertyPurpose:string;
+
 };;
 
-export type ResidentialPropertyResponse = Omit<residentialProperty, "images" | "agentId"> & {
+export type ResidentialPropertyResponse = Omit<residentialProperty, "images" | "agentId" | "propertyType"> & {
     propertyId: string;
     galleries: PropertyGallery[];
     compoundName: string;
     agentName: string;
+    propertyType: string;
     dateListed: string;
 }
-
-export type PropertyGroup = {
-    commercialProperties: CommercialPropertyResponse[];
-    residentialProperties: ResidentialPropertyResponse[];
-};
-export type PropertyGroupList = (CommercialPropertyResponse | ResidentialPropertyResponse)[];
 export type PropertyGroupListItem = (CommercialPropertyResponse | ResidentialPropertyResponse);
+
+export type PropertyGroup = (CommercialPropertyResponse | ResidentialPropertyResponse)[];
+export type PropertyGroupList = (CommercialPropertyResponse | ResidentialPropertyResponse)[];
 
 export type getAgentProfileResponse = {
     isSuccess: true;

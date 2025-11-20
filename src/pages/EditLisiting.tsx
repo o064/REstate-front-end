@@ -24,11 +24,15 @@ function EditLisiting() {
   //  Reset form when previous data is loaded
   useEffect(() => {
     if (prevData && Object.keys(prevData).length > 0) {
-      const { compoundName, dateListed, agentName, galleries, ...rest } = prevData;
-      reset({ ...rest, propertyStatus: 0, compoundId: '' } as Omit<
-        ListingFormInputs,
-        'images' | 'agentId'
-      >); // fill all fields
+      const { compound, dateListed, agentName, galleries, ...rest } = prevData;
+      rest;
+      reset({
+        ...rest,
+        propertyStatus: 0,
+        compoundId: compound.compoundId,
+        propertyType: rest.propertyType == 'Residential' ? 0 : 1,
+        propertyPurpose: rest.propertyPurpose == 'Sale' ? 0 : 1,
+      } as Omit<ListingFormInputs, 'images' | 'agentId'>); // fill all fields
     }
   }, [prevData, reset]);
 
@@ -41,7 +45,6 @@ function EditLisiting() {
     );
   }
   const { mutate: EditProperty, isPending, isError: isErrorMutate } = useEditProperty();
-  if (isLoading || isPending) return <Loader />;
 
   useEffect(() => {
     if (isErrorPrevData || isErrorMutate) {
@@ -50,6 +53,8 @@ function EditLisiting() {
       toast.error(errorMessage);
     }
   }, [isErrorPrevData, isErrorMutate, error]);
+  if (isLoading || isPending) return <Loader />;
+
   function onSubmit(formData: Omit<ListingFormInputs, 'images' | 'agentId'>) {
     if (propertyId) {
       EditProperty(

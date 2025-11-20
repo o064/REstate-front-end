@@ -17,11 +17,16 @@ import Input from '../ui/Input';
 import Loader from '../ui/Loader';
 import { useAddProperty } from '../hooks/useProperty';
 import Container from '../ui/Continer';
+import { useAuth } from '../context/AuthContext';
 
 function AddListing() {
+  const { user } = useAuth();
   const methods = useForm<ListingFormInputs>({
     mode: 'onChange',
-    defaultValues: defaultResidentialValues,
+    defaultValues: {
+      ...defaultResidentialValues,
+      userId: user?.userId,
+    },
   });
   const [step, setStep] = useState<number>(1);
   const { mutate: AddProperty, isPending } = useAddProperty();
@@ -44,7 +49,6 @@ function AddListing() {
     setStep((step) => step - 1);
   }
   function onSubmit(formData: ListingFormInputs) {
-    console.log(formData);
     AddProperty(formData, {
       onSuccess: () => {
         setStep(6);
@@ -96,7 +100,7 @@ function AddListing() {
             {/* defaults */}
             <Input
               type="hidden"
-              {...methods.register('agentId', { required: 'agent id is required' })}
+              {...methods.register('userId', { required: 'user id is required' })}
             />
             <Input
               type="hidden"

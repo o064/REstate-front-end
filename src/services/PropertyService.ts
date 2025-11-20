@@ -7,6 +7,9 @@ export async function postProperty(
     propertyType: 0 | 1,
     property: Omit<residentialProperty | CommercialProperty, "images">
 ) {
+    if (property.compoundId == "") {
+        property.compoundId = null;
+    }
     const endpoint =
         propertyType === 0
             ? "/api/ResidentialProperty"
@@ -49,9 +52,9 @@ export async function putProperty(
 }
 export async function delPropertyById(
     id: string,
-    propertyType: number
+    propertyType: string
 ) {
-    const res = propertyType ? await request<deletePropertyResponse>(`/api/ResidentialProperty/${id}`, {
+    const res = propertyType == "Residential" ? await request<deletePropertyResponse>(`/api/ResidentialProperty/${id}`, {
         method: "DELETE",
     }) : await request<deletePropertyResponse>(`/api/CommercialProperty/${id}`, {
         method: "DELETE",
@@ -62,14 +65,16 @@ export async function delPropertyById(
     return res;
 }
 
-export async function getPropertyById(id: string, type: 0 | 1) {
+export async function getPropertyById(id: string, propertyType: string) {
     const url =
-        type === 0
+        propertyType == "Residential"
             ? `/api/ResidentialProperty/${id}`
             : `/api/CommercialProperty/${id}`;
+    (url);
+
     // Dynamically pick the correct response type
     const res =
-        type === 0
+        propertyType == "Residential"
             ? await request<getResidentialPropertyById>(url, { method: "GET" })
             : await request<getCommercialPropertyById>(url, { method: "GET" });
 
