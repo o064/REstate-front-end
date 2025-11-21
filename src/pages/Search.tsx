@@ -6,7 +6,6 @@ import EstateCard from "../ui/EstateCard";
 import OptionSelector from "../ui/OptionSelector";
 
 import { Home, Building2, DollarSign, Ruler } from "lucide-react";
-import type { PropertyGroup } from "../types/Responses";
 
 const propertyTypeOptions = [
   { value: "Commercial", icon: <Building2 />, label: "Commercial" },
@@ -39,8 +38,8 @@ export default function SearchPage() {
   const { data } = useAllProperties();
 
   const allProperties = [
-    ...(data?.items?.flatMap((i:PropertyGroup) => i.commercialProperties) || []),
-    ...(data?.items?.flatMap((i:PropertyGroup) => i.residentialProperties) || []),
+    ...(data?.items?.flatMap((i:any) => i.commercialProperties) || []),
+    ...(data?.items?.flatMap((i:any) => i.residentialProperties) || []),
   ];
 
   const filtered = allProperties.filter((p) => {

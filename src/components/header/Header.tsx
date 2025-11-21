@@ -21,7 +21,7 @@ const Header = () => {
 
         {/* right => login & signup */}
         <div className="w-fit flex justify-center items-center gap-3 px-4 sm:px-6 lg:px-8">
-          {!isAuthenticated && (
+          {isAuthenticated && (
             <>
               <Button children={'Login'} to="/login" className="text-sm p-2 md:text-lg " />
               <Button children={'SignUp'} to="/signup" className="text-sm p-2 md:text-lg " />

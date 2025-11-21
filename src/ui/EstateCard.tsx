@@ -5,45 +5,45 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItemtoWishList, delItemFromWishList, getWishList } from '../store/wishListSlice';
 import { Like } from '../services/LikesServices';
+import type {  PropertyWithAgency } from '../types/property';
 
 type EstateCardPropse = {
-  property: any;
+  property: PropertyWithAgency;
+  image?:any[]
 };
 
-const EstateCard = ({ property }: EstateCardPropse) => {
+const EstateCard = ({ property,image }: EstateCardPropse) => {
   const dispatch = useDispatch();
   const wishList = useSelector(getWishList);
 
   const [isWishList, setIsWishList] = useState(false);
 
-  // ⭐ لايكات
   const [likes, setLikes] = useState(property.likesCount ?? 0); 
   const [isLiked, setIsLiked] = useState(property.isLiked ?? false);
 
   // check if property is already in wishlist
   useEffect(() => {
-    const exists = wishList.some((item) => item.id === property.id);
+    const exists = wishList.some((item) => item.propertyId === property.propertyId);
     setIsWishList(exists);
-  }, [wishList, property.id]);
+  }, [wishList, property.propertyId]);
 
   const handleWishListToggle = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
 
     if (isWishList) {
-      dispatch(delItemFromWishList(property.id));
+      dispatch(delItemFromWishList(property.propertyId));
     } else {
       dispatch(addItemtoWishList(property));
     }
     setIsWishList(!isWishList);
   };
 
-  // ⭐ دالة اللايك
   const handleLike = async (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
 
-    const id = property.id ?? property.propertyId;
+    const id = property.propertyId ?? property.propertyId;
     const response = await Like(id);
 
     if (response?.data === "Added") {
@@ -59,12 +59,12 @@ const EstateCard = ({ property }: EstateCardPropse) => {
   return (
     <>
       <Link
-        to={`/estateDetails/${property.id || property.propertyId}`}
+        to={`/estateDetails/${property.propertyId || property.propertyId}`}
         className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow overflow-hidden border border-gray-200"
       >
         {/* Property Image */}
         <div className="relative h-48 bg-gray-200 cursor-pointer">
-          <img src={property.imageUrl} alt={property.name} className="w-full h-full object-cover" />
+          <img src={"https://re-estate.runasp.net/"+image![0]?.imageUrl} alt={property.title} className="w-full h-full object-cover" />
 
           {/* Badge */}
           <div className="absolute top-3 left-3">
@@ -98,9 +98,9 @@ const EstateCard = ({ property }: EstateCardPropse) => {
           <div className="text-xl font-bold text-blue-600 mb-2">{formatPrice(property.price)}</div>
 
           {/* name */}
-          <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2">{property.name}</h3>
+          <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2">{property.title}</h3>
 
-          {/* ⭐ زر اللايك */}
+          {/*  زر اللايك */}
           <button
             onClick={handleLike}
             className="flex items-center space-x-2 mb-3 px-3 py-1 rounded-lg border text-sm hover:bg-gray-100 transition"

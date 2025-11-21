@@ -2,7 +2,7 @@ export type PropertyPurpose = "sale" | "rent";
 export type PropertyType = "commercial" | "residential";
 
 export type Property = {
-    id: string;
+    propertyId: string;
     title: string;
     purpose: PropertyPurpose;
     square: number;
@@ -12,7 +12,7 @@ export type Property = {
     bathrooms?: number;
     imageUrl: string;
     propertyType?: string
-    images?: string[]
+    galleries?: any[]
     likes?: boolean | number | any
     likesCount: number
     isLiked: boolean

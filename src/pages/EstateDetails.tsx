@@ -2,25 +2,22 @@ import { MapPin, Phone, Bed, Bath, Ruler, Heart } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import EstateCard from '../ui/EstateCard';
 import Button from '../ui/Button';
-import { fakePropertyWithAgency } from '../dev-data/properites';
 import Comments from '../components/comments/Comments';
 import { useParams } from 'react-router';
-import type { PropertyWithAgency } from '../types/property';
 
 const EstateDetails = () => {
   const [src, setSrc] = useState(0);
-  const [property , setProperty] = useState<PropertyWithAgency>()
+  const [property, setProperty] = useState<any>();
   const { id } = useParams<{ id: string }>();
-  const propertyes = fakePropertyWithAgency;
-   
-  useEffect(()=>{
-   const getProperty = () => {
-  const propId = propertyes.find(item => item.id == id );
-  if(propId) setProperty(propId)
- }
-getProperty()
- },[])
- 
+
+  useEffect(() => {
+    const getProperty = () => {
+      const propId = property.find((item:any) => item.id == id);
+      if (propId) setProperty(propId)
+    }
+    getProperty()
+  }, [])
+
   const similarProperties = [
     {
       id: 1,
@@ -51,7 +48,7 @@ getProperty()
       {/* عنوان العقار */}
       <div className="flex justify-between items-start border-b pb-3">
         <div>
-          <h1 className="text-2xl font-bold text-gray-800">{property?.name}</h1>
+          <h1 className="text-2xl font-bold text-gray-800">{property?.title}</h1>
           <p className="text-gray-500 flex items-center gap-1 mt-1">
             <MapPin size={18} className="text-blue-500" />
             {property?.address}
@@ -72,16 +69,15 @@ getProperty()
           />
         </div>
         <div className="flex md:flex-col gap-1.5 sm:gap-3.5 justify-center mx-auto  w-26 sm:w-auto  md:w-[30%]">
-          {property?.images!.map((img, index) => (
+          {property?.galleries!.map((img:any, index:number) => (
             <img
               key={index}
-              src={img}
+              src={img.imageUrl}
               alt={`thumb-${index}`}
-              className={`h-24 object-cover rounded-lg cursor-pointer border-2 transition ${
-                src === index
+              className={`h-24 object-cover rounded-lg cursor-pointer border-2 transition ${src === index
                   ? 'border-blue-500 scale-105'
                   : 'border-transparent hover:border-gray-300'
-              }`}
+                }`}
               onClick={() => setSrc(index)}
             />
           ))}
@@ -113,7 +109,7 @@ getProperty()
       {/* الوصف */}
       <section>
         <h2 className="text-lg font-semibold mb-2 text-left">Description</h2>
-        <p className="text-gray-700 leading-relaxed">{property?.name}</p>
+        <p className="text-gray-700 leading-relaxed">{property?.title}</p>
       </section>
 
       {/* المميزات */}
@@ -155,12 +151,12 @@ getProperty()
               key={item.id}
               className="border rounded-xl overflow-hidden hover:shadow-lg transition group cursor-pointer"
             >
-              <EstateCard property={fakePropertyWithAgency[0]} />
+              <EstateCard property={property} />
             </div>
           ))}
         </div>
       </section>
-      <Comments  id={id!}/>
+      <Comments id={id!} />
     </div>
   );
 };
