@@ -3,7 +3,6 @@ import type { ListingFormInputs } from "../types/property";
 import { postImages } from "../services/imagesService";
 import { delPropertyById, getAllProperties, getPropertyById, postProperty, putProperty } from "../services/PropertyService";
 import { useParams } from "react-router";
-import { useMemo } from "react";
 import toast from "react-hot-toast";
 
 
@@ -72,29 +71,18 @@ export function useDeleteProperty() {
 export function usePrevData() {
     const { propertyId, propertyType } = useParams<{ propertyId: string; propertyType: string }>();
 
-    const query = useQuery({
+    const { data: queryData, isLoading, isError, error } = useQuery({
         queryKey: ["property", propertyId, propertyType],
         queryFn: () => getPropertyById(propertyId!, propertyType!),
         enabled: !!propertyId && !!propertyType,
         staleTime: Infinity,
     });
 
-    const { data: queryData, isLoading, isError, error } = query;
+    const data = queryData?.isSuccess ? queryData.data : undefined;
 
-    const memoizedData = useMemo(() => {
-        if (queryData?.isSuccess && queryData.data) {
-            return { ...queryData.data };
-        }
-        return undefined;
-    }, [queryData]); // Dependencies are the source data
-
-    return {
-        data: memoizedData, // Return the stable, memoized data
-        isLoading,
-        isError,
-        error,
-    };
+    return { data, isLoading, isError, error };
 }
+
 
 export function useAllProperties() {
   const query = useQuery({

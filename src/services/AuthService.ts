@@ -7,7 +7,7 @@ import type { LoginResponse } from "../types/Responses";
 
 
 export async function loginService(user: UserSignIn) {
-    const res = await request<LoginResponse>("/api/Auth/Login", {
+    const res = await request<LoginResponse>("/api/Auth/login", {
         method: "POST",
         body: JSON.stringify(user),
     });

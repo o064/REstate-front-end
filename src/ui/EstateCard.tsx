@@ -5,20 +5,21 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItemtoWishList, delItemFromWishList, getWishList } from '../store/wishListSlice';
 import { Like } from '../services/LikesServices';
-import type {  PropertyWithAgency } from '../types/property';
 
 type EstateCardPropse = {
-  property: PropertyWithAgency;
-  image?:any[]
+  property: any;
+  image?: any[]
 };
 
-const EstateCard = ({ property,image }: EstateCardPropse) => {
+const EstateCard = ({ property, image }: EstateCardPropse) => {
+  if (!property) return null;
+
   const dispatch = useDispatch();
   const wishList = useSelector(getWishList);
 
   const [isWishList, setIsWishList] = useState(false);
 
-  const [likes, setLikes] = useState(property.likesCount ?? 0); 
+  const [likes, setLikes] = useState(property.likesCount ?? 0);
   const [isLiked, setIsLiked] = useState(property.isLiked ?? false);
 
   // check if property is already in wishlist
@@ -47,11 +48,11 @@ const EstateCard = ({ property,image }: EstateCardPropse) => {
     const response = await Like(id);
 
     if (response?.data === "Added") {
-      setLikes((prev:number) => prev + 1);
+      setLikes((prev: number) => prev + 1);
       setIsLiked(true);
-    } 
+    }
     else if (response?.data === "Deleted") {
-      setLikes((prev:number) => prev - 1);
+      setLikes((prev: number) => prev - 1);
       setIsLiked(false);
     }
   };
@@ -59,21 +60,22 @@ const EstateCard = ({ property,image }: EstateCardPropse) => {
   return (
     <>
       <Link
-        to={`/estateDetails/${property.propertyId || property.propertyId}`}
+        to={`/estateDetails/${property.propertyType}/${property.propertyId}`}
         className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow overflow-hidden border border-gray-200"
       >
         {/* Property Image */}
         <div className="relative h-48 bg-gray-200 cursor-pointer">
-          <img src={"https://re-estate.runasp.net/"+image![0]?.imageUrl} alt={property.title} className="w-full h-full object-cover" />
-
+          <img
+            src={image?.[0]?.imageUrl ? "https://re-estate.runasp.net" + image[0].imageUrl : "/placeholder.png"}
+            alt={property.title}
+          />
           {/* Badge */}
           <div className="absolute top-3 left-3">
             <span
-              className={`px-2 py-1 rounded-full text-xs font-medium ${
-                property.purpose === 'sale'
-                  ? 'bg-green-100 text-green-800'
-                  : 'bg-purple-100 text-purple-800'
-              }`}
+              className={`px-2 py-1 rounded-full text-xs font-medium ${property.purpose === 'sale'
+                ? 'bg-green-100 text-green-800'
+                : 'bg-purple-100 text-purple-800'
+                }`}
             >
               For {property.purpose === 'sale' ? 'Sale' : 'Rent'}
             </span>
@@ -85,9 +87,8 @@ const EstateCard = ({ property,image }: EstateCardPropse) => {
             className="absolute top-3 right-3 p-2 bg-white rounded-full shadow-md hover:bg-red-50 transition"
           >
             <Heart
-              className={`h-4 w-4 ${
-                isWishList ? 'fill-red-500 text-red-500' : 'text-gray-400 hover:text-red-500'
-              }`}
+              className={`h-4 w-4 ${isWishList ? 'fill-red-500 text-red-500' : 'text-gray-400 hover:text-red-500'
+                }`}
             />
           </button>
         </div>

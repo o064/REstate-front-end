@@ -31,9 +31,14 @@ export type getResidentialPropertyById = {
         compound: compoundResposne;
         agentName: string;
         dateListed: string;
-        propertyStatus:string;
-        propertyType:string;
-        propertyPurpose:string;
+        propertyStatus: string;
+        propertyType: string;
+        propertyPurpose: string;
+        bedrooms?: number;
+        bathrooms?: number;
+        phone: string;
+        agencyName: string;
+        vendorName: string;
     };
 }
 export type postResPropertyResponse = {
@@ -63,15 +68,15 @@ export type postComPropertyResponse =
     | BadRequest;
 // Agent profile response types
 
-export type CommercialPropertyResponse = Omit<CommercialProperty, "images" | "compoundId" | "agentId" | "propertyType" |"propertyPurpose"| "propertyStatus"> & {
+export type CommercialPropertyResponse = Omit<CommercialProperty, "images" | "compoundId" | "agentId" | "propertyType" | "propertyPurpose" | "propertyStatus"> & {
     propertyId: string;
     galleries: PropertyGallery[];
     compound: compoundResposne;
     agentName: string;
     dateListed: string;
-            propertyStatus:string;
-        propertyType:string;
-        propertyPurpose:string;
+    propertyStatus: string;
+    propertyType: string;
+    propertyPurpose: string;
 
 };;
 
@@ -134,8 +139,8 @@ export type LoginResponse = LoginSuccess | BadRequest;
 export type CommentResponse = {
     commentText: string;
     propertyId: string;
-    commentId?:string
-    userID?:string
+    commentId?: string
+    userID?: string
 }
 
 export type postCommentResponse = {

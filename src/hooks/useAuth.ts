@@ -8,6 +8,7 @@ import type { RegitserForm, sessinToken } from '../types/User';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { getUserById, getUserRoles } from '../services/ProfileService';
+import { setAuthToken } from '../utils/request';
 
 export function useUser() {
     return useQuery<getUser | null>({
@@ -18,6 +19,7 @@ export function useUser() {
 }
 
 async function fetchAuthData(userId: string, jwtToken: string): Promise<sessinToken> {
+    setAuthToken(jwtToken);
     const userRole = await getUserRoles(userId);
     if (!userRole.isSuccess) throw new Error('Failed to fetch user roles');
 

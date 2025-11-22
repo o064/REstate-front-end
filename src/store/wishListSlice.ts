@@ -15,7 +15,7 @@ const wishListSlice = createSlice({
   initialState,
   reducers: {
     addItemtoWishList(state, action: PayloadAction<PropertyWithAgency>) {
-      const exists = state.items.find(item => item.id === action.payload.id);
+      const exists = state.items.find(item => item.propertyId === action.payload.propertyId);
       if (!exists) {
         state.items.push(action.payload);
 
@@ -24,7 +24,7 @@ const wishListSlice = createSlice({
       }
     },
     delItemFromWishList(state, action: PayloadAction<string>) {
-      state.items = state.items.filter(item => item.id !== action.payload);
+      state.items = state.items.filter(item => item.propertyId !== action.payload);
 
       // حفظ في localStorage
       localStorage.setItem("wishList", JSON.stringify(state.items));

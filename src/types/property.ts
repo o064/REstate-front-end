@@ -54,12 +54,17 @@ export type residentialProperty = baseLisintingForm & {
     bedrooms: number;
     kitchenType: number;
     floors: number;
+
 };
 export type CommercialProperty = baseLisintingForm & {
     propertyType: 1;
     floorNumber: number;
     businessType: string;
     hasStorage: boolean
+    bedrooms: number
+    bathrooms: number
+    vendorName: string;
+    agencyName: string
 };
 export type ListingFormInputs =
     | CommercialProperty
@@ -75,3 +80,36 @@ export type PropertyGallery = {
     uploadedAt: string;
     videoUrl?: string | null;
 }
+
+export type Compound = {
+  compoundId: string;
+  name: string;
+  city: string;
+  address: string;
+  description: string;
+};
+
+export type PropertyRes = {
+  address: string;
+  amenity: Amenity;
+  businessType: string;
+  city: string;
+  comments: any[]; // ممكن تضبط type لاحقًا حسب شكل التعليقات
+  compound: Compound;
+  dateListed: string; // أو Date لو هتحولها
+  description: string;
+  floorNumber: number;
+  galleries:PropertyGallery[];
+  googleMapsUrl: string;
+  hasStorage: boolean;
+  isLiked: boolean;
+  likesCount: number;
+  price: number;
+  propertyId: string;
+  propertyPurpose: "Sale" | "Rent";
+  propertyStatus: string;
+  propertyType: "Commercial" | "Residential";
+  square: number;
+  title: string;
+  userId: string;
+};

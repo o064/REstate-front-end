@@ -71,7 +71,7 @@ const router = createBrowserRouter(
     <>
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
-        <Route path="estateDetails/:id" element={<EstateDetails />} />
+        <Route path="estateDetails/:type/:id" element={<EstateDetails />} />
         <Route path="search" element={<Search />} />
 
         {/* Protected Routes */}
@@ -81,7 +81,7 @@ const router = createBrowserRouter(
 
           {/* agent routes */}
           <Route element={<RoleBasedRoute allowedRoles={['Admin', 'Agent']} />}>
-            <Route path="edit/property/:propertyType/:propertyId" element={<EditLisiting />} />
+            <Route path="estateDetails/:propertyType/:propertyId" element={<EstateDetails />} />
             <Route path="add" element={<AddListing />} />
           </Route>
         </Route>

@@ -12,9 +12,7 @@ const Estate = () => {
     ...(data?.items?.flatMap((i: any) => i.commercialProperties) || []),
     ...(data?.items?.flatMap((i: any) => i.residentialProperties) || []),
   ];
-  console.log(allProperties);
   
-
   return (
     <section className="py-16 bg-gray-50 mt-96 lg:mt-40">
       {/* Header */}
