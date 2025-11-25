@@ -2,6 +2,10 @@ import type { PropertyGroup } from "./Responses";
 
 export type UserRole = 'Customer' | 'Agent' | "Admin";
 
+export interface userRoleResponse {
+    roleId: string;
+    roleName: string;
+}
 
 export type UserRegister = {
     email: string;
@@ -47,7 +51,7 @@ export type UserSignIn = {
 export type sessinToken = {
     user: UserProfile;
     jwtToken: string;
-    roles: [string];
+    roles: userRoleResponse[];
 };
 // profile
 
