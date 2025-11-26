@@ -51,7 +51,7 @@ export type UserSignIn = {
 export type sessinToken = {
     user: UserProfile;
     jwtToken: string;
-    roles: userRoleResponse[];
+    roles: string[];
 };
 // profile
 
