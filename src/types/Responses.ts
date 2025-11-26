@@ -1,5 +1,5 @@
 import type { CommercialProperty, PropertyGallery, residentialProperty } from "./property";
-import type { AgentData, UserData } from "./User";
+import type { AgentData, UserData, userRoleResponse } from "./User";
 
 export type BadRequest = {
     isSuccess: false,
@@ -130,7 +130,7 @@ export type getUserRolesResponse = {
     message: string;
     data: {
         userId: string;
-        roles: [string];
+        roles: userRoleResponse[];
     };
 } | BadRequest;
 export type LoginResponse = LoginSuccess | BadRequest;

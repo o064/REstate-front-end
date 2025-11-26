@@ -25,7 +25,7 @@ async function fetchAuthData(userId: string, jwtToken: string): Promise<sessinTo
 
     const userProfile = await getUserById(userId);
     if (!userProfile.isSuccess) throw new Error('Failed to fetch user profile');
-    const roles = userRole.data.roles;
+    const roles = userRole.data.roles.map(a => a.roleName);
     const user = userProfile.data;
     if (roles.includes("Admin"))
         user.role = "Admin";

@@ -1,12 +1,12 @@
 import { createContext, useContext, useState, useCallback, useEffect } from 'react';
 import Cookies from 'js-cookie';
-import type { sessinToken, Profile, userRoleResponse } from '../types/User';
+import type { sessinToken, Profile } from '../types/User';
 import { setAuthToken } from '../utils/request';
 
 interface AuthContextType {
   isAuthenticated: boolean;
   token: string | null;
-  roles: userRoleResponse[];
+  roles: string[];
   user: Profile | null;
   isLoading: boolean;
   login: (data: sessinToken) => void;
@@ -38,7 +38,7 @@ function initializeAuthState(): sessinToken | null {
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [token, setToken] = useState<string | null>(null);
-  const [roles, setRoles] = useState<userRoleResponse[]>([]);
+  const [roles, setRoles] = useState<string[]>([]);
   const [user, setUserState] = useState<Profile | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
