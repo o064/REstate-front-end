@@ -9,22 +9,7 @@ type FormDataInputs = { images: File[] };
 
 function ImageUploadStep({ required = false }: { required?: boolean }) {
   const [formData, setFormData] = useState<FormDataInputs>({ images: [] });
-  const { control, setValue, watch } = useFormContext<FormDataInputs>();
-  const images = watch('images');
-  // Handle file selection
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (files && files.length > 0) {
-      const fileArray = Array.from(files);
-      const newImages = [...formData.images, ...fileArray];
-
-      // Update local preview state
-      setFormData({ images: newImages });
-
-      // Sync with React Hook Form
-      setValue('images', newImages);
-    }
-  };
+  const { control, setValue } = useFormContext<FormDataInputs>();
 
   // Remove image by index
   const onImageRemove = (index: number) => {
