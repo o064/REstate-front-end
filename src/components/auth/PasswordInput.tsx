@@ -14,6 +14,10 @@ export default function PasswordInput({ ...props }: PasswordInputProps) {
         {...props}
         type={visible ? 'text' : 'password'}
         placeholder={props.placeholder ?? '••••••••'}
+        autoCapitalize="none"
+        autoCorrect="off"
+        spellCheck="false"
+        autoComplete="current-password"
       />
       <button
         type="button"
