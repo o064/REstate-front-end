@@ -2,6 +2,8 @@ import { createContext, useContext, useState, useCallback, useEffect } from 'rea
 import Cookies from 'js-cookie';
 import type { sessinToken, Profile } from '../types/User';
 import { setAuthToken } from '../utils/request';
+import {jwtDecode} from 'jwt-decode';
+import toast from 'react-hot-toast';
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -15,7 +17,7 @@ interface AuthContextType {
 }
 
 const COOKIE_NAME = 'Authentication';
-const COOKIE_EXPIRES = new Date(Date.now() + 20 * 60 * 60 * 1000); // 20 min
+const COOKIE_EXPIRES = new Date(Date.now() + 2 * 60 * 60 * 1000); // 2 hours
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
@@ -36,6 +38,16 @@ function initializeAuthState(): sessinToken | null {
   }
 }
 
+function isTokenExpired(token: string) {
+  try {
+    const decoded: any = jwtDecode(token);
+    const now = Date.now() / 1000;
+    return decoded.exp < now;
+  } catch {
+    return true;
+  }
+}
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [token, setToken] = useState<string | null>(null);
   const [roles, setRoles] = useState<string[]>([]);
@@ -46,10 +58,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const data = initializeAuthState();
     if (data) {
-      setToken(data.jwtToken);
-      setRoles(data.roles);
-      setUserState(data.user);
-      setAuthToken(data.jwtToken); // set token for API requests
+      if (isTokenExpired(data.jwtToken)) {
+        // لو انتهى التوكن سجل خروج
+        toast.error("Login agine")
+        logout();
+      } else {
+        setToken(data.jwtToken);
+        setRoles(data.roles);
+        setUserState(data.user);
+        setAuthToken(data.jwtToken); 
+      }
     }
     setIsLoading(false);
   }, []);
@@ -63,9 +81,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setRoles(Array.isArray(data.roles) ? data.roles : []);
     setUserState(data.user);
 
-    setAuthToken(formattedToken); // make token available for API calls
+    setAuthToken(formattedToken); 
 
-    // Store all in one cookie
     Cookies.set(
       COOKIE_NAME,
       JSON.stringify({
@@ -85,9 +102,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setToken(null);
     setRoles([]);
     setUserState(null);
-    // setAuthToken(null);
-
+    setAuthToken(''); 
     Cookies.remove(COOKIE_NAME);
+    window.location.href = '/login';
   }, []);
 
   const setUser = useCallback(
@@ -106,10 +123,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     [roles, token]
   );
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (token && isTokenExpired(token)) {
+        logout();
+      }
+    }, 60 * 1000); // تحقق كل دقيقة
+
+    return () => clearInterval(interval);
+  }, [token, logout]);
+
   return (
     <AuthContext.Provider
       value={{
-        isAuthenticated: !!Cookies.get(COOKIE_NAME),
+        isAuthenticated: !!token,
         token,
         roles,
         user,
