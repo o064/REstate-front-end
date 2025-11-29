@@ -1,35 +1,39 @@
-import { useEffect, useState } from "react";
-import Button from "../../ui/Button";
-import Input from "../../ui/Input";
-import { Check, Delete, Edit, MessagesSquareIcon, User, X } from "lucide-react";
-import InputField from "../../ui/InputField";
-import { deleteUserComment, editUserComment, getPropertyComments, postComment } from "../../services/commentsService";
-import type { CommentResponse } from "../../types/Responses";
-import { useAuth } from "../../context/AuthContext";
-import type { UserProfile } from "../../types/User";
-import { getUserById } from "../../services/ProfileService";
+import { useEffect, useState } from 'react';
+import Button from '../../ui/Button';
+import Input from '../../ui/Input';
+import { Check, Delete, Edit, MessagesSquareIcon, User, X } from 'lucide-react';
+import InputField from '../../ui/InputField';
+import {
+  deleteUserComment,
+  editUserComment,
+  getPropertyComments,
+  postComment,
+} from '../../services/commentsService';
+import type { CommentResponse } from '../../types/Responses';
+import { useAuth } from '../../context/AuthContext';
+import type { UserProfile } from '../../types/User';
+import { getUserById } from '../../services/ProfileService';
 
 type CommentProps = {
   id: string;
 };
 
 const Comments = ({ id }: CommentProps) => {
-
-  const [commentText, setCommentText] = useState("");
+  const [commentText, setCommentText] = useState('');
   const [editCommentId, setEditCommentId] = useState<any | null>(null);
-  const [editValue, setEditValue] = useState("");
+  const [editValue, setEditValue] = useState('');
   const [comments, setComments] = useState<CommentResponse[]>([]);
   const [refresh, setRefresh] = useState(false);
-  const [userData , setUserData] = useState<UserProfile|null>(null)
-  const {user} = useAuth();
+  const [userData, setUserData] = useState<UserProfile | null>(null);
+  const { user } = useAuth();
 
-  useEffect(()=>{
-    const getUserData = async (id:any) => {
-      const uData = await getUserById(id)
-      setUserData(uData.data)
-    }
-    getUserData(user?.userId)
-  },[])
+  useEffect(() => {
+    const getUserData = async (id: any) => {
+      const uData = await getUserById(id);
+      setUserData(uData.data);
+    };
+    getUserData(user?.userId);
+  }, []);
   // Fetch comments
   useEffect(() => {
     const fetchData = async () => {
@@ -49,11 +53,10 @@ const Comments = ({ id }: CommentProps) => {
         propertyId: id,
       });
 
-      setCommentText("");
-      setRefresh(prev => !prev);
-
+      setCommentText('');
+      setRefresh((prev) => !prev);
     } catch (err) {
-      console.error("Failed to post comment:", err);
+      console.error('Failed to post comment:', err);
     }
   };
 
@@ -62,10 +65,9 @@ const Comments = ({ id }: CommentProps) => {
     try {
       await editUserComment(id, editValue);
       setEditCommentId(null);
-      setEditValue("");
-      setRefresh(prev => !prev);
-    }
-    catch (err) {
+      setEditValue('');
+      setRefresh((prev) => !prev);
+    } catch (err) {
       console.log(err);
     }
   };
@@ -74,16 +76,14 @@ const Comments = ({ id }: CommentProps) => {
   const handleDeleteComment = async (id: any) => {
     try {
       await deleteUserComment(id);
-      setRefresh(prev => !prev);
-    }
-    catch (err) {
+      setRefresh((prev) => !prev);
+    } catch (err) {
       console.log(err);
     }
   };
 
   return (
     <section className="mb-36">
-
       {/* Input Box */}
       <div className="relative">
         <InputField id="comment">
@@ -137,17 +137,18 @@ const Comments = ({ id }: CommentProps) => {
                     <X onClick={() => setEditCommentId(null)} />
                   </>
                 ) : (
-                  user?.userId == item.userID &&
-                  <>
-                    <Edit 
-                      size={16}
-                      onClick={() => { 
-                        setEditCommentId(item.commentId);
-                        setEditValue(item.commentText);
-                      }}
-                    />
-                    <Delete size={16} onClick={() => handleDeleteComment(item.commentId)} />
-                  </>
+                  user?.userId == item.userID && (
+                    <>
+                      <Edit
+                        size={16}
+                        onClick={() => {
+                          setEditCommentId(item.commentId);
+                          setEditValue(item.commentText);
+                        }}
+                      />
+                      <Delete size={16} onClick={() => handleDeleteComment(item.commentId)} />
+                    </>
+                  )
                 )}
               </span>
             </div>

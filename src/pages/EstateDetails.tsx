@@ -1,6 +1,5 @@
 import { MapPin, Phone, Bed, Bath, Ruler, Heart } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import EstateCard from '../ui/EstateCard';
 import Button from '../ui/Button';
 import Comments from '../components/comments/Comments';
 import { useParams } from 'react-router';
