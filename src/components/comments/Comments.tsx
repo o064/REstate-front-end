@@ -21,7 +21,6 @@ const Comments = ({ id }: CommentProps) => {
   const [comments, setComments] = useState<CommentResponse[]>([]);
   const [refresh, setRefresh] = useState(false);
 
-  // تخزين بيانات كل المستخدمين هنا
   const [usersData, setUsersData] = useState<Record<string, UserProfile>>({});
 
   const { user } = useAuth();
@@ -36,7 +35,6 @@ useEffect(() => {
 
     if (!commentsData?.length) return;
 
-    // IDs فريدة بدون تكرار وتحويلها لـ string
     const userIds: any[] = [
       ...new Set(commentsData.map((c: CommentResponse) => String(c.userID)))
     ];
@@ -44,12 +42,11 @@ useEffect(() => {
     // جلب بيانات المستخدمين
     const users = await Promise.all(
       userIds.map(async (uId: string) => {
-        const res = await getUserById(uId); // uId مضمون string
+        const res = await getUserById(uId); 
         return { id: uId, data: res.data as UserProfile };
       })
     );
 
-    // تحويل البيانات لكائن لتسهيل الوصول
     const formatted: Record<string, UserProfile> = {};
     users.forEach((u) => {
       formatted[u.id] = u.data;
