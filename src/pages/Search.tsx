@@ -1,45 +1,43 @@
-import { useState } from "react";
-import { useAllProperties } from "../hooks/useProperty";
-import { Search, SlidersHorizontal } from "lucide-react";
+import { useState } from 'react';
+import { useAllProperties } from '../hooks/useProperty';
+import { Search, SlidersHorizontal } from 'lucide-react';
 
-import EstateCard from "../ui/EstateCard";
-import OptionSelector from "../ui/OptionSelector";
+import EstateCard from '../ui/EstateCard';
+import OptionSelector from '../ui/OptionSelector';
 
-import { Home, Building2, DollarSign, Ruler } from "lucide-react";
+import { Home, Building2, DollarSign, Ruler } from 'lucide-react';
 
 const propertyTypeOptions = [
-  { value: "Commercial", icon: <Building2 />, label: "Commercial" },
-  { value: "Residential", icon: <Home />, label: "Residential" },
+  { value: 'Commercial', icon: <Building2 />, label: 'Commercial' },
+  { value: 'Residential', icon: <Home />, label: 'Residential' },
 ];
 
 const priceOptions = [
-  { value: "100000", icon: <DollarSign />, label: "≤ 100k" },
-  { value: "500000", icon: <DollarSign />, label: "≤ 500k" },
-  { value: "1000000", icon: <DollarSign />, label: "≤ 1M" },
+  { value: '100000', icon: <DollarSign />, label: '≤ 100k' },
+  { value: '500000', icon: <DollarSign />, label: '≤ 500k' },
+  { value: '1000000', icon: <DollarSign />, label: '≤ 1M' },
 ];
 
 const areaOptions = [
-  { value: "50", icon: <Ruler />, label: "≥ 50 m²" },
-  { value: "100", icon: <Ruler />, label: "≥ 100 m²" },
-  { value: "200", icon: <Ruler />, label: "≥ 200 m²" },
+  { value: '50', icon: <Ruler />, label: '≥ 50 m²' },
+  { value: '100', icon: <Ruler />, label: '≥ 100 m²' },
+  { value: '200', icon: <Ruler />, label: '≥ 200 m²' },
 ];
 
-
-
 export default function SearchPage() {
-  const [query, setQuery] = useState("");
-  const [maxPrice, setMaxPrice] = useState("");
-  const [minArea, setMinArea] = useState("");
-  const [type, setType] = useState("");
+  const [query, setQuery] = useState('');
+  const [maxPrice, setMaxPrice] = useState('');
+  const [minArea, setMinArea] = useState('');
+  const [type, setType] = useState('');
 
   const [page, setPage] = useState(1);
   const itemsPerPage = 6;
 
-  const { data } = useAllProperties();
+  const { data } = useAllProperties(type);
 
   const allProperties = [
-    ...(data?.items?.flatMap((i:any) => i.commercialProperties) || []),
-    ...(data?.items?.flatMap((i:any) => i.residentialProperties) || []),
+    ...(data?.items?.flatMap((i: any) => i.commercialProperties) || []),
+    ...(data?.items?.flatMap((i: any) => i.residentialProperties) || []),
   ];
 
   const filtered = allProperties.filter((p) => {
@@ -50,9 +48,9 @@ export default function SearchPage() {
 
     return (
       matchesQuery &&
-      (maxPrice === "" || p.price <= +maxPrice) &&
-      (minArea === "" || p.square >= +minArea) &&
-      (type === "" || p.propertyType==type)
+      (maxPrice === '' || p.price <= +maxPrice) &&
+      (minArea === '' || p.square >= +minArea) &&
+      (type === '' || p.propertyType == type)
     );
   });
 
@@ -61,9 +59,7 @@ export default function SearchPage() {
   return (
     <div className="max-w-7xl mx-auto p-4 mb-40">
       {/* Header */}
-      <h1
-        className="text-3xl font-bold mb-6 flex items-center gap-2"
-      >
+      <h1 className="text-3xl font-bold mb-6 flex items-center gap-2">
         <SlidersHorizontal className="text-blue-600" />
         Search Properties
       </h1>
@@ -81,9 +77,7 @@ export default function SearchPage() {
       </div>
 
       {/* Filters */}
-      <div
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12"
-      >
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
         <OptionSelector
           title="Property Type"
           value={type}
@@ -107,14 +101,10 @@ export default function SearchPage() {
       </div>
 
       {/* Property List */}
-      <div
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-      >
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {displayed.length > 0 ? (
           displayed.map((property) => (
-            <div
-              key={property.propertyId}
-            >
+            <div key={property.propertyId}>
               <EstateCard property={property} />
             </div>
           ))

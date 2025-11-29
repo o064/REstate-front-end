@@ -1,5 +1,5 @@
 import type { CommercialProperty, residentialProperty } from "../types/property";
-import type { deletePropertyResponse, getAllCompoundsResponse, getCommercialPropertyById, getResidentialPropertyById, postComPropertyResponse, postResPropertyResponse } from "../types/Responses";
+import type { deletePropertyResponse, getCommercialPropertyById, getResidentialPropertyById, postComPropertyResponse, postResPropertyResponse } from "../types/Responses";
 import request from "../utils/request";
 
 
@@ -86,18 +86,18 @@ export async function getPropertyById(id: string, propertyType: string) {
 }
 
 export async function getAllProperties(propertyType: string) {
-  const url =
-    propertyType === "residential"
-      ? `/api/ResidentialProperty`
-      : `/api/CommercialProperty`;
+    const url =
+        propertyType === "residential"
+            ? `/api/ResidentialProperty`
+            : `/api/CommercialProperty`;
 
-  const res = await request<any>(url, { method: "GET" });
+    const res = await request<any>(url, { method: "GET" });
 
-  if (!res.isSuccess) {
-    throw new Error(res.message || "Failed to fetch compounds");
-  }
+    if (!res.isSuccess) {
+        throw new Error(res.message || "Failed to fetch compounds");
+    }
 
-  return res.data;  // مهم جداً ترجع data فقط
+    return res.data;  // مهم جداً ترجع data فقط
 }
 
 
