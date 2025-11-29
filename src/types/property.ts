@@ -2,8 +2,10 @@ export type PropertyPurpose = "sale" | "rent";
 export type PropertyType = "commercial" | "residential";
 
 export type Property = {
-    propertyId: string;
+    id?: string;
+    propertyId?: string;
     title: string;
+    name?: string;
     purpose: PropertyPurpose;
     square: number;
     price: number;
@@ -11,11 +13,13 @@ export type Property = {
     bedrooms?: number;
     bathrooms?: number;
     imageUrl: string;
+    type?: string;
     propertyType?: string
     galleries?: any[]
     likes?: boolean | number | any
-    likesCount: number
-    isLiked: boolean
+    likesCount?: number
+    isLiked?: boolean
+    images?: any[]
 };
 
 export type PropertyWithAgency = Property & {
@@ -61,10 +65,6 @@ export type CommercialProperty = baseLisintingForm & {
     floorNumber: number;
     businessType: string;
     hasStorage: boolean
-    bedrooms: number
-    bathrooms: number
-    vendorName: string;
-    agencyName: string
 };
 export type ListingFormInputs =
     | CommercialProperty
@@ -82,34 +82,34 @@ export type PropertyGallery = {
 }
 
 export type Compound = {
-  compoundId: string;
-  name: string;
-  city: string;
-  address: string;
-  description: string;
+    compoundId: string;
+    name: string;
+    city: string;
+    address: string;
+    description: string;
 };
 
 export type PropertyRes = {
-  address: string;
-  amenity: Amenity;
-  businessType: string;
-  city: string;
-  comments: any[]; // ممكن تضبط type لاحقًا حسب شكل التعليقات
-  compound: Compound;
-  dateListed: string; // أو Date لو هتحولها
-  description: string;
-  floorNumber: number;
-  galleries:PropertyGallery[];
-  googleMapsUrl: string;
-  hasStorage: boolean;
-  isLiked: boolean;
-  likesCount: number;
-  price: number;
-  propertyId: string;
-  propertyPurpose: "Sale" | "Rent";
-  propertyStatus: string;
-  propertyType: "Commercial" | "Residential";
-  square: number;
-  title: string;
-  userId: string;
+    address: string;
+    amenity: Amenity;
+    businessType: string;
+    city: string;
+    comments: any[]; // ممكن تضبط type لاحقًا حسب شكل التعليقات
+    compound: Compound;
+    dateListed: string; // أو Date لو هتحولها
+    description: string;
+    floorNumber: number;
+    galleries: PropertyGallery[];
+    googleMapsUrl: string;
+    hasStorage: boolean;
+    isLiked: boolean;
+    likesCount: number;
+    price: number;
+    propertyId: string;
+    propertyPurpose: "Sale" | "Rent";
+    propertyStatus: string;
+    propertyType: "Commercial" | "Residential";
+    square: number;
+    title: string;
+    userId: string;
 };

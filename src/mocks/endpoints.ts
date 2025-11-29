@@ -219,7 +219,7 @@ export const endpoints: Endpoints = {
         {
             method: "POST",
             path: "/api/Auth/login",
-            response: (req) => {
+            response: () => {
                 return {
                     isSuccess: true,
                     message: "Login successful",
