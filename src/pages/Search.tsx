@@ -35,18 +35,22 @@ export default function SearchPage() {
   const [page, setPage] = useState(1);
   const itemsPerPage = 6;
 
-  const { data } = useAllProperties();
+  const { data:commercial } = useAllProperties("commercial" );
+  const { data:residential } = useAllProperties("residential" );
+
+
+  
 
   const allProperties = [
-    ...(data?.items?.flatMap((i:any) => i.commercialProperties) || []),
-    ...(data?.items?.flatMap((i:any) => i.residentialProperties) || []),
+    ...(commercial.items || []),
+    ...(residential.items || []),
   ];
-
-  const filtered = allProperties.filter((p) => {
+  
+  const filtered = allProperties.filter((p:any) => {
     const matchesQuery =
-      p.title.toLowerCase().includes(query.toLowerCase()) ||
-      p.city?.toLowerCase().includes(query.toLowerCase()) ||
-      p.address?.toLowerCase().includes(query.toLowerCase());
+      p?.title.toLowerCase().includes(query.toLowerCase()) ||
+      p?.city?.toLowerCase().includes(query.toLowerCase()) ||
+      p?.address?.toLowerCase().includes(query.toLowerCase());
 
     return (
       matchesQuery &&

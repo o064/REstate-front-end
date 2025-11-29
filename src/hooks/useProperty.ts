@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { ListingFormInputs } from "../types/property";
 import { postImages } from "../services/imagesService";
-import { delPropertyById, getAllProperties, getPropertyById, postProperty, putProperty } from "../services/PropertyService";
+import { delPropertyById, getAllProperties, getPropertyById, postProperty, putProperty,getProperties } from "../services/PropertyService";
 import { useParams } from "react-router";
 import toast from "react-hot-toast";
 
@@ -86,8 +86,23 @@ export function usePrevData() {
 
 export function useAllProperties(propertyType: string) {
   const query = useQuery({
-    queryKey: ["properties", propertyType],  // لازم نفرق بين residential و commercial
-    queryFn: () => getAllProperties(propertyType),  // function مش نتيجة دالة
+    queryKey: ["properties", propertyType],  
+    queryFn: () => getAllProperties(propertyType),  
+    staleTime: 5 * 60 * 1000,
+  });
+
+  return {
+    data: query.data || [],
+    isLoading: query.isLoading,
+    isError: query.isError,
+    error: query.error,
+  };
+}
+
+export function useProperties() {
+  const query = useQuery({
+    queryKey: ["properties"],  
+    queryFn:  getProperties,  
     staleTime: 5 * 60 * 1000,
   });
 
