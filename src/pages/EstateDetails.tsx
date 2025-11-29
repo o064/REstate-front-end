@@ -45,8 +45,7 @@ const EstateDetails = () => {
       try {
         setLoading(true);
         const res = await getPropertyById(id, type);
-        console.log('API response:', res);
-        setProperty(res.data); // لو الـ response structure مختلف استعمل res.data.property
+        setProperty(res.data); 
 
       } catch (err) {
         console.error(err);
@@ -58,8 +57,6 @@ const EstateDetails = () => {
     fetchProperty();
     
   }, [id, type]);
-  console.log(property);
-  console.log('params:', { type, id });
   
   if (loading) return <h1 className="text-center mt-10">Loading...</h1>;
   if (!property) return <h1 className="text-center mt-10">Property not found.</h1>;

@@ -7,11 +7,7 @@ import { useAllProperties } from '../../hooks/useProperty';
 
 
 const Estate = () => {
-  const { data } = useAllProperties();
-  const allProperties = [
-    ...(data?.items?.flatMap((i: any) => i.commercialProperties) || []),
-    ...(data?.items?.flatMap((i: any) => i.residentialProperties) || []),
-  ];
+  const { data } = useAllProperties("commercial");
   
   return (
     <section className="py-16 bg-gray-50 mt-96 lg:mt-40">
@@ -29,7 +25,7 @@ const Estate = () => {
       </div>
 
       {/* Estate Grid */}
-      {allProperties.length === 0 ? (
+      {data?.items?.length === 0 ? (
         <div className="text-center py-20">
           <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <MapPin className="h-12 w-12 text-gray-400" />
@@ -39,8 +35,8 @@ const Estate = () => {
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 px-6">
-          {allProperties.slice(0, 8).map((property: any) => (
-            <EstateCard key={property.propertyId} property={property} image={property.galleries}/>
+          {data?.items?.slice(0, 8).map((property: any) => (
+            <EstateCard key={property?.propertyId} property={property} image={property?.galleries}/>
           ))}
         </div>
       )}
