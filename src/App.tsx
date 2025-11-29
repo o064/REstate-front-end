@@ -19,6 +19,7 @@ import UnAuthorized from './ui/unAuthorized';
 import NotFound from './ui/NotFound';
 import toast, { Toaster } from 'react-hot-toast';
 import ErrorPage from './pages/ErrorPage';
+import EditLisiting from './pages/EditLisiting';
 
 // Create a client
 
@@ -80,7 +81,7 @@ const router = createBrowserRouter(
 
           {/* agent routes */}
           <Route element={<RoleBasedRoute allowedRoles={['Admin', 'Agent']} />}>
-            <Route path="estateDetails/:propertyType/:propertyId" element={<EstateDetails />} />
+            <Route path="edit/:propertyType/:propertyId" element={<EditLisiting />} />
             <Route path="add" element={<AddListing />} />
           </Route>
         </Route>
