@@ -81,7 +81,7 @@ const router = createBrowserRouter(
 
           {/* agent routes */}
           <Route element={<RoleBasedRoute allowedRoles={['Admin', 'Agent']} />}>
-            <Route path="edit/:propertyType/:propertyId" element={<EditLisiting />} />
+            <Route path="edit/property/:propertyType/:propertyId" element={<EditLisiting />} />
             <Route path="add" element={<AddListing />} />
           </Route>
         </Route>
