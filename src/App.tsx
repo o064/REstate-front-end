@@ -12,7 +12,6 @@ import Login from './pages/LogIn';
 import EstateDetails from './pages/EstateDetails';
 import WishList from './pages/WishList';
 import AddListing from './pages/AddListing';
-import EditLisiting from './pages/EditLisiting';
 import MyProfile from './pages/MyProfile';
 import RoleBasedRoute from './components/auth/RoleBaseRoute';
 import Search from './pages/Search';

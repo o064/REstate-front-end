@@ -1,4 +1,3 @@
-import type { Property } from '../../types/property';
 import ImageListing from './ImageListing';
 import ListingInfo from './ListingInfo';
 import ListingFeatures from './ListingFeatures';

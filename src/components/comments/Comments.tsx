@@ -21,6 +21,7 @@ const Comments = ({ id }: CommentProps) => {
   const [comments, setComments] = useState<CommentResponse[]>([]);
   const [refresh, setRefresh] = useState(false);
 
+  // تخزين بيانات كل المستخدمين هنا
   const [usersData, setUsersData] = useState<Record<string, UserProfile>>({});
 
   const { user } = useAuth();
@@ -35,6 +36,7 @@ useEffect(() => {
 
     if (!commentsData?.length) return;
 
+    // IDs فريدة بدون تكرار وتحويلها لـ string
     const userIds: any[] = [
       ...new Set(commentsData.map((c: CommentResponse) => String(c.userID)))
     ];
@@ -58,6 +60,7 @@ useEffect(() => {
 
   fetchData();
 }, [id, refresh]);
+
 
   // -----------------------------
   //         Add Comment

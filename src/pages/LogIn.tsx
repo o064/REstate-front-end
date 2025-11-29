@@ -12,8 +12,6 @@ import type { UserSignIn } from '../types/User';
 import Container from '../ui/Continer';
 import { useHomePageRedirect, useLogin } from '../hooks/useAuth';
 import Loader from '../ui/Loader';
-import { toast } from 'react-hot-toast';
-import { useEffect } from 'react';
 
 function Login() {
   const {

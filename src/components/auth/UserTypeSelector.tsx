@@ -1,9 +1,9 @@
 import { User, Building2 } from 'lucide-react';
-import type { UserType } from '../../types/User';
+import type { UserRole } from '../../types/User';
 
 interface UserTypeSelectorProps {
-  value: UserType;
-  onChange: (type: UserType) => void;
+  value: UserRole;
+  onChange: (type: UserRole) => void;
   className?: string;
 }
 
@@ -16,9 +16,9 @@ function UserTypeSelector({ value, onChange, className = '' }: UserTypeSelectorP
       <div className="grid grid-cols-2 gap-3">
         <button
           type="button"
-          onClick={() => onChange('buyer')}
+          onClick={() => onChange('Customer')}
           className={`p-4 rounded-xl border-2 transition-all duration-200 shadow-sm flex flex-col items-center group ${
-            value === 'buyer'
+            value === 'Customer'
               ? 'border-blue-500 bg-blue-50 text-blue-700 font-semibold'
               : 'border-gray-200 bg-white hover:bg-gray-50'
           }`}
@@ -29,9 +29,9 @@ function UserTypeSelector({ value, onChange, className = '' }: UserTypeSelectorP
 
         <button
           type="button"
-          onClick={() => onChange('vendor')}
+          onClick={() => onChange('Agent')}
           className={`p-4 rounded-xl border-2 transition-all duration-200 shadow-sm flex flex-col items-center group ${
-            value === 'vendor'
+            value === 'Agent'
               ? 'border-blue-500 bg-blue-50 text-blue-700 font-semibold'
               : 'border-gray-200 bg-white hover:bg-gray-50'
           }`}

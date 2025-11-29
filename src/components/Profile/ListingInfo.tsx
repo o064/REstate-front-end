@@ -22,10 +22,12 @@ function ListingInfo({ property }: { property: PropertyGroupListItem }) {
       </span>
       <span
         className={`ml-2 px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap ${
-          property.propertyType === 0 ? 'bg-blue-100 text-blue-800' : 'bg-amber-100 text-amber-800'
+          property.propertyType === 'Residential'
+            ? 'bg-blue-100 text-blue-800'
+            : 'bg-amber-100 text-amber-800'
         }`}
       >
-        {property.propertyType === 0 ? 'Residential' : 'Commercial'}
+        {property.propertyType === 'Residential' ? 'Residential' : 'Commercial'}
       </span>
     </div>
   );

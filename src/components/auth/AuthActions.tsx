@@ -1,7 +1,6 @@
 import Button from '../../ui/Button';
 import SpinnerMini from '../../ui/SpinnerMini';
-import Divider from './Divider';
-import Google from './Google';
+
 type AuthActionsProps = {
   actionFor: string;
   isLoading?: boolean;

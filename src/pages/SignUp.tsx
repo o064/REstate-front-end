@@ -107,10 +107,9 @@ function Signup() {
             title="I am signing up as a:"
             className="border-b border-gray-300"
             options={[
-
-              { value: 1, label: 'broker', icon: <Building2 /> },
-              { value: 2, label: 'customer', icon: <User /> },
-              { value: 3, label: 'agent', icon: <Building2 /> },
+              { value: 3, label: 'customer', icon: <User /> },
+              { value: 1, label: 'agent', icon: <Building2 /> },
+              { value: 2, label: 'broker', icon: <Building2 /> },
             ]}
           />
           {/* email */}
