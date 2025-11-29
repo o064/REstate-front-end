@@ -7,38 +7,13 @@ import { useParams } from 'react-router';
 import { getPropertyById } from '../services/PropertyService';
 import type { PropertyRes } from '../types/property';
 
-const similarProperties = [
-  {
-    id: 1,
-    title: 'Modern Apartment in Fifth Settlement',
-    price: '3,000,000 EGP',
-    area: '200 m²',
-    image: 'https://images.dubizzle.com.eg/thumbnails/154463110-800x600.webp',
-  },
-  {
-    id: 2,
-    title: 'Villa in Sheikh Zayed',
-    price: '7,500,000 EGP',
-    area: '350 m²',
-    image: 'https://images.dubizzle.com.eg/thumbnails/154339648-800x600.webp',
-  },
-  {
-    id: 3,
-    title: 'Apartment in Nasr City',
-    price: '1,900,000 EGP',
-    area: '150 m²',
-    image:
-      'https://img-4.aqarmap.com.eg/new-aqarmap-media/slider-photo-watermarked-logo-large/2506/683c4f22e696a972766983.png/2510/68e25a8a33845018562350.jfif',
-  },
-];
-
 const EstateDetails = () => {
   const [property, setProperty] = useState<PropertyRes | any>();
   const { id, type } = useParams<{ id: string; type: string }>();
   const [mainImageIndex, setMainImageIndex] = useState(0);
   const [loading, setLoading] = useState(false);
 
- useEffect(() => {
+  useEffect(() => {
     const fetchProperty = async () => {
       if (!id || !type) return;
 
@@ -47,7 +22,6 @@ const EstateDetails = () => {
         const res = await getPropertyById(id, type);
         console.log('API response:', res);
         setProperty(res.data); // لو الـ response structure مختلف استعمل res.data.property
-
       } catch (err) {
         console.error(err);
       } finally {
@@ -56,11 +30,10 @@ const EstateDetails = () => {
     };
 
     fetchProperty();
-    
   }, [id, type]);
   console.log(property);
   console.log('params:', { type, id });
-  
+
   if (loading) return <h1 className="text-center mt-10">Loading...</h1>;
   if (!property) return <h1 className="text-center mt-10">Property not found.</h1>;
 
@@ -150,21 +123,6 @@ const EstateDetails = () => {
           </p>
         </div>
         <Button children="Call now" className="w-fit" icon={<Phone />} />
-      </section>
-
-      {/* Similar Properties */}
-      <section className="mb-24">
-        <h2 className="text-lg font-semibold mb-4">Similar Properties</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          {similarProperties.map((item) => (
-            <div
-              key={item.id}
-              className="border rounded-xl overflow-hidden hover:shadow-lg transition group cursor-pointer"
-            >
-              <EstateCard property={item} image={[{ imageUrl: item.image }]} />
-            </div>
-          ))}
-        </div>
       </section>
 
       {/* Comments */}
