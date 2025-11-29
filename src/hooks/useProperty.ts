@@ -84,17 +84,18 @@ export function usePrevData() {
 }
 
 
-export function useAllProperties() {
+export function useAllProperties(propertyType: string) {
   const query = useQuery({
-    queryKey: ["properties"], 
-    queryFn: getAllProperties, 
-    staleTime: 5 * 60 * 1000, 
+    queryKey: ["properties", propertyType],  // لازم نفرق بين residential و commercial
+    queryFn: () => getAllProperties(propertyType),  // function مش نتيجة دالة
+    staleTime: 5 * 60 * 1000,
   });
 
   return {
-    data: query.data?.data || [],
+    data: query.data || [],
     isLoading: query.isLoading,
     isError: query.isError,
     error: query.error,
   };
 }
+

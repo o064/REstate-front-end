@@ -24,9 +24,13 @@ const EstateCard = ({ property, image }: EstateCardPropse) => {
 
   // check if property is already in wishlist
   useEffect(() => {
+    if (property) {
+      setLikes(property.likesCount ?? 0);
+      setIsLiked(property.isLiked ?? false);
+    }
     const exists = wishList.some((item) => item.propertyId === property.propertyId);
     setIsWishList(exists);
-  }, [wishList, property.propertyId]);
+  }, [wishList, property.propertyId, property]);
 
   const handleWishListToggle = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -44,18 +48,21 @@ const EstateCard = ({ property, image }: EstateCardPropse) => {
     e.preventDefault();
     e.stopPropagation();
 
-    const id = property.propertyId ?? property.propertyId;
+    const id = property.propertyId;
     const response = await Like(id);
 
     if (response?.data === "Added") {
       setLikes((prev: number) => prev + 1);
       setIsLiked(true);
     }
-    else if (response?.data === "Deleted") {
-      setLikes((prev: number) => prev - 1);
+
+    if (response?.data === "Deleted") {
+      setLikes((prev: number) => (prev > 0 ? prev - 1 : 0));
       setIsLiked(false);
     }
   };
+
+
 
   return (
     <>

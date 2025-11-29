@@ -85,14 +85,19 @@ export async function getPropertyById(id: string, propertyType: string) {
 
 }
 
-export async function getAllProperties() {
-    const url = `/api/Property`;
-    const res = await request<getAllCompoundsResponse | any>(url, { method: "GET" })
+export async function getAllProperties(propertyType: string) {
+  const url =
+    propertyType === "residential"
+      ? `/api/ResidentialProperty`
+      : `/api/CommercialProperty`;
 
-    if (!res.isSuccess) {
-        throw new Error(res.message || "Failed to fetch compounds");
-    }
-    return res;
+  const res = await request<any>(url, { method: "GET" });
 
+  if (!res.isSuccess) {
+    throw new Error(res.message || "Failed to fetch compounds");
+  }
+
+  return res.data;  // مهم جداً ترجع data فقط
 }
+
 

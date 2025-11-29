@@ -10,7 +10,7 @@ export function getToken(): string {
 }
 
 // إضافة تعليق
-export async function postComment(comment: CommentResponse) {
+export async function postComment(comment: CommentResponse | any) {
     const jwtToken = getToken();
 
 

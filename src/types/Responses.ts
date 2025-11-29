@@ -139,8 +139,11 @@ export type LoginResponse = LoginSuccess | BadRequest;
 export type CommentResponse = {
     commentText: string;
     propertyId: string;
-    commentId?: string
-    userID?: string
+    commentId?: string;
+    userID?: string;
+    likesCount:number;
+    isLiked:boolean;
+    userName:string
 }
 
 export type postCommentResponse = {
