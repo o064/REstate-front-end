@@ -1,5 +1,7 @@
 import type { getAgentProfileResponse, getUserProfileResponse } from "../types/Responses";
-
+import { useQuery } from "@tanstack/react-query";
+import Cookies from "js-cookie";
+import { getUserProfile } from "../services/ProfileService";
 export function formatPrice(value: number): string {
     return new Intl.NumberFormat("en", {
         style: "currency",
@@ -46,3 +48,4 @@ export function destructUserProfile(data?: getUserProfileResponse | getAgentProf
     };
 
 }
+
