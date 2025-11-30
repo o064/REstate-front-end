@@ -1,4 +1,3 @@
-import ImageListing from './ImageListing';
 import ListingInfo from './ListingInfo';
 import ListingFeatures from './ListingFeatures';
 import ListingControl from './ListingControl';
@@ -9,13 +8,14 @@ type PropertyListingCardProps = {
 };
 
 function PropertyListingCard({ property }: PropertyListingCardProps) {
+  
   return (
     <div className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
       <div className="flex flex-col sm:flex-row gap-4">
         {/* Image */}
         <img
-         src={ property.galleries[0]?.imageUrl}
-          alt={property.galleries[0]?.mediaId}
+         src={`https://re-estate.runasp.net/${property.galleries[0]?.imageUrl}`}
+          alt={`https://re-estate.runasp.net/${property.galleries[0]?.mediaId}`}
         />
         {/* Details */}
         <div className="flex-1 min-w-0">

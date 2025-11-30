@@ -5,27 +5,26 @@ import InputField from '../../ui/InputField';
 import Button from '../../ui/Button';
 import CardDetils from '../../ui/CardDetils';
 import { useEffect, useState } from 'react';
-import { useUserProfile } from '../../hooks/useProfile';
 import { useAuth } from '../../context/AuthContext';
-import { destructUserProfile } from '../../utils/helper';
 import { Link } from 'react-router';
+import { useAgent } from '../../utils/getAgent';
 
 const Main = () => {
   const { user, search, setSearch } = useAuth();
-
+  const { agent } = useAgent()
   const [sale, setSale] = useState<any[]>([]);
   const [rent, setRent] = useState<any[]>([]);
   const [list, setList] = useState<any[]>([]);
 
-useEffect(() => {
+  useEffect(() => {
+    if (!agent) return;
 
+    const agentPropertiesList = agent?.data.properties
 
-    const { listings = [] } = destructUserProfile();
-
-    setList(listings || []);
-    setSale(listings.filter((item: any) => item.propertyPurpose === "Sale"));
-    setRent(listings.filter((item: any) => item.propertyPurpose === "Rent"));
-  }, []);
+    setList(agentPropertiesList);
+    setSale(agentPropertiesList.filter((item: any) => item.propertyPurpose === "Sale"));
+    setRent(agentPropertiesList.filter((item: any) => item.propertyPurpose === "Rent"));
+  }, [agent]);
 
   return (
     <main className="">
@@ -45,20 +44,20 @@ useEffect(() => {
           {/* Search */}
           <div className="w-[80%] mx-auto">
             <InputField id="search">
-            <Link to={'/search'}>
-            
-              <Button
-                children={'Search'}
-                icon={<Search />}
-                className="flex absolute w-fit right-3 p-2 top-4"
-              />
+              <Link to={'/search'}>
+
+                <Button
+                  children={'Search'}
+                  icon={<Search />}
+                  className="flex absolute w-fit right-3 p-2 top-4"
+                />
               </Link>
               <Input
                 type="text"
                 id="search"
                 name="search"
                 value={search}
-                onChange={(e)=>setSearch(e.target.value)}
+                onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search"
                 className="mb-16 p-6 bg-white placeholder:text-gray-500  placeholder:md:text-lg text-black border-none outline-none"
               />
@@ -72,21 +71,21 @@ useEffect(() => {
                 <CardDetils
                   Hfont="bold"
                   Pfont="semibold"
-                  count={list?.length}
+                  count={list.length}
                   title="Properties Listed"
                   Hcolor="blue-700"
                 />
                 <CardDetils
                   Hfont="bold"
                   Pfont="semibold"
-                  count={sale?.length}
+                  count={sale.length}
                   title="For Sale"
                   Hcolor="blue-700"
                 />
                 <CardDetils
                   Hfont="bold"
                   Pfont="semibold"
-                  count={rent?.length}
+                  count={rent.length}
                   title="For Rent"
                   Hcolor="blue-700"
                 />

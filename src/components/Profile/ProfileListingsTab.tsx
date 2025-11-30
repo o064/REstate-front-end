@@ -6,7 +6,6 @@ function ProfileListingsTab({ properties }: { properties: PropertyGroupList }) {
   if (properties.length === 0) {
     return <EmptyListing />;
   }
-  console.log(properties);
   return (
     <div className="space-y-6">
       <div>
