@@ -94,7 +94,12 @@ function EditLisiting() {
           <StepDivider />
           {/* Navigation Buttons */}
           <div className="flex justify-between gap-6 mt-8 pt-6 border-t border-gray-200">
-            <Button variant="secondary" fullWidth={false} type="button">
+            <Button 
+              variant="secondary" 
+              fullWidth={false} 
+              type="button" 
+              onClick={() => navigate('/profile')}
+            >
               Cancel
             </Button>
             <Button variant="primary" fullWidth={false} type="submit">
