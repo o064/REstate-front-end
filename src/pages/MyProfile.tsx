@@ -4,7 +4,6 @@ import ProfileHeader from '../components/Profile/ProfileHeader';
 import ProfileTabs from '../components/Profile/ProfileTabs';
 import { useUserProfile } from '../hooks/useProfile';
 import { useLogout } from '../hooks/useAuth';
-import { destructUserProfile } from '../utils/helper';
 import { useNavigate } from 'react-router';
 import { toast } from 'react-hot-toast';
 import { useAgent } from '../utils/getAgent';
