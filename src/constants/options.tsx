@@ -41,9 +41,9 @@ export const KitchenTypeOptions = [
 export const bathroomsOptions = [
   { value: 0, label: 'No bathroom' },
   { value: 1, label: '1 bathroom' },
-  { value: 2, label: '1 bedrooms' },
-  { value: 3, label: '3 bedrooms' },
-  { value: 4, label: '4+ bedrooms' },
+  { value: 2, label: '2 bathrooms' },
+  { value: 3, label: '3 bathrooms' },
+  { value: 4, label: '4+ bathrooms' },
 ];
 
 // export const amenityOptions = [

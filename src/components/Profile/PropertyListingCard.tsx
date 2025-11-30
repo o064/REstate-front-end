@@ -2,6 +2,7 @@ import ListingInfo from './ListingInfo';
 import ListingFeatures from './ListingFeatures';
 import ListingControl from './ListingControl';
 import type { PropertyGroupListItem } from '../../types/Responses';
+import { API_URL } from '../../utils/request';
 
 type PropertyListingCardProps = {
   property: PropertyGroupListItem;
@@ -14,8 +15,8 @@ function PropertyListingCard({ property }: PropertyListingCardProps) {
       <div className="flex flex-col sm:flex-row gap-4">
         {/* Image */}
         <img
-         src={`https://re-estate.runasp.net/${property.galleries[0]?.imageUrl}`}
-          alt={`https://re-estate.runasp.net/${property.galleries[0]?.mediaId}`}
+         src={ API_URL + property.galleries[0]?.imageUrl}
+          alt={property.galleries[0]?.mediaId}
         />
         {/* Details */}
         <div className="flex-1 min-w-0">
