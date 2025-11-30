@@ -12,23 +12,21 @@ import { Link } from 'react-router';
 
 const Main = () => {
   const { user, search, setSearch } = useAuth();
-  const { data, isLoading } = useUserProfile();
 
   const [sale, setSale] = useState<any[]>([]);
   const [rent, setRent] = useState<any[]>([]);
   const [list, setList] = useState<any[]>([]);
 
-  useEffect(() => {
-    if (!data) return;
+useEffect(() => {
 
-  const { listings = []} = destructUserProfile(data!);
+
+    const { listings = [] } = destructUserProfile();
 
     setList(listings || []);
-    setSale(listings.filter((item:any) => item.propertyPurpose === "Sale"));
-    setRent(listings.filter((item:any) => item.propertyPurpose === "Rent"));
-  }, [data]);
+    setSale(listings.filter((item: any) => item.propertyPurpose === "Sale"));
+    setRent(listings.filter((item: any) => item.propertyPurpose === "Rent"));
+  }, []);
 
-  if (isLoading) return <p className="text-center py-20">Loading...</p>;
   return (
     <main className="">
       {/* top */}

@@ -26,26 +26,32 @@ export function capitalize(str: string) {
         .join(' ');;
 
 }
-export function destructUserProfile(data?: getUserProfileResponse | getAgentProfileResponse) {
-    if (!data || !data.isSuccess) return { user: null, listings: [] };
+export function destructUserProfile(
+  data?: getUserProfileResponse | getAgentProfileResponse
+) {
+  if (!data || !data.isSuccess || !data.data) {
+    return { user: null, listings: [] };
+  }
 
-    const profileData = data.data;
-    (profileData);
-    if ('agencyName' in profileData) {
-        const { properties, user, ...rest } = profileData;
-        const agentInfo = { ...rest, ...user };
+  const profileData = data.data;
 
-        const listings = properties;
-        (listings);
-        return {
-            user: agentInfo,
-            listings,
-        };
-    }
+  // لو المستخدم وكيل
+  if ('agencyName' in profileData) {
+    const properties = Array.isArray(profileData.properties) ? profileData.properties : [];
+    const userInfo = profileData.user || {};
+    const agentInfo = { ...profileData, ...userInfo };
+
     return {
-        user: profileData,
-        listings: [],
+      user: agentInfo,
+      listings: properties,
     };
+  }
 
+  // مستخدم عادي
+  return {
+    user: profileData || null,
+    listings: [],
+  };
 }
+
 
