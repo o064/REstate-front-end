@@ -1,12 +1,18 @@
 import { configureStore } from '@reduxjs/toolkit';
 import wishListReducer from "./store/wishListSlice"
+import { PropertyApi } from './store/likeApi';
 const store = configureStore({
   reducer: {
+    [PropertyApi.reducerPath]: PropertyApi.reducer,
     wishList: wishListReducer
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware()
+      .concat(PropertyApi.middleware)
 })
 export default store;
-// Infer the `RootState` and `AppDispatch` types from the store itself
-export type RootState = ReturnType<typeof store.getState>
-// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
-export type AppDispatch = typeof store.dispatch
+
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+

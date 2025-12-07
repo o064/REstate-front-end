@@ -39,6 +39,8 @@ export type getResidentialPropertyById = {
         phone: string;
         agencyName: string;
         vendorName: string;
+        isLiked: boolean;
+        likesCount: number
     };
 }
 export type postResPropertyResponse = {
@@ -50,6 +52,7 @@ export type getCommercialPropertyById = {
     isSuccess: true;
     message: string;
     data?: CommercialPropertyResponse;
+
 }
 
 
@@ -77,7 +80,12 @@ export type CommercialPropertyResponse = Omit<CommercialProperty, "images" | "co
     propertyStatus: string;
     propertyType: string;
     propertyPurpose: string;
-
+    isLiked: boolean;
+    likesCount: number;
+    bedrooms:number;
+    bathrooms:number;
+    agencyName:string;
+    vendorName:string
 };;
 
 export type ResidentialPropertyResponse = Omit<residentialProperty, "images" | "agentId" | "propertyType"> & {
@@ -87,6 +95,8 @@ export type ResidentialPropertyResponse = Omit<residentialProperty, "images" | "
     agentName: string;
     propertyType: string;
     dateListed: string;
+    isLiked: boolean;
+    likesCount: number
 }
 export type PropertyGroupListItem = (CommercialPropertyResponse | ResidentialPropertyResponse);
 
@@ -141,9 +151,9 @@ export type CommentResponse = {
     propertyId: string;
     commentId?: string;
     userID?: string;
-    likesCount:number;
-    isLiked:boolean;
-    userName:string
+    likesCount: number;
+    isLiked: boolean;
+    userName: string
 }
 
 export type postCommentResponse = {

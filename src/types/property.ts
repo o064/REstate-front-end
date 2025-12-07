@@ -112,4 +112,10 @@ export type PropertyRes = {
     square: number;
     title: string;
     userId: string;
+    bathrooms: number;
+    bedrooms: number;
+    kitchenType: number;
+    floors: number;
+    agencyName:string;
+    vendorName:string
 };

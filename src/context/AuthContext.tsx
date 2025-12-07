@@ -16,6 +16,8 @@ interface AuthContextType {
   setUser: (user: Profile | null) => void;
   search: string;
   setSearch: React.Dispatch<React.SetStateAction<string>>;
+  edit:boolean,
+  setEdit:(e:boolean)=>void
 }
 
 const COOKIE_NAME = 'Authentication';
@@ -62,6 +64,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUserState] = useState<Profile | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [search, setSearch] = useState("");
+  const [edit , setEdit] = useState(false)
 
   // Load from cookies
   useEffect(() => {
@@ -174,6 +177,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setUser,
         search,
         setSearch,
+        edit,
+        setEdit
       }}
     >
       {children}

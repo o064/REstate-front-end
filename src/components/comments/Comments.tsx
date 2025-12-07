@@ -89,7 +89,7 @@ useEffect(() => {
   };
 
   // -----------------------------
-  //        Likes (Per Item)
+  //        Likes 
   // -----------------------------
   const handleLike = async (item: CommentResponse) => {
     const response = await commentLike(item.commentId);
