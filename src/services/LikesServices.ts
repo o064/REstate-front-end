@@ -37,7 +37,7 @@ export const Like = async (id: string) => {
   }
 };
 
-export const commentLike = async (id: string) => {
+export const commentLike = async (id: any) => {
   try {
     const token = getToken();
 
