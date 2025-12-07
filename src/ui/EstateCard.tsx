@@ -197,12 +197,3 @@ const EstateCard = ({ property, image }: EstateCardPropse) => {
 };
 
 export default EstateCard;
-
-
-
-  // دمج جميع العقارات في مصفوفة واحدة لتحديث UI
-
-
-
-
- 
