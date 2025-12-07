@@ -22,7 +22,9 @@ export const Like = async (id: string) => {
         "Content-Type": "application/json",
         "Cache-Control": "no-store", 
       },
+      
     });
+    console.log(response);
 
     if (!response.ok) {
       throw new Error("Like request failed");
