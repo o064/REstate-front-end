@@ -21,20 +21,47 @@ export const Like = async (id: any) => {
 }
 
 
-export const commentLike = async (id: any) => {
-    try {
-        const token = getToken()
 
-        const setLike = await fetch(`${commentLikeUrl}/${id}`, {
-            method: "POST",
-            headers: {
-                Authorization: token,
-                "Content-Type": "application/json",
-            },
-        });
-        return await setLike.json()
 
-    } catch (err) { console.log(err) };
+export const commentLike = async (id: string) => {
+  try {
+    const token = getToken();
 
-}
+    if (!token) {
+      throw new Error("No token found");
+    }
+
+    const response = await fetch(`${commentLikeUrl}/${id}`, {
+      method: "POST",
+      headers: {
+        Authorization: token.startsWith("Bearer ")
+          ? token
+          : `Bearer ${token}`,
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Comment like failed");
+    }
+
+    return await response.json();
+  } catch (err) {
+    console.error("Comment Like Error:", err);
+    throw err;
+  }
+};
+
+
+
+
+
+
+
+
+
+
+
+
 
