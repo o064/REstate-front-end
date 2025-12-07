@@ -121,8 +121,8 @@ const EstateCard = ({ property, image }: EstateCardPropse) => {
             onClick={handleLike}
             className="flex items-center space-x-2 mb-3 px-3 py-1 rounded-lg border text-sm hover:bg-gray-100 transition"
           >
-            <ThumbsUp className={`h-4 w-4 ${ isLiked? 'text-blue-600 fill-blue-600' : 'text-gray-600'}`} />
-            <span className="text-gray-700">{likes} Likes</span>
+            <ThumbsUp className={`h-4 w-4 ${ property.isLiked? 'text-blue-600 fill-blue-600' : 'text-gray-600'}`} />
+            <span className="text-gray-700">{property.likesCount} Likes</span>
           </button>
 
           {/* Location */}
