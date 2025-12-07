@@ -27,6 +27,7 @@ const areaOptions = [
 
 export default function SearchPage() {
   const {search,setSearch} = useAuth()
+  
   const [maxPrice, setMaxPrice] = useState('');
   const [minArea, setMinArea] = useState('');
   const [type, setType] = useState('');
